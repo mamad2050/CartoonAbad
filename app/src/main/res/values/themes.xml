@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/dark_purple</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorOnSurface">@color/navy_blue</item>
+        <item name="colorSurface">@color/navy_blue</item>
         <item name="colorOnSurface" tools:ignore="DuplicateDefinition">@color/white</item>
         <item name="android:colorBackground">@color/dark_purple</item>
         <!--        <item name="colorSecondary">@color/teal_200</item>-->
@@ -20,6 +20,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorSecondary">@color/dark_gray</item>
         <!-- card radius -->
+
         <item name="cardCornerRadius">@dimen/radius</item>
         <!-- text appearances -->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
