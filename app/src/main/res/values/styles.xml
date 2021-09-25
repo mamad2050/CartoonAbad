@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <style name="MyNavigationView">
+        <item name="android:listDivider">?android:textColorSecondary</item>
+    </style>
+</resources>

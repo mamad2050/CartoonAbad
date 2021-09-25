@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CartoonAbad</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">خانه</string>
+    <string name="favorite">علاقه مندی ها</string>
+    <string name="downloaded">دانلود شده ها</string>
+    <string name="purchase">خرید اشتراک</string>
+    <string name="rate">رای به برنامه</string>
+    <string name="share">معرفی برنامه به دوستان</string>
+    <string name="contacts">ارتباط با ما</string>
 </resources>
