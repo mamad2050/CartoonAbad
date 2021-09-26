@@ -5,7 +5,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
 
-abstract class NikeCompletableObserver(private val compositeDisposable: CompositeDisposable) :
+abstract class CartoonAbadCompletableObserver(private val compositeDisposable: CompositeDisposable) :
     CompletableObserver {
     override fun onSubscribe(d: Disposable) {
         compositeDisposable.add(d)
