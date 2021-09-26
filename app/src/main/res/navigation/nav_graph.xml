@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/downloadedFragment"
-        android:name="ir.andromeda.cartoonabad.DownloadedFragment"
+        android:name="ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment"
         android:label="@string/downloaded"
         tools:layout="@layout/fragment_downloaded" />
 </navigation>
