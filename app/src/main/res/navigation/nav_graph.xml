@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.cartoonabad.HomeFragment"
+        android:name="ir.andromeda.cartoonabad.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.cartoonabad.FavoriteFragment"
+        android:name="ir.andromeda.cartoonabad.FavoriteFragment"
         android:label="@string/favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/downloadedFragment"
-        android:name="com.example.cartoonabad.DownloadedFragment"
+        android:name="ir.andromeda.cartoonabad.DownloadedFragment"
         android:label="@string/downloaded"
         tools:layout="@layout/fragment_downloaded" />
 </navigation>

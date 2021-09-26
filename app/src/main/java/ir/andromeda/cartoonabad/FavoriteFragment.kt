@@ -1,4 +1,4 @@
-package com.example.cartoonabad
+package ir.andromeda.cartoonabad
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.example.cartoonabad
+package ir.andromeda.cartoonabad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

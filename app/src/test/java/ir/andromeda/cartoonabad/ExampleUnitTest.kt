@@ -1,4 +1,4 @@
-package com.example.cartoonabad
+package ir.andromeda.cartoonabad
 
 import org.junit.Test
 

@@ -5,12 +5,19 @@
       <map>
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_done_white_24dp.xml" value="0.18020833333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.18020833333333333" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_downloaded.xml" value="0.1640625" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.1640625" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_home.xml" value="0.1640625" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/view_header_navigation_drawer.xml" value="0.22" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/menu/drawer_menu.xml" value="0.22" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.15677083333333333" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_favorite_border_white_24dp.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_favorite_white_24dp.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_file_download_white_24dp.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_poll_white_24dp.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_round_home_24.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_share_white_24dp.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_shop_white_24dp.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.21296296296296297" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/layout_header_nav_drawer.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/menu/drawer_menu.xml" value="0.20677083333333332" />
       </map>
     </option>
   </component>
