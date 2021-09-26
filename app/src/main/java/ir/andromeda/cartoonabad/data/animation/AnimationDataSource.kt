@@ -4,7 +4,7 @@ import io.reactivex.Single
 
 interface AnimationDataSource {
 
-    fun getAnimations()
+    fun getAnimations(): Single<Animation>
 
     fun getSeasons(animationId: Int)
 
