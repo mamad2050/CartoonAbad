@@ -2,6 +2,11 @@
 <resources>
 
     <style name="MyNavigationView">
-        <item name="android:listDivider">?android:textColorSecondary</item>
+        <item name="android:listDivider">?divider</item>
+    </style>
+
+
+    <style name="NavigationDrawerTextStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/primary_regular</item>
     </style>
 </resources>

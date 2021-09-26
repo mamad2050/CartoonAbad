@@ -14,6 +14,7 @@
             android:id="@+id/downloadedFragment"
             android:icon="@drawable/ic_file_download_white_24dp"
             android:title="@string/downloaded" />
+
     </group>
 
     <group android:id="@+id/temp">
@@ -23,6 +24,7 @@
     </group>
 
     <group>
+
         <item
             android:icon="@drawable/ic_rate_white_24dp"
             android:title="@string/rate" />
@@ -32,6 +34,7 @@
         <item
             android:icon="@drawable/ic_info_white_24dp"
             android:title="@string/contacts" />
+
     </group>
 
 </menu>
