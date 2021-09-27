@@ -4,13 +4,13 @@ import io.reactivex.Single
 
 interface AnimationDataSource {
 
-    fun getAnimations(): Single<Animation>
+    fun getAnimations(): Single<List<Animation>>
 
-    fun getSeasons(animationId: Int)
+    fun getSeasons(animationId: Int): Single<List<Season>>
 
-    fun getEpisodes(seasonId: Int)
+    fun getEpisodes(seasonId: Int): Single<List<Episode>>
 
-    fun addToFavorite()
+    fun addToFavorite(episode: Episode)
 
-    fun download()
+    fun download(episode: Episode)
 }
