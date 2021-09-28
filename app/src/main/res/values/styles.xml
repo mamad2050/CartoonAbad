@@ -8,5 +8,6 @@
 
     <style name="NavigationDrawerTextStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/primary_regular</item>
+
     </style>
 </resources>

@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.data.animation
+package ir.andromeda.cartoonabad.data
 
 data class Season(
     val animation_id: String,

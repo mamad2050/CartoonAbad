@@ -2,7 +2,15 @@ package ir.andromeda.cartoonabad
 
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco
+import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
+import ir.andromeda.cartoonabad.data.animation.AnimationRepository
+import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
+import ir.andromeda.cartoonabad.feature.home.HomeViewModel
+import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
+import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
+import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
@@ -18,6 +26,12 @@ class App : Application() {
 
         val myModules = module {
 
+            single { createApiServiceInstance() }
+            single <ImageLoadingService> { FrescoImageLoadingService() }
+
+            factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
+
+            viewModel { HomeViewModel(get()) }
         }
 
         startKoin {

@@ -1,0 +1,28 @@
+package ir.andromeda.cartoonabad.feature.home
+
+import androidx.lifecycle.MutableLiveData
+import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
+import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
+import ir.andromeda.cartoonabad.common.asyncNetworkRequest
+import ir.andromeda.cartoonabad.data.animation.Animation
+import ir.andromeda.cartoonabad.data.animation.AnimationRepository
+import timber.log.Timber
+
+class HomeViewModel(animationRepository: AnimationRepository) : CartoonAbadViewModel() {
+
+    val animationsLiveData = MutableLiveData<List<Animation>>()
+
+    init {
+        progressBarLiveData.value = true
+        animationRepository.getProducts()
+            .doFinally { progressBarLiveData.postValue(false)  }
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<List<Animation>>(compositeDisposable) {
+                override fun onSuccess(t: List<Animation>) {
+                 animationsLiveData.value = t
+                    Timber.i(t.toString())
+                }
+            })
+    }
+
+}

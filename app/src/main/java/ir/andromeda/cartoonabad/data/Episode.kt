@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.data.animation
+package ir.andromeda.cartoonabad.data
 
 data class Episode(
     val duration: String,

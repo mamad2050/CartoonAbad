@@ -1,4 +1,9 @@
 package ir.andromeda.cartoonabad.data.animation
 
-class AnimationRemoteDataSource {
+import io.reactivex.Single
+import ir.andromeda.cartoonabad.services.http.ApiService
+
+class AnimationRemoteDataSource(private val apiService: ApiService ) : AnimationDataSource{
+
+    override fun getAnimations(): Single<List<Animation>> = apiService.getAnimations()
 }
