@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -17,7 +18,7 @@ import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 class AnimationAdapter(
     private val animations: List<Animation>,
     val imageLoadingService: ImageLoadingService,
-    val animationEventListener: OnAnimationEventListener
+    val animationEventListener: CartoonAbadViewModel.OnItemEventListener<Animation>?
 ) : RecyclerView.Adapter<AnimationAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -43,13 +44,10 @@ class AnimationAdapter(
 
             itemView.implementSpringAnimationTrait()
             itemView.setOnClickListener {
-                animationEventListener.onCLick(animation)
+               animationEventListener?.onCLick(animation)
             }
 
         }
     }
 
-    interface OnAnimationEventListener {
-        fun onCLick(animation: Animation)
-    }
 }
