@@ -13,7 +13,9 @@ class HomeViewModel(animationRepository: AnimationRepository) : CartoonAbadViewM
     val animationsLiveData = MutableLiveData<List<Animation>>()
 
     init {
+
         progressBarLiveData.value = true
+
         animationRepository.getProducts()
             .doFinally { progressBarLiveData.postValue(false)  }
             .asyncNetworkRequest()

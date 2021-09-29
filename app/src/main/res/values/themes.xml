@@ -21,7 +21,6 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorSecondary">@color/dark_gray</item>
         <!-- card radius -->
-
         <item name="cardCornerRadius">@dimen/radius</item>
         <!-- text appearances -->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>

@@ -22,6 +22,7 @@ abstract class CartoonAbadFragment() : Fragment(), CartoonAbadView {
         get() = context
 
 }
+
 abstract class CartoonAbadActivity() : AppCompatActivity(), CartoonAbadView {
     override val rootView: CoordinatorLayout?
         get() {
@@ -54,10 +55,11 @@ interface CartoonAbadView {
                         LayoutInflater.from(context).inflate(R.layout.view_loading, it, false)
                     it.addView(loadingView)
                 }
-                loadingView.visibility = if (mustShow) View.VISIBLE else View.GONE
+                loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
             }
         }
     }
+
 
 }
 
@@ -68,6 +70,11 @@ abstract class CartoonAbadViewModel : ViewModel() {
     override fun onCleared() {
         compositeDisposable.clear()
         super.onCleared()
+    }
+
+
+    interface OnItemClickListener<in V> {
+        fun onCLick(item: V)
     }
 
 }

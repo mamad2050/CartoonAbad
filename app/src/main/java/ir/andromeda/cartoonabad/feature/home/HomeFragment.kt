@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
+import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.get
@@ -14,7 +15,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class HomeFragment : CartoonAbadFragment() {
+class HomeFragment : CartoonAbadFragment(), AnimationAdapter.OnAnimationEventListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +32,7 @@ class HomeFragment : CartoonAbadFragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,15 +40,11 @@ class HomeFragment : CartoonAbadFragment() {
             setProgressIndicator(it)
         }
 
-
-
         viewModel.animationsLiveData.observe(viewLifecycleOwner) {
 
             binding.rvAnimations.layoutManager = GridLayoutManager(requireContext(), 2)
-            adapter = AnimationAdapter(it,imageLoadingService)
+            adapter = AnimationAdapter(it, imageLoadingService, this)
             binding.rvAnimations.adapter = adapter
-
-           Toast.makeText(requireContext(),it[0].name,Toast.LENGTH_SHORT).show()
 
         }
 
@@ -55,6 +53,10 @@ class HomeFragment : CartoonAbadFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onCLick(animation: Animation) {
+        Toast.makeText(requireContext(),animation.name,Toast.LENGTH_SHORT).show()
     }
 
 }
