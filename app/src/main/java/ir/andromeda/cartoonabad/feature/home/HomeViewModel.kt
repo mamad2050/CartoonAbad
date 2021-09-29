@@ -16,7 +16,7 @@ class HomeViewModel(animationRepository: AnimationRepository) : CartoonAbadViewM
 
         progressBarLiveData.value = true
 
-        animationRepository.getProducts()
+        animationRepository.getAnimations()
             .doFinally { progressBarLiveData.postValue(false)  }
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Animation>>(compositeDisposable) {

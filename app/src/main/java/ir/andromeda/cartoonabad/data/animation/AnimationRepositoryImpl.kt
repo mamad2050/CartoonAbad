@@ -6,5 +6,5 @@ class AnimationRepositoryImpl(
     private val remoteDataSource: AnimationDataSource
 ) : AnimationRepository{
 
-    override fun getProducts(): Single<List<Animation>> = remoteDataSource.getAnimations()
+    override fun getAnimations(): Single<List<Animation>> = remoteDataSource.getAnimations()
 }

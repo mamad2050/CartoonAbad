@@ -4,6 +4,6 @@ import io.reactivex.Single
 
 interface AnimationRepository {
 
-    fun getProducts(): Single<List<Animation>>
+    fun getAnimations(): Single<List<Animation>>
 
 }
