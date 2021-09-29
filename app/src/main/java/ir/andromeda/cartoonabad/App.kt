@@ -5,7 +5,11 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
+import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
+import ir.andromeda.cartoonabad.data.season.SeasonRepository
+import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
+import ir.andromeda.cartoonabad.feature.list.ListViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -27,11 +31,13 @@ class App : Application() {
         val myModules = module {
 
             single { createApiServiceInstance() }
-            single <ImageLoadingService> { FrescoImageLoadingService() }
+            single<ImageLoadingService> { FrescoImageLoadingService() }
 
             factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
+            factory<SeasonRepository> { SeasonRepositoryImpl(SeasonRemoteDataSource(get())) }
 
             viewModel { HomeViewModel(get()) }
+            viewModel { (animationId: Int) -> ListViewModel(animationId, get()) }
         }
 
         startKoin {

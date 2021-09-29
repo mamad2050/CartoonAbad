@@ -13,7 +13,7 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
 class AnimationAdapter(
-    private val animations: List<Animation>,
+    private val animations: List<Animation> = ArrayList(),
     val imageLoadingService: ImageLoadingService,
     val animationEventListener: CartoonAbadViewModel.OnItemEventListener<Animation>?
 ) : RecyclerView.Adapter<AnimationAdapter.MyViewHolder>() {
@@ -34,10 +34,10 @@ class AnimationAdapter(
 
         private val ivAnimation = itemView.findViewById<CartoonAbadImageView>(R.id.ivAnimation)
         private val tvAnimation = itemView.findViewById<TextView>(R.id.tvName)
+
         fun bindAnimation(animation: Animation) {
             imageLoadingService.load(ivAnimation as CartoonAbadImageView, animation.image)
             tvAnimation.text = animation.name
-
 
             itemView.implementSpringAnimationTrait()
             itemView.setOnClickListener {

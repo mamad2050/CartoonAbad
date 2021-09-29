@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -47,13 +50,16 @@ class HomeFragment : CartoonAbadFragment(), CartoonAbadViewModel.OnItemEventList
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         _binding = null
     }
 
     override fun onCLick(item: Animation) {
-        Toast.makeText(requireContext(),item.name,Toast.LENGTH_SHORT).show()
+        Navigation.findNavController(requireView())
+            .navigate(R.id.go_to_listFragment, Bundle().apply {
+                putInt(EXTRA_KEY_ID, item.id.toInt())
+            })
     }
 
 }

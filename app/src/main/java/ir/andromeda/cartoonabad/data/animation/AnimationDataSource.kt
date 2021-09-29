@@ -1,8 +1,6 @@
 package ir.andromeda.cartoonabad.data.animation
 
 import io.reactivex.Single
-import ir.andromeda.cartoonabad.data.Episode
-import ir.andromeda.cartoonabad.data.Season
 
 interface AnimationDataSource {
 

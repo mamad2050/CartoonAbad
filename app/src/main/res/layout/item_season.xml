@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp">
 
-            <ImageView
+            <ir.andromeda.cartoonabad.view.CartoonAbadImageView
                 android:id="@+id/iv_season_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -30,7 +30,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:roundedCornerRadius="8dp" />
 
             <TextView
                 android:id="@+id/tv_season_name"
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="?textAppearanceBody1"
+                android:textAppearance="?textAppearanceBody2"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_season_image"
                 app:layout_constraintEnd_toStartOf="@+id/iv_season_arrow"
                 app:layout_constraintTop_toTopOf="@+id/iv_season_image"
@@ -62,21 +62,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_season_image"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_season_image"
-                tools:src="@drawable/ic_baseline_arrow_drop_down_24" />
+                app:layout_constraintTop_toTopOf="@+id/iv_season_image" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:textAppearance="?textAppearanceBody1"
+                android:text="@string/episodes_size"
+                android:textAppearance="?textAppearanceBody2"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_season_image"
                 app:layout_constraintEnd_toStartOf="@+id/tv_season_episodeSize"
-                app:layout_constraintTop_toTopOf="@+id/iv_season_image"
-                tools:text="تعداد قسمت :" />
+                app:layout_constraintTop_toTopOf="@+id/iv_season_image" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,10 +86,12 @@
         android:id="@+id/rv_season_episodes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
         android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />

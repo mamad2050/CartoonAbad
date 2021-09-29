@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="ir.andromeda.cartoonabad.feature.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/go_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="ir.andromeda.cartoonabad.feature.favorite.FavoriteFragment"
@@ -20,4 +24,9 @@
         android:name="ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment"
         android:label="@string/downloaded"
         tools:layout="@layout/fragment_downloaded" />
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="ir.andromeda.cartoonabad.feature.list.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" />
 </navigation>
