@@ -15,7 +15,8 @@ import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 class SeasonAdapter(
     private val seasons: List<Season> = ArrayList(),
     private val imageLoadingService: ImageLoadingService,
-    private val context: Context
+    private val context: Context,
+    private val episodeListener: EpisodeEventListener
 ) : RecyclerView.Adapter<SeasonAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -49,7 +50,8 @@ class SeasonAdapter(
 
             rvEpisodes.layoutManager =
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            val episodeAdapter = EpisodeAdapter(season.episodeList, imageLoadingService)
+            val episodeAdapter =
+                EpisodeAdapter(season.episodeList, imageLoadingService, episodeListener)
             rvEpisodes.adapter = episodeAdapter
 
         }

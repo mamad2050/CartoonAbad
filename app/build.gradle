@@ -20,7 +20,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 
 
@@ -84,4 +84,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-runtime:$room_version")
 
+    //exoPlayer
+    implementation("com.google.android.exoplayer:exoplayer:2.15.1")
 }

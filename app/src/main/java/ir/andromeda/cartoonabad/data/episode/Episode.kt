@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 data class Episode(
     val duration: String,
     @PrimaryKey(autoGenerate = true)
-    val id: String,
+    val id: Long,
     val image: String,
     val name: String,
     val season_id: String,

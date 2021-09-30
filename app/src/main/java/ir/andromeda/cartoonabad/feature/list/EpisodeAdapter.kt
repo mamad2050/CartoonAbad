@@ -14,6 +14,7 @@ import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 class EpisodeAdapter(
     private val episodes: List<Episode> = ArrayList(),
     private val imageLoadingService: ImageLoadingService,
+    private val listener: EpisodeEventListener
 ) : RecyclerView.Adapter<EpisodeAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -51,10 +52,13 @@ class EpisodeAdapter(
             }
 
             itemView.setOnClickListener {
-
+                listener.onEpisodeClick(episode)
             }
-
 
         }
     }
+}
+
+interface EpisodeEventListener {
+    fun onEpisodeClick(episode: Episode)
 }
