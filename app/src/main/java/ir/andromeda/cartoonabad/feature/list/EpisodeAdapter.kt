@@ -52,7 +52,6 @@ class EpisodeAdapter(
             }
 
             itemView.setOnClickListener {
-                //
                 listener.onEpisodeClick(episode)
             }
 
