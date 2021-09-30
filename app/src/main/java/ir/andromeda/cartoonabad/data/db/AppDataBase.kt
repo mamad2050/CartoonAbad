@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.episode.EpisodeLocalDataSource
 
-@Database(entities = [Episode::class], version = 1, exportSchema = false)
+@Database(entities = [Episode::class], version = 1 , exportSchema = false)
 
 abstract class AppDataBase : RoomDatabase() {
 

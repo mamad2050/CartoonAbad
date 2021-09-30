@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.animation.Animation
@@ -33,8 +32,8 @@ class AnimationAdapter(
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val ivAnimation = itemView.findViewById<CartoonAbadImageView>(R.id.ivAnimation)
-        private val tvAnimation = itemView.findViewById<TextView>(R.id.tvName)
+        private val ivAnimation = itemView.findViewById<CartoonAbadImageView>(R.id.iv_animation)
+        private val tvAnimation = itemView.findViewById<TextView>(R.id.tv_animation_name)
 
         fun bindAnimation(animation: Animation) {
             imageLoadingService.load(ivAnimation as CartoonAbadImageView, animation.image)

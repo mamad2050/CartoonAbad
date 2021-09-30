@@ -86,8 +86,7 @@ class PlayerActivity : CartoonAbadActivity() {
     public override fun onPause() {
         super.onPause()
         if (Util.SDK_INT < 24) {
-            releasePlayer()
-        }
+         }
     }
 
     public override fun onStop() {

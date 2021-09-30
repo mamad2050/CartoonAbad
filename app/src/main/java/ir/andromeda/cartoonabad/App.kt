@@ -7,9 +7,12 @@ import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
+import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
+import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
+import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.list.ListViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
@@ -39,9 +42,11 @@ class App : Application() {
 
             factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
             factory<SeasonRepository> { SeasonRepositoryImpl(SeasonRemoteDataSource(get())) }
+            factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
 
             viewModel { HomeViewModel(get()) }
-            viewModel { (animationId: String) -> ListViewModel(animationId, get()) }
+            viewModel { (animationId: String) -> ListViewModel(animationId, get(),get()) }
+            viewModel { FavoriteViewModel(get())}
         }
 
         startKoin {

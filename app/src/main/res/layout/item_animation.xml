@@ -15,14 +15,14 @@
         android:orientation="vertical">
 
         <ir.andromeda.cartoonabad.view.CartoonAbadImageView
-            android:id="@+id/ivAnimation"
+            android:id="@+id/iv_animation"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
             app:actualImageScaleType="fitXY" />
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tv_animation_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
