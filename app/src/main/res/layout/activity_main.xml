@@ -11,17 +11,20 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                app:titleCentered="true"
                 app:titleTextAppearance="?textAppearanceHeadline5"
                 app:titleTextColor="?colorOnPrimary" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.fragment.app.FragmentContainerView
@@ -44,8 +47,8 @@
         android:theme="@style/MyNavigationView"
         app:headerLayout="@layout/layout_header_nav_drawer"
         app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
         app:itemTextAppearance="@style/NavigationDrawerTextStyle"
+        app:itemTextColor="@color/white"
         app:menu="@menu/drawer_menu" />
 
 
