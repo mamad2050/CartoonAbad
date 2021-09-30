@@ -11,7 +11,7 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/go_to_listFragment"
+            android:id="@+id/navigateToListFragment"
             app:destination="@id/listFragment" />
     </fragment>
     <fragment
@@ -27,6 +27,10 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="ir.andromeda.cartoonabad.feature.list.ListFragment"
-        android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        android:label="باید درست شه"
+        tools:layout="@layout/fragment_list">
+        <argument
+            android:name="animation"
+            app:argType="ir.andromeda.cartoonabad.data.animation.Animation" />
+    </fragment>
 </navigation>

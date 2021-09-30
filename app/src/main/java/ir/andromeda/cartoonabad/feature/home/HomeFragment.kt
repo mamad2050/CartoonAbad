@@ -56,10 +56,8 @@ class HomeFragment : CartoonAbadFragment(), CartoonAbadViewModel.OnItemEventList
     }
 
     override fun onCLick(item: Animation) {
-        Navigation.findNavController(requireView())
-            .navigate(R.id.go_to_listFragment, Bundle().apply {
-                putInt(EXTRA_KEY_ID, item.id.toInt())
-            })
+        val action = HomeFragmentDirections.navigateToListFragment(item)
+        Navigation.findNavController(requireView()).navigate(action)
     }
 
 }

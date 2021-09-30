@@ -8,7 +8,8 @@ import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import timber.log.Timber
 
-class ListViewModel(animationId: Int, seasonRepository: SeasonRepository) : CartoonAbadViewModel() {
+class ListViewModel(animationId: String, seasonRepository: SeasonRepository) :
+    CartoonAbadViewModel() {
 
     val seasonsLiveData = MutableLiveData<List<Season>>()
 
@@ -16,7 +17,7 @@ class ListViewModel(animationId: Int, seasonRepository: SeasonRepository) : Cart
 
         progressBarLiveData.value = true
 
-        seasonRepository.getSeasons(animationId)
+        seasonRepository.getSeasons(animationId.toInt())
             .doFinally { progressBarLiveData.postValue(false) }
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
