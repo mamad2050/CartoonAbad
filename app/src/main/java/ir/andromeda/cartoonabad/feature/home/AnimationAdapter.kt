@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
+import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -15,7 +16,7 @@ import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 class AnimationAdapter(
     private val animations: List<Animation> = ArrayList(),
     val imageLoadingService: ImageLoadingService,
-    val animationEventListener: CartoonAbadViewModel.OnItemEventListener<Animation>?
+    val animationEventListener: OnItemEventListener<Animation>?
 ) : RecyclerView.Adapter<AnimationAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

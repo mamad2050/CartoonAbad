@@ -60,7 +60,6 @@ interface CartoonAbadView {
         }
     }
 
-
 }
 
 abstract class CartoonAbadViewModel : ViewModel() {
@@ -72,9 +71,7 @@ abstract class CartoonAbadViewModel : ViewModel() {
         super.onCleared()
     }
 
-
-    interface OnItemEventListener<in V> {
-        fun onCLick(item: V)
-    }
-
+}
+interface OnItemEventListener<in V> {
+    fun onCLick(item: V)
 }

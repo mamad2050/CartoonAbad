@@ -11,13 +11,14 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
+import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : CartoonAbadFragment(), CartoonAbadViewModel.OnItemEventListener<Animation> {
+class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!

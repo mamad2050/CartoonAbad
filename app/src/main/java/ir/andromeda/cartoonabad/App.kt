@@ -1,10 +1,12 @@
 package ir.andromeda.cartoonabad
 
 import android.app.Application
+import androidx.room.Room
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
+import ir.andromeda.cartoonabad.data.db.AppDataBase
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
@@ -32,6 +34,8 @@ class App : Application() {
 
             single { createApiServiceInstance() }
             single<ImageLoadingService> { FrescoImageLoadingService() }
+
+            single { Room.databaseBuilder(this@App,AppDataBase::class.java,"db_app").build() }
 
             factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
             factory<SeasonRepository> { SeasonRepositoryImpl(SeasonRemoteDataSource(get())) }
