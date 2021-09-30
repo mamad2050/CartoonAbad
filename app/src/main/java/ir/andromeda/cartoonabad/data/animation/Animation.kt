@@ -8,4 +8,8 @@ data class Animation(
     val id: String,
     val image: String,
     val name: String
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String {
+        return name
+    }
+}

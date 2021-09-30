@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="ir.andromeda.cartoonabad.feature.list.ListFragment"
-        android:label="باید درست شه"
+        android:label="{animation}"
         tools:layout="@layout/fragment_list">
         <argument
             android:name="animation"
