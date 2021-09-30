@@ -45,7 +45,7 @@ class SeasonAdapter(
             tvEpisodeSize.text = season.episodeList.size.toString()
 
             itemView.setOnClickListener {
-
+//
             }
 
             rvEpisodes.layoutManager =
