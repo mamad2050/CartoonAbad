@@ -41,7 +41,7 @@ class App : Application() {
             factory<SeasonRepository> { SeasonRepositoryImpl(SeasonRemoteDataSource(get())) }
 
             viewModel { HomeViewModel(get()) }
-            viewModel { (animationId: Int) -> ListViewModel(animationId, get()) }
+            viewModel { (animationId: String) -> ListViewModel(animationId, get()) }
         }
 
         startKoin {

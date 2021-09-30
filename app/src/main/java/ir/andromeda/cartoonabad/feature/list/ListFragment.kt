@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
@@ -20,9 +21,9 @@ class ListFragment : CartoonAbadFragment() {
     private val binding get() = _binding!!
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
-    private val viewModel: ListViewModel by viewModel {
-        parametersOf(arguments?.getInt(EXTRA_KEY_ID))
-    }
+    private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
+
+    private val args: ListFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

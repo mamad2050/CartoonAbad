@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
-            app:actualImageScaleType="centerCrop"
-          />
+            app:actualImageScaleType="fitXY" />
 
         <TextView
             android:id="@+id/tvName"
