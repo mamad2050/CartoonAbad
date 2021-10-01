@@ -22,6 +22,8 @@
         <item name="android:textColorSecondary">@color/dark_gray</item>
         <!-- card radius -->
         <item name="cardCornerRadius">@dimen/radius</item>
+        <!-- player background -->
+        <item name="playerBackground">@color/black</item>
         <!-- text appearances -->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
