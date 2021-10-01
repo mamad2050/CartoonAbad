@@ -1,6 +1,7 @@
 package ir.andromeda.cartoonabad.feature.player
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import com.google.android.exoplayer2.MediaItem
@@ -30,7 +31,9 @@ class PlayerActivity : CartoonAbadActivity() {
         setContentView(view)
 
         episode = intent.getParcelableExtra<Episode>(EXTRA_KEY_DATA) as Episode
-        print("")
+
+        //making screen landscape
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     }
 
     private fun initializePlayer() {
