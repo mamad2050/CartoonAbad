@@ -35,7 +35,6 @@ class FavoriteAdapter(
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
-        private val ivPlay = itemView.findViewById<ImageView>(R.id.iv_episode_favorite)
         private val ivDelete= itemView.findViewById<ImageView>(R.id.iv_episode_delete)
 
         fun bindEpisode(episode: Episode) {

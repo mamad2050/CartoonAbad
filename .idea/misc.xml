@@ -7,15 +7,14 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.18020833333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_downloaded.xml" value="0.1796875" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.3333333333333333" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.22" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_list.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_animation.xml" value="0.22" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_episode.xml" value="0.4466666666666667" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_episode.xml" value="0.22" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_favorite.xml" value="0.3333333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_season.xml" value="0.3333333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/view_loading.xml" value="0.1640625" />
-        <entry key="..\:/Users/Mohammad/.gradle/caches/transforms-3/c7aec77a1f3c22247012869d5c86a692/transformed/jetified-exoplayer-ui-2.15.1/res/drawable-anydpi-v21/exo_icon_rewind.xml" value="0.16111111111111112" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.15925925925925927" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_favorite_border_white_24dp.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_favorite_white_24dp.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_file_download_white_24dp.xml" value="0.21296296296296297" />
@@ -25,11 +24,7 @@
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_shop_white_24dp.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.18" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_player.xml" value="0.22" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/custom_player_control_view.xml" value="0.33" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.20677083333333332" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/item_episode.xml" value="0.11851851851851852" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/item_season.xml" value="0.11851851851851852" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/layout_header_nav_drawer.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/menu/drawer_menu.xml" value="0.20677083333333332" />
       </map>
