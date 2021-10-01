@@ -30,7 +30,7 @@ class PlayerActivity : CartoonAbadActivity() {
         setContentView(view)
 
         episode = intent.getParcelableExtra<Episode>(EXTRA_KEY_DATA) as Episode
-
+        print("")
     }
 
     private fun initializePlayer() {
@@ -87,7 +87,8 @@ class PlayerActivity : CartoonAbadActivity() {
     public override fun onPause() {
         super.onPause()
         if (Util.SDK_INT < 24) {
-         }
+            releasePlayer()
+        }
     }
 
     public override fun onStop() {
