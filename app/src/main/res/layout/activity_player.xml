@@ -9,9 +9,10 @@
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/playerView"
-        android:background="?playerBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?playerBackground"
+        android:keepScreenOn="true"
         app:controller_layout_id="@layout/custom_player_control_view" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
