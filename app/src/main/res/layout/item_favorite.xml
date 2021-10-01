@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.47" />
 
     <ImageView
-        android:id="@+id/iv_episode_play"
+        android:id="@+id/iv_episode_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -67,7 +67,7 @@
         android:layout_marginEnd="16dp"
         android:textAppearance="?textAppearanceBody2"
         app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
-        app:layout_constraintEnd_toStartOf="@+id/iv_episode_play"
+        app:layout_constraintEnd_toStartOf="@+id/iv_episode_favorite"
         app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
         tools:text="20:42" />
 

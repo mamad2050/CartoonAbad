@@ -7,13 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
 class FavoriteAdapter(
     private val episodes: List<Episode> = ArrayList(),
-    private val imageLoadingService: ImageLoadingService
+    private val imageLoadingService: ImageLoadingService,
+    private val listener: EpisodeEventListener
 
 ) : RecyclerView.Adapter<FavoriteAdapter.Holder>() {
 
@@ -33,7 +35,7 @@ class FavoriteAdapter(
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
-        private val ivPlay = itemView.findViewById<ImageView>(R.id.iv_episode_play)
+        private val ivPlay = itemView.findViewById<ImageView>(R.id.iv_episode_favorite)
         private val ivDelete= itemView.findViewById<ImageView>(R.id.iv_episode_delete)
 
         fun bindEpisode(episode: Episode) {
@@ -41,7 +43,21 @@ class FavoriteAdapter(
             imageLoadingService.load(ivImage,episode.image)
             tvName.text = episode.name
             tvDuration.text = episode.duration
+
+            itemView.setOnClickListener { listener.onEpisodeClick(episode) }
+
+            ivDelete.setOnClickListener { listener.onRemoveClick(episode) }
+
+
         }
+    }
+
+    interface EpisodeEventListener{
+
+        fun onRemoveClick(episode: Episode)
+
+        fun onEpisodeClick(episode: Episode)
+
     }
 
 }

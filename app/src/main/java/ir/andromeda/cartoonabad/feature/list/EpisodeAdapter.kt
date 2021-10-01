@@ -32,7 +32,7 @@ class EpisodeAdapter(
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
-        private val ivPlay = itemView.findViewById<ImageView>(R.id.iv_episode_play)
+        private val ivFavorite = itemView.findViewById<ImageView>(R.id.iv_episode_favorite)
         private val ivDownload =
             itemView.findViewById<ImageView>(R.id.iv_episode_download)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
@@ -47,8 +47,8 @@ class EpisodeAdapter(
 
             }
 
-            ivPlay.setOnClickListener {
-
+            ivFavorite.setOnClickListener {
+            listener.onFavoriteClick(episode)
             }
 
             itemView.setOnClickListener {
@@ -61,6 +61,9 @@ class EpisodeAdapter(
 }
 
 interface EpisodeEventListener {
+
     fun onEpisodeClick(episode: Episode)
+
+    fun onFavoriteClick(episode: Episode)
 
 }

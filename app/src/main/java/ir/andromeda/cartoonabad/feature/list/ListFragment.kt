@@ -64,4 +64,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             putExtra(EXTRA_KEY_DATA, episode)
         })
     }
+
+    override fun onFavoriteClick(episode: Episode) {
+        viewModel.addEpisodeToFavorites(episode)
+    }
 }

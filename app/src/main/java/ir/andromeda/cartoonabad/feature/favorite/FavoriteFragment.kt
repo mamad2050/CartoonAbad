@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.OnItemEventListener
+import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import kotlinx.android.synthetic.main.fragment_favorite.*
@@ -15,7 +17,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : Fragment() , FavoriteAdapter.EpisodeEventListener{
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
@@ -37,7 +39,7 @@ class FavoriteFragment : Fragment() {
 
         viewModel.episodesLiveData.observe(viewLifecycleOwner){
             binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
-            adapter = FavoriteAdapter(it as ArrayList , imageLoadingService)
+            adapter = FavoriteAdapter(it as ArrayList , imageLoadingService,this)
             binding.rvFavorites.adapter = adapter
             Timber.i(it.toString())
         }
@@ -48,4 +50,14 @@ class FavoriteFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onRemoveClick(episode: Episode) {
+        viewModel.removeFromFavorite(episode)
+    }
+
+    override fun onEpisodeClick(episode: Episode) {
+        TODO("Not yet implemented")
+    }
+
+
 }
