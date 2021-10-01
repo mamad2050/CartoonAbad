@@ -62,4 +62,5 @@ class EpisodeAdapter(
 
 interface EpisodeEventListener {
     fun onEpisodeClick(episode: Episode)
+
 }

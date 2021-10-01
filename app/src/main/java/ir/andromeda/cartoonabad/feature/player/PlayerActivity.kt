@@ -23,13 +23,14 @@ class PlayerActivity : CartoonAbadActivity() {
     private lateinit var episode: Episode
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         episode = intent.getParcelableExtra<Episode>(EXTRA_KEY_DATA) as Episode
-        print("")
+
     }
 
     private fun initializePlayer() {
