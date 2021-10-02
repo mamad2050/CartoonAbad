@@ -11,7 +11,7 @@ import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityPlayerBinding
-import kotlinx.android.synthetic.main.custom_player_control_view.*
+import kotlinx.android.synthetic.main.custom_player_control_view.view.*
 
 class PlayerActivity : CartoonAbadActivity() {
 
@@ -28,12 +28,13 @@ class PlayerActivity : CartoonAbadActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         val view = binding.root
+        binding.playerView.controllerCustomLayout.ivBack
         setContentView(view)
 
         episode = intent.getParcelableExtra<Episode>(EXTRA_KEY_DATA) as Episode
 
-        ivBack.setOnClickListener { onBackPressed() }
-        tvEpisodeName.text = episode.name
+        binding.playerView.controllerCustomLayout.ivBack.setOnClickListener { onBackPressed() }
+        binding.playerView.controllerCustomLayout.tvEpisodeName.text = episode.name
 
         //making screen landscape
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE

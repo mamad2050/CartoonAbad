@@ -46,8 +46,7 @@ class ListViewModel(
                     }
 
                 })
-
-            else
+        else
 
             episodeRepository.addToFavorite(episode)
                 .subscribeOn(Schedulers.io())
@@ -56,6 +55,6 @@ class ListViewModel(
                         episode.isFavorite = true
                     }
                 })
-        }
     }
+}
 
