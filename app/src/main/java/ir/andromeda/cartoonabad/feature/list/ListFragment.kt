@@ -13,6 +13,7 @@ import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
+import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
@@ -43,6 +44,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as DrawerLocker).setDrawerLocked(true)
+
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
@@ -60,6 +63,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     override fun onStop() {
         super.onStop()
         _binding = null
+        (activity as DrawerLocker).setDrawerLocked(false)
     }
 
     override fun onEpisodeClick(episode: Episode) {

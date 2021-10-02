@@ -13,6 +13,12 @@
         <action
             android:id="@+id/navigateToListFragment"
             app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/navigateToDownloadedFragment"
+            app:destination="@id/downloadedFragment" />
+        <action
+            android:id="@+id/navigateToFavoriteFragment"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -23,7 +29,7 @@
         android:id="@+id/downloadedFragment"
         android:name="ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment"
         android:label="@string/downloaded"
-        tools:layout="@layout/fragment_downloaded" />
+        tools:layout="@layout/fragment_downloaded"/>
     <fragment
         android:id="@+id/listFragment"
         android:name="ir.andromeda.cartoonabad.feature.list.ListFragment"

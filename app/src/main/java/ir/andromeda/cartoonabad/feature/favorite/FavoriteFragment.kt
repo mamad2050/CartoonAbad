@@ -13,6 +13,7 @@ import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
+import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import kotlinx.android.synthetic.main.fragment_favorite.*
@@ -43,6 +44,7 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.EpisodeEventListener {
         super.onViewCreated(view, savedInstanceState)
         Toast.makeText(requireContext(),"hello",Toast.LENGTH_SHORT).show()
 
+        (activity as DrawerLocker).setDrawerLocked(true)
 
         viewModel.episodesLiveData.observe(viewLifecycleOwner) {
             binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
@@ -56,6 +58,7 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.EpisodeEventListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        (activity as DrawerLocker).setDrawerLocked(false)
     }
 
     override fun onRemoveClick(episode: Episode) {

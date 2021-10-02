@@ -10,6 +10,7 @@ import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
+import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -55,7 +56,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         val action = HomeFragmentDirections.navigateToListFragment(item)
         Navigation.findNavController(requireView()).navigate(action)
     }
-
 
 
 }
