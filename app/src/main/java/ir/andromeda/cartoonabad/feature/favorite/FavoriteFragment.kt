@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
+import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.koin.android.ext.android.inject
@@ -60,8 +63,9 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.EpisodeEventListener {
     }
 
     override fun onEpisodeClick(episode: Episode) {
-        TODO("Not yet implemented")
+        startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
+            putExtra(EXTRA_KEY_DATA, episode)
+        })
     }
-
 
 }

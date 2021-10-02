@@ -52,8 +52,11 @@ class MainActivity : AppCompatActivity() {
                     R.id.downloadedFragment -> {
 
                     }
+
                 }
             }
+
+
 
     }
 
