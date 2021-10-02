@@ -13,7 +13,7 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
 class FavoriteAdapter(
-    private val episodes: List<Episode> = ArrayList(),
+    private val episodes: MutableList<Episode>,
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener
 
@@ -35,23 +35,27 @@ class FavoriteAdapter(
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
-        private val ivDelete= itemView.findViewById<ImageView>(R.id.iv_episode_delete)
+        private val ivDelete = itemView.findViewById<ImageView>(R.id.iv_episode_delete)
 
         fun bindEpisode(episode: Episode) {
 
-            imageLoadingService.load(ivImage,episode.image)
+            imageLoadingService.load(ivImage, episode.image)
             tvName.text = episode.name
             tvDuration.text = episode.duration
 
             itemView.setOnClickListener { listener.onEpisodeClick(episode) }
 
-            ivDelete.setOnClickListener { listener.onRemoveClick(episode) }
+            ivDelete.setOnClickListener {
+                listener.onRemoveClick(episode)
+                episodes.remove(episode)
+                notifyItemRemoved(adapterPosition)
+            }
 
 
         }
     }
 
-    interface EpisodeEventListener{
+    interface EpisodeEventListener {
 
         fun onRemoveClick(episode: Episode)
 

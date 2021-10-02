@@ -47,8 +47,15 @@ class EpisodeAdapter(
 
             }
 
+            if (episode.isFavorite)
+                ivFavorite.setImageResource(R.drawable.ic_baseline_star_24)
+            else
+                ivFavorite.setImageResource(R.drawable.ic_baseline_star_border_24)
+
             ivFavorite.setOnClickListener {
             listener.onFavoriteClick(episode)
+                episode.isFavorite=!episode.isFavorite
+                notifyItemChanged(adapterPosition)
             }
 
             itemView.setOnClickListener {
