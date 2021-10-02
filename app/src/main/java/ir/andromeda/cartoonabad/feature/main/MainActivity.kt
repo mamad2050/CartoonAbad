@@ -15,6 +15,9 @@ import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+import android.content.Intent
+import ir.andromeda.cartoonabad.BuildConfig
+import java.lang.Exception
 
 
 class MainActivity : CartoonAbadActivity(), DrawerLocker {
@@ -47,7 +50,7 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
                     Toast.makeText(this, "rateMenuItem", Toast.LENGTH_SHORT).show()
                 }
                 R.id.shareMenuItem -> {
-                    Toast.makeText(this, "shareMenuItem", Toast.LENGTH_SHORT).show()
+                    shareApp()
                 }
                 R.id.contactsMenuItem -> {
                     Toast.makeText(this, "contactsMenuItem", Toast.LENGTH_SHORT).show()
@@ -64,6 +67,23 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
             }
             drawerLayout.close()
             true
+        }
+    }
+
+    private fun shareApp() {
+        try {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+            var shareMessage =
+                "سلااااام، توی برنامه ی کارتون آباد میتونی کارتون های معروف و قشنگی رو به رایگان ببینی.\n\nاز لینک زیر دانلودش کن."
+            //cafebazaar link
+            shareMessage =
+                "${shareMessage}\n\nhttps://cafebazaar.ir/app/${BuildConfig.APPLICATION_ID}"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)))
+        } catch (e: Exception) {
+            Timber.e(e)
         }
     }
 
