@@ -1,4 +1,8 @@
 package ir.andromeda.cartoonabad.feature.player
 
-class PlayerViewModel {
+import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
+
+class PlayerViewModel :CartoonAbadViewModel(){
+
+
 }
