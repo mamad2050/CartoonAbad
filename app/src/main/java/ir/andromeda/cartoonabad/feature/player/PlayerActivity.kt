@@ -28,7 +28,6 @@ class PlayerActivity : CartoonAbadActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         val view = binding.root
-        binding.playerView.controllerCustomLayout.ivBack
         setContentView(view)
 
         episode = intent.getParcelableExtra<Episode>(EXTRA_KEY_DATA) as Episode
