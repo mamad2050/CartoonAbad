@@ -38,13 +38,12 @@ class ListViewModel(
 
     fun addEpisodeToFavorites(episode: Episode) {
         if (episode.isFavorite)
-            episodeRepository.addToFavorite(episode)
+            episodeRepository.deleteFromFavorite(episode)
                 .subscribeOn(Schedulers.io())
                 .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                     override fun onComplete() {
                         episode.isFavorite = false
                     }
-
                 })
         else
 

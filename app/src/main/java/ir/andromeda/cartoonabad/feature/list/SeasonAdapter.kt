@@ -9,14 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.data.season.Season
+import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
+import timber.log.Timber
+
 
 class SeasonAdapter(
     private val seasons: List<Season> = ArrayList(),
     private val imageLoadingService: ImageLoadingService,
     private val context: Context,
-    private val episodeListener: EpisodeEventListener
+    private val episodeListener: EpisodeEventListener,
+
 ) : RecyclerView.Adapter<SeasonAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -45,7 +49,7 @@ class SeasonAdapter(
             tvEpisodeSize.text = season.episodeList.size.toString()
 
             itemView.setOnClickListener {
-//
+
             }
 
             rvEpisodes.layoutManager =

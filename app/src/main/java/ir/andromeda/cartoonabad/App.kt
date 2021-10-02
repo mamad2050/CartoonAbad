@@ -7,6 +7,7 @@ import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
+import ir.andromeda.cartoonabad.data.episode.EpisodeLocalDataSource
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
@@ -38,15 +39,19 @@ class App : Application() {
             single { createApiServiceInstance() }
             single<ImageLoadingService> { FrescoImageLoadingService() }
 
-            single { Room.databaseBuilder(this@App,AppDataBase::class.java,"db_app").build() }
+            single { Room.databaseBuilder(this@App, AppDataBase::class.java, "db_app").build() }
 
             factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
-            factory<SeasonRepository> { SeasonRepositoryImpl(SeasonRemoteDataSource(get())) }
+            factory<SeasonRepository> {
+                SeasonRepositoryImpl(
+                    SeasonRemoteDataSource(get())
+                )
+            }
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
 
             viewModel { HomeViewModel(get()) }
-            viewModel { (animationId: String) -> ListViewModel(animationId, get(),get()) }
-            viewModel { FavoriteViewModel(get())}
+            viewModel { (animationId: String) -> ListViewModel(animationId, get(), get()) }
+            viewModel { FavoriteViewModel(get()) }
         }
 
         startKoin {

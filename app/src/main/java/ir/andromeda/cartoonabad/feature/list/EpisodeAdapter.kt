@@ -7,23 +7,36 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.data.db.AppDataBase
 import ir.andromeda.cartoonabad.data.episode.Episode
+import ir.andromeda.cartoonabad.data.episode.EpisodeLocalDataSource
+import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
+import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
+import timber.log.Timber
+import kotlin.coroutines.coroutineContext
 
 class EpisodeAdapter(
     private val episodes: List<Episode> = ArrayList(),
     private val imageLoadingService: ImageLoadingService,
-    private val listener: EpisodeEventListener
+    private val listener: EpisodeEventListener,
+
 ) : RecyclerView.Adapter<EpisodeAdapter.MyViewHolder>() {
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+
         return MyViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_episode, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+
+
         holder.bindEpisode(episodes[position])
     }
 
@@ -39,6 +52,7 @@ class EpisodeAdapter(
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
 
         fun bindEpisode(episode: Episode) {
+
             imageLoadingService.load(ivImage as CartoonAbadImageView, episode.image)
             tvName.text = episode.name
             tvDuration.text = episode.duration
@@ -53,8 +67,8 @@ class EpisodeAdapter(
                 ivFavorite.setImageResource(R.drawable.ic_baseline_star_border_24)
 
             ivFavorite.setOnClickListener {
-            listener.onFavoriteClick(episode)
-                episode.isFavorite=!episode.isFavorite
+                listener.onFavoriteClick(episode)
+                episode.isFavorite = !episode.isFavorite
                 notifyItemChanged(adapterPosition)
             }
 
@@ -66,6 +80,7 @@ class EpisodeAdapter(
 
     }
 }
+
 
 interface EpisodeEventListener {
 
