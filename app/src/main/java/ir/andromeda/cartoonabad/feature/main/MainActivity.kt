@@ -13,6 +13,7 @@ import ir.andromeda.cartoonabad.R
 import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.TextView
 import android.widget.Toolbar
+import androidx.lifecycle.LiveData
 import java.lang.reflect.Field
 
 
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var listener: NavController.OnDestinationChangedListener
+    private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         navigationView.setupWithNavController(navController)
 
-
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -42,17 +43,18 @@ class MainActivity : AppCompatActivity() {
             NavController.OnDestinationChangedListener { controller, destination, arguments ->
                 when (destination.id) {
                     R.id.homeFragment -> {
-                        Toast.makeText(this, "homeFragment", Toast.LENGTH_SHORT).show()
+
                     }
                     R.id.favoriteFragment -> {
-                        Toast.makeText(this, "favoriteFragment", Toast.LENGTH_SHORT).show()
+
 
                     }
                     R.id.downloadedFragment -> {
-                        Toast.makeText(this, "downloadedFragment", Toast.LENGTH_SHORT).show()
+
                     }
                 }
             }
+
     }
 
     override fun onResume() {

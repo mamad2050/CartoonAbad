@@ -28,7 +28,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
 
-    private val favoriteViewModel: FavoriteViewModel by viewModel()
+//    private val favoriteViewModel: FavoriteViewModel by viewModel()
 
     private val args: ListFragmentArgs by navArgs()
 
@@ -48,19 +48,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         }
 
         viewModel.seasonsLiveData.observe(viewLifecycleOwner) {
-
-            it.forEach { season ->
-                season.episodeList.forEach { ep ->
-                    favoriteViewModel.episodesLiveData.observe(viewLifecycleOwner) { fav ->
-                        fav.forEach { favoriteEp ->
-                            if (ep.id == favoriteEp.id) {
-                                ep.isFavorite = favoriteEp.isFavorite
-                            }
-                        }
-                    }
-                }
-            }
-
 
             binding.rvSeasons.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)

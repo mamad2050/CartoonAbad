@@ -44,7 +44,8 @@ class App : Application() {
             factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
             factory<SeasonRepository> {
                 SeasonRepositoryImpl(
-                    SeasonRemoteDataSource(get())
+                    SeasonRemoteDataSource(get()),
+                    get<AppDataBase>().episodeDao()
                 )
             }
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }

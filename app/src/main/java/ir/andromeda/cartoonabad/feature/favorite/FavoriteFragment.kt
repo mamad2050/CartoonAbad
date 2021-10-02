@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class FavoriteFragment : Fragment() , FavoriteAdapter.EpisodeEventListener{
+class FavoriteFragment : Fragment(), FavoriteAdapter.EpisodeEventListener {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
@@ -30,16 +30,20 @@ class FavoriteFragment : Fragment() , FavoriteAdapter.EpisodeEventListener{
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFavoriteBinding.inflate(inflater,container,false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(),"hello",Toast.LENGTH_SHORT).show()
 
-        viewModel.episodesLiveData.observe(viewLifecycleOwner){
+
+        viewModel.episodesLiveData.observe(viewLifecycleOwner) {
             binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
-            adapter = FavoriteAdapter(it as ArrayList , imageLoadingService,this)
+            adapter = FavoriteAdapter(it as ArrayList, imageLoadingService, this)
             binding.rvFavorites.adapter = adapter
             Timber.i(it.toString())
         }
