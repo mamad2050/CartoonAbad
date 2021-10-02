@@ -18,6 +18,7 @@ class PlayerActivity : CartoonAbadActivity() {
     private lateinit var binding: ActivityPlayerBinding
     private var player: SimpleExoPlayer? = null
 
+    //for play from the last position
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
