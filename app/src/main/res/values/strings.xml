@@ -12,4 +12,8 @@
     <string name="no_account">شما هیچ اشتراکی ندارید!</string>
     <string name="episodes_size">تعداد قسمت :</string>
     <string name="choose_app">برنامه ای را انتخاب کنید</string>
+    <string name="empty_state_favorite">هنوز چیزی به علاقه مندی هات اضافه نکردی :)</string>
+
+
+
 </resources>

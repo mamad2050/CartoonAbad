@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.data.EmptyState
 import java.lang.IllegalStateException
 
 
@@ -60,6 +61,23 @@ interface CartoonAbadView {
         }
     }
 
+
+    fun showEmptyState(layoutResId: Int): View? {
+
+        rootView?.let {
+            viewContext?.let { context ->
+                var emptyState = it.findViewById<View>(R.id.emptyStateRootView)
+                if (emptyState == null) {
+                    emptyState = LayoutInflater.from(context).inflate(layoutResId, it, false)
+                    it.addView(emptyState)
+                }
+                emptyState.visibility = View.VISIBLE
+                return emptyState
+            }
+        }
+        return null
+    }
+
 }
 
 abstract class CartoonAbadViewModel : ViewModel() {
@@ -72,6 +90,7 @@ abstract class CartoonAbadViewModel : ViewModel() {
     }
 
 }
+
 interface OnItemEventListener<in V> {
     fun onCLick(item: V)
 }
