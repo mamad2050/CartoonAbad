@@ -12,6 +12,7 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.OnItemEventListener
+import ir.andromeda.cartoonabad.data.EmptyState
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
@@ -42,24 +43,25 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "hello", Toast.LENGTH_SHORT).show()
 
         (activity as DrawerLocker).setDrawerLocked(true)
 
         viewModel.episodesLiveData.observe(viewLifecycleOwner) {
-
 
             if (it.isNotEmpty()) {
                 binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
                 adapter = FavoriteAdapter(it as ArrayList, imageLoadingService, this)
                 binding.rvFavorites.adapter = adapter
                 Timber.i(it.toString())
-            } else {
-                showEmptyState(R.layout.view_default_empty_state)
             }
 
         }
 
+        viewModel.emptyStateLiveData.observe(viewLifecycleOwner){
+            if (it.mustShow) {
+                showEmptyState(R.layout.view_default_empty_state)
+            }
+        }
 
     }
 

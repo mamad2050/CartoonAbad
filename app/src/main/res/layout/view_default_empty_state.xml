@@ -33,6 +33,5 @@
             android:text="@string/empty_state_favorite"
             android:textAppearance="?textAppearanceHeadline5" />
 
-
     </LinearLayout>
 </FrameLayout>

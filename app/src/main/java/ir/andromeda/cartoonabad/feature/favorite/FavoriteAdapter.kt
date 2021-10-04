@@ -48,7 +48,8 @@ class FavoriteAdapter(
             ivDelete.setOnClickListener {
                 listener.onRemoveClick(episode)
                 episodes.remove(episode)
-                notifyItemRemoved(adapterPosition)
+                notifyItemRemoved(absoluteAdapterPosition)
+
             }
 
 
