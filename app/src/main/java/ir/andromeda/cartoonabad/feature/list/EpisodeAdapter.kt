@@ -44,8 +44,7 @@ class EpisodeAdapter(
 
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
         private val ivFavorite = itemView.findViewById<ImageView>(R.id.iv_episode_favorite)
-        private val ivDownload =
-            itemView.findViewById<ImageView>(R.id.iv_episode_download)
+        private val ivDownload = itemView.findViewById<ImageView>(R.id.iv_episode_download)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
 
@@ -74,6 +73,10 @@ class EpisodeAdapter(
                 listener.onEpisodeClick(episode)
             }
 
+            ivDownload.setOnClickListener {
+                listener.onDownloadClick(episode)
+            }
+
         }
 
     }
@@ -85,5 +88,7 @@ interface EpisodeEventListener {
     fun onEpisodeClick(episode: Episode)
 
     fun onFavoriteClick(episode: Episode)
+
+    fun onDownloadClick(episode: Episode)
 
 }

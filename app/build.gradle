@@ -87,4 +87,7 @@ dependencies {
 
     //exoPlayer
     implementation("com.google.android.exoplayer:exoplayer:2.15.1")
+
+    //download manager
+    implementation "androidx.tonyodev.fetch2fileserver:xfetch2fileserver:3.1.6"
 }

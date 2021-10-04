@@ -44,6 +44,9 @@
         <argument
             android:name="animation"
             app:argType="ir.andromeda.cartoonabad.data.animation.Animation" />
+        <action
+            android:id="@+id/action_listFragment_to_downloadedFragment"
+            app:destination="@id/downloadedFragment" />
     </fragment>
     <fragment
         android:id="@+id/purchaseFragment"

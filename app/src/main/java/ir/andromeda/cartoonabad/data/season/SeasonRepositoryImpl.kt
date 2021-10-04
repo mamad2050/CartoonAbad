@@ -8,22 +8,19 @@ class SeasonRepositoryImpl(
     private val localDataSource: EpisodeLocalDataSource
 
 ) : SeasonRepository {
-    override fun getSeasons(animationId: Int): Single<List<Season>> =
 
+    override fun getSeasons(animationId: Int): Single<List<Season>> =
         localDataSource.getFavoriteEpisodes()
             .flatMap { favoriteEpisodes ->
-
                 val favoriteEpisodeId = favoriteEpisodes.map { it.id }
                 remoteDataSource.getSeasons(animationId).doOnSuccess { seasons ->
-
                     seasons.forEach { season ->
-                        season.episodeList.forEach { ep ->
-                            if (favoriteEpisodeId.contains(ep.id)) {
-                                ep.isFavorite = true
+                        season.episodeList.forEach { episode ->
+                            if (favoriteEpisodeId.contains(episode.id)) {
+                                episode.isFavorite = true
                             }
                         }
                     }
-
                 }
             }
 }

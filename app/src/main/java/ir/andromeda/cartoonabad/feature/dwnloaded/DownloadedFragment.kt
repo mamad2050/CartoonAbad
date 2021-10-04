@@ -10,6 +10,8 @@ import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 
 class DownloadedFragment : Fragment() {
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

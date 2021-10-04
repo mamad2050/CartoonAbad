@@ -1,20 +1,27 @@
 package ir.andromeda.cartoonabad.feature.list
 
+import android.app.DownloadManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
+import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -71,4 +78,10 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     override fun onFavoriteClick(episode: Episode) {
         viewModel.addEpisodeToFavorites(episode)
     }
+
+    override fun onDownloadClick(episode: Episode) {
+
+        view?.let { Navigation.findNavController(it).navigate(R.id.action_listFragment_to_downloadedFragment) }
+    }
+
 }
