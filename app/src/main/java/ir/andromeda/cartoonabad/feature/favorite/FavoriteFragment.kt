@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.data.episode.Episode
@@ -21,7 +22,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class FavoriteFragment : Fragment(), FavoriteAdapter.EpisodeEventListener {
+class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventListener {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
@@ -38,20 +39,27 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.EpisodeEventListener {
         return binding.root
     }
 
-    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(),"hello",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "hello", Toast.LENGTH_SHORT).show()
 
         (activity as DrawerLocker).setDrawerLocked(true)
 
         viewModel.episodesLiveData.observe(viewLifecycleOwner) {
-            binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
-            adapter = FavoriteAdapter(it as ArrayList, imageLoadingService, this)
-            binding.rvFavorites.adapter = adapter
-            Timber.i(it.toString())
+
+
+            if (it.isNotEmpty()) {
+                binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
+                adapter = FavoriteAdapter(it as ArrayList, imageLoadingService, this)
+                binding.rvFavorites.adapter = adapter
+                Timber.i(it.toString())
+            } else {
+                showEmptyState(R.layout.view_default_empty_state)
+            }
+
         }
+
 
     }
 
