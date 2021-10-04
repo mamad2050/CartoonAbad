@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -16,6 +15,7 @@ import ir.andromeda.cartoonabad.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import android.content.Intent
+import android.net.Uri
 import ir.andromeda.cartoonabad.BuildConfig
 import java.lang.Exception
 
@@ -47,19 +47,19 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         binding.navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.rateMenuItem -> {
-                    Toast.makeText(this, "rateMenuItem", Toast.LENGTH_SHORT).show()
+                    rateApp()
                 }
                 R.id.shareMenuItem -> {
                     shareApp()
                 }
-                R.id.contactsMenuItem -> {
-                    Toast.makeText(this, "contactsMenuItem", Toast.LENGTH_SHORT).show()
+                R.id.contactsFragment -> {
+                    navController.navigate(R.id.navigateToContactsFragment)
                 }
                 R.id.downloadedFragment -> {
                     navController.navigate(R.id.navigateToDownloadedFragment)
                 }
                 R.id.purchaseFragment -> {
-//                    navController.navigate(R.id.navigateToPurchaseFragment)
+                    navController.navigate(R.id.navigateToPurchaseFragment)
                 }
                 R.id.favoriteFragment -> {
                     navController.navigate(R.id.navigateToFavoriteFragment)
@@ -67,6 +67,19 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
             }
             drawerLayout.close()
             true
+        }
+    }
+
+    private fun rateApp() {
+        //cafebazaar rate
+        try {
+            val intent = Intent(Intent.ACTION_EDIT)
+            intent.data = Uri.parse("bazaar://details?id=${BuildConfig.APPLICATION_ID}")
+            intent.setPackage("com.farsitel.bazaar")
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, getString(R.string.install_bazaar_app), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 

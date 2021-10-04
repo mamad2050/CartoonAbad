@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.dwnloaded
+package ir.andromeda.cartoonabad.feature.purchase
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 
-class DownloadedFragment : Fragment() {
+class PurchaseFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_downloaded, container, false)
+        return inflater.inflate(R.layout.fragment_purchase, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

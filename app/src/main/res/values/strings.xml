@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">CartoonAbad</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">کارتون آباد</string>
     <string name="home">خانه</string>
     <string name="favorite">علاقه مندی ها</string>
     <string name="downloaded">دانلود شده ها</string>
@@ -13,7 +11,5 @@
     <string name="episodes_size">تعداد قسمت :</string>
     <string name="choose_app">برنامه ای را انتخاب کنید</string>
     <string name="empty_state_favorite">هنوز چیزی به علاقه مندی هات اضافه نکردی :)</string>
-
-
-
+    <string name="install_bazaar_app">لطفا برنامه ی کافه بازار را نصب کنید</string>
 </resources>
