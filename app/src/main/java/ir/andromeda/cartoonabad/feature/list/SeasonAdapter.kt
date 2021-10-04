@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,14 +15,13 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import timber.log.Timber
 
-
 class SeasonAdapter(
     private val seasons: List<Season> = ArrayList(),
     private val imageLoadingService: ImageLoadingService,
     private val context: Context,
     private val episodeListener: EpisodeEventListener,
 
-) : RecyclerView.Adapter<SeasonAdapter.MyViewHolder>() {
+    ) : RecyclerView.Adapter<SeasonAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -42,14 +42,22 @@ class SeasonAdapter(
         private val rvEpisodes = itemView.findViewById<RecyclerView>(R.id.rv_season_episodes)
         private val tvEpisodeSize =
             itemView.findViewById<TextView>(R.id.tv_season_episodeSize)
+        private val ivArrow = itemView.findViewById<ImageView>(R.id.iv_season_arrow)
 
         fun bindSeason(season: Season) {
             imageLoadingService.load(ivImage as CartoonAbadImageView, season.image)
             tvName.text = season.name
             tvEpisodeSize.text = season.episodeList.size.toString()
 
-            itemView.setOnClickListener {
+            rvEpisodes.visibility = if (season.visibility) View.VISIBLE else View.GONE
+            ivArrow.setImageResource(
+                if (season.visibility) R.drawable.ic_baseline_arrow_drop_up_24
+                else R.drawable.ic_baseline_arrow_drop_down_24
+            )
 
+            itemView.setOnClickListener {
+                season.visibility = !season.visibility
+                notifyItemChanged(absoluteAdapterPosition)
             }
 
             rvEpisodes.layoutManager =

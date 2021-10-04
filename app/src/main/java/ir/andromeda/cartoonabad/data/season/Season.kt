@@ -10,4 +10,7 @@ data class Season(
     val animation_id: String,
     @SerializedName("episodes")
     val episodeList: List<Episode>
-)
+) {
+    //for expand
+    var visibility: Boolean = false
+}
