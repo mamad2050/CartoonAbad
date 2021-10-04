@@ -12,14 +12,12 @@ import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
-import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 
 class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
@@ -28,8 +26,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-
-//    private val favoriteViewModel: FavoriteViewModel by viewModel()
 
     private val args: ListFragmentArgs by navArgs()
 

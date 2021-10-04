@@ -22,8 +22,7 @@ class EpisodeAdapter(
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener,
 
-) : RecyclerView.Adapter<EpisodeAdapter.MyViewHolder>() {
-
+    ) : RecyclerView.Adapter<EpisodeAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -34,7 +33,6 @@ class EpisodeAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
 
 
         holder.bindEpisode(episodes[position])

@@ -46,7 +46,6 @@ class ListViewModel(
                     }
                 })
         else
-
             episodeRepository.addToFavorite(episode)
                 .subscribeOn(Schedulers.io())
                 .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {

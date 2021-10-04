@@ -12,20 +12,18 @@ class SeasonRepositoryImpl(
 
         localDataSource.getFavoriteEpisodes()
             .flatMap { favoriteEpisodes ->
+
+                val favoriteEpisodeId = favoriteEpisodes.map { it.id }
                 remoteDataSource.getSeasons(animationId).doOnSuccess { seasons ->
+
                     seasons.forEach { season ->
-                        season.episodeList.forEach { episode ->
-                            val favoriteEpisodeId = favoriteEpisodes.map {
-                                it.id
-                            }
-                            season.episodeList.forEach {ep->
-                                if (favoriteEpisodeId.contains(ep.id)) {
-                                    ep.isFavorite = true
-                                }
+                        season.episodeList.forEach { ep ->
+                            if (favoriteEpisodeId.contains(ep.id)) {
+                                ep.isFavorite = true
                             }
                         }
-
                     }
+
                 }
             }
 }

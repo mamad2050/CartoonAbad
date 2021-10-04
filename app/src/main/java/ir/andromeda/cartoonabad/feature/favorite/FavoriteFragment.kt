@@ -35,7 +35,7 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,7 +57,7 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
 
         }
 
-        viewModel.emptyStateLiveData.observe(viewLifecycleOwner){
+        viewModel.emptyStateLiveData.observe(viewLifecycleOwner) {
             if (it.mustShow) {
                 showEmptyState(R.layout.view_default_empty_state)
             }
