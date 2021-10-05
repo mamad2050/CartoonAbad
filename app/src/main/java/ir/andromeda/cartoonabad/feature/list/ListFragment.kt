@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.io.File
 import java.security.Permission
 import java.util.jar.Manifest
 
@@ -105,7 +106,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             startDownloading(episode)
         }
 
-//        view?.let { Navigation.findNavController(it).navigate(R.id.action_listFragment_to_downloadedFragment)}
     }
 
     private fun startDownloading(episode: Episode) {
@@ -117,13 +117,16 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         request.allowScanningByMediaScanner()
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-           "CartoonAbad/" + episode.url.substringAfterLast("/")
+           "CartoonAbad"+ File.separator + episode.url.substringAfterLast("/")
         )
 
         val manager = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manager.enqueue(request)
 
+        Toast.makeText(requireContext(),"${episode.name} به صف دانلود اضافه شد ",Toast.LENGTH_SHORT).show()
+
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
