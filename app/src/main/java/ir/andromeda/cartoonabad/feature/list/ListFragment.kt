@@ -111,12 +111,14 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private fun startDownloading(episode: Episode) {
 
         val request = DownloadManager.Request(Uri.parse(episode.url))
-        request.setAllowedNetworkTypes( DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_MOBILE)
+        request.setAllowedNetworkTypes( DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
         request.setTitle(episode.name)
         request.setDescription(episode.duration)
         request.allowScanningByMediaScanner()
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"${episode.url}")
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+           "CartoonAbad/" + episode.url.substringAfterLast("/")
+        )
 
         val manager = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manager.enqueue(request)
