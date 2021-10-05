@@ -33,6 +33,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.io.File
+import java.net.URL
 import java.security.Permission
 import java.util.jar.Manifest
 
@@ -112,13 +113,18 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
         val request = DownloadManager.Request(Uri.parse(episode.url))
         request.setAllowedNetworkTypes( DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+//        val episodeUrl = URL(episode.url)
+//        val urlConnection = episodeUrl.openConnection()
+//        urlConnection.connect()
+//        val episodeSize = urlConnection.contentLength
         request.setTitle(episode.name)
         request.setDescription(episode.duration)
         request.allowScanningByMediaScanner()
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+        request.setDestinationInExternalPublicDir("",
            "CartoonAbad"+ File.separator + episode.url.substringAfterLast("/")
         )
+
 
         val manager = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manager.enqueue(request)
