@@ -1,20 +1,26 @@
 package ir.andromeda.cartoonabad.feature.contacts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.CartoonAbadFragment
+import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ContactsFragment : Fragment() {
+class ContactsFragment : CartoonAbadFragment() {
+
+    private var _binding: FragmentContactsBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: ContactsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_contacts, container, false)
+    ): View {
+        _binding = FragmentContactsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

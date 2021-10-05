@@ -6,7 +6,6 @@ import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
-import ir.andromeda.cartoonabad.data.episode.Episode
 import timber.log.Timber
 
 class HomeViewModel(animationRepository: AnimationRepository) : CartoonAbadViewModel() {
