@@ -1,7 +1,7 @@
 package ir.andromeda.cartoonabad.data.message
 
-import io.reactivex.Completable
+import io.reactivex.Single
 
 interface MessageDataSource {
-    fun addMessage(topic: String, message: String, email: String): Completable
+    fun addMessage(topic: String, message: String, email: String): Single<Unit>
 }

@@ -12,4 +12,14 @@
     <string name="choose_app">برنامه ای را انتخاب کنید</string>
     <string name="empty_state_favorite">هنوز چیزی به علاقه مندی هات اضافه نکردی :)</string>
     <string name="install_bazaar_app">لطفا برنامه ی کافه بازار را نصب کنید</string>
+    <string name="error_in_purchase">مشکل در پرداخت</string>
+    <string name="error_in_app">مشکل در برنامه</string>
+    <string name="suggest_cartoon">پیشنهاد برای کارتون جدید</string>
+    <string name="topic">موضوع</string>
+    <string name="email">ایمیل</string>
+    <string name="message_guide">لطفا متن خود را بنویسید…</string>
+    <string name="send">ارسال</string>
+    <string name="choose_topic">لطفا موضوع را انتخاب کنید</string>
+    <string name="do_not_leave_fields_empty">لطفا فیلد را خالی نگذارید</string>
+    <string name="successfully_send">پیام شما با موفقیت ارسال شد</string>
 </resources>

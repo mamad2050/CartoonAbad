@@ -6,7 +6,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSurface">@color/navy_blue</item>
-        <item name="colorOnSurface" tools:ignore="DuplicateDefinition">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:colorBackground">@color/dark_purple</item>
         <item name="divider">@color/silver</item>
         <!--        <item name="colorSecondary">@color/teal_200</item>-->
@@ -38,6 +39,7 @@
         <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
         <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
+
 
     </style>
 

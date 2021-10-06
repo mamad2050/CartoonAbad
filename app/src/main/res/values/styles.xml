@@ -9,4 +9,8 @@
         <item name="android:fontFamily">@font/primary_regular</item>
     </style>
 
+    <style name="MyTextInputLayout" parent="ThemeOverlay.AppCompat">
+        <item name="colorPrimary">@color/white</item>
+    </style>
+
 </resources>

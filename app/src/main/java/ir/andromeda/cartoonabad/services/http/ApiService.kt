@@ -6,6 +6,7 @@ import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.season.Season
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,19 +24,23 @@ interface ApiService {
     fun getSeasons(@Query("animation_id") animationId: Int): Single<List<Season>>
 
     @POST("addMessage.php")
-    fun addMessage(@Body jsonObject: JsonObject): Completable
+    fun addMessage(@Body jsonObject: JsonObject): Single<Unit>
 
 }
 
 fun createApiServiceInstance(): ApiService {
 
-    val okHttpClient = OkHttpClient.Builder().build()
+    val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        })
+        .build()
 
     val retrofit = Retrofit.Builder()
         .baseUrl("https://cartoon-abad.ir/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//        .client(okHttpClient)
+        .client(okHttpClient)
         .build()
 
     return retrofit.create(ApiService::class.java)
