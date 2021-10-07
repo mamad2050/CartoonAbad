@@ -13,7 +13,7 @@ import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import kotlin.Error
 
-class DownloadedFragment(val episode: Episode) : CartoonAbadFragment() {
+class DownloadedFragment() : CartoonAbadFragment() {
 
     private lateinit var fetch: Fetch
     private lateinit var fetchConfiguration: FetchConfiguration

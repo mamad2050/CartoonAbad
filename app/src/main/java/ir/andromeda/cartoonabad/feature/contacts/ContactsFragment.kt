@@ -5,20 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.view.isEmpty
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.CartoonAbadCompletableObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
+import ir.andromeda.cartoonabad.data.message.Message
+import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
+import ir.andromeda.cartoonabad.services.http.ApiService
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
 class ContactsFragment : CartoonAbadFragment() {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ContactsViewModel by viewModel()
+    private val compositeDisposable = CompositeDisposable()
 
     private var selectedTopic: String? = null
 
@@ -33,22 +47,15 @@ class ContactsFragment : CartoonAbadFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         setAutoTextViewValues()
 
         binding.autoTvTopic.setOnItemClickListener { parent, _, position, _ ->
             selectedTopic = parent.getItemAtPosition(position) as String
         }
-
+//
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
-        }
-
-        viewModel.showResult.observe(viewLifecycleOwner) {
-            Snackbar.make(
-                activity?.findViewById(R.id.contentRootView) as View,
-                getString(R.string.successfully_send),
-                Snackbar.LENGTH_SHORT
-            ).show()
         }
 
         binding.btnSend.setOnClickListener {
@@ -71,8 +78,20 @@ class ContactsFragment : CartoonAbadFragment() {
             }
 
             if (!selectedTopic.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
-                viewModel.addMessage(selectedTopic!!, message, email)
+                viewModel.sendMessage(selectedTopic!!, message, email)
             }
+
+
+
+            viewModel.sendMessage(selectedTopic!!, message, email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
+                    override fun onComplete() {
+                        Snackbar.make( activity?.findViewById(R.id.contentRootView) as View, getString(R.string.successfully_send), Snackbar.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),R.string.successfully_send,Toast.LENGTH_SHORT).show()
+                    }
+                })
 
         }
 

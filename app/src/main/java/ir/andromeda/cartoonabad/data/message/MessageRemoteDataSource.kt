@@ -6,12 +6,12 @@ import ir.andromeda.cartoonabad.services.http.ApiService
 
 class MessageRemoteDataSource(private val apiService: ApiService) : MessageDataSource {
 
-    override fun addMessage(topic: String, message: String, email: String): Single<Unit> {
+    override fun sendMessage(
+        title: String,
+        message: String,
+        email: String
+    ): Single<MessageResponse> {
 
-        return apiService.addMessage(JsonObject().apply {
-            addProperty("topic", topic)
-            addProperty("message", message)
-            addProperty("email", email)
-        })
+        return apiService.sendMessage(title, message, email)
     }
 }

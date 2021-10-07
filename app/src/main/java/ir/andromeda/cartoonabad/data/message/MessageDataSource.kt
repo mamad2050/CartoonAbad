@@ -3,5 +3,5 @@ package ir.andromeda.cartoonabad.data.message
 import io.reactivex.Single
 
 interface MessageDataSource {
-    fun addMessage(topic: String, message: String, email: String): Single<Unit>
+    fun sendMessage(title: String, message: String, email: String): Single<MessageResponse>
 }

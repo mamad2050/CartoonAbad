@@ -1,19 +1,20 @@
 package ir.andromeda.cartoonabad.services.http
 
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import io.reactivex.Completable
+import com.google.gson.annotations.SerializedName
 import io.reactivex.Single
+import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.data.animation.Animation
+import ir.andromeda.cartoonabad.data.message.Message
 import ir.andromeda.cartoonabad.data.season.Season
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -23,8 +24,14 @@ interface ApiService {
     @GET("getSeasons.php")
     fun getSeasons(@Query("animation_id") animationId: Int): Single<List<Season>>
 
-    @POST("addMessage.php")
-    fun addMessage(@Body jsonObject: JsonObject): Single<Unit>
+    @FormUrlEncoded
+    @POST("sendMessage.php")
+    fun sendMessage(
+        @Field("title") title: String,
+        @Field("message") message: String,
+        @Field("email") email: String
+    ): Single<MessageResponse>
+
 
 }
 
