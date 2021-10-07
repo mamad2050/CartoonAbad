@@ -13,6 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadCompletableObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
+import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.data.message.Message
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
@@ -66,7 +67,11 @@ class ContactsFragment : CartoonAbadFragment() {
             val message = binding.etlMessage.editText?.text.toString().trim()
 
             if (selectedTopic.isNullOrEmpty()) {
-                Snackbar.make( activity?.findViewById(R.id.contentRootView) as View, getString(R.string.choose_topic), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    activity?.findViewById(R.id.contentRootView) as View,
+                    getString(R.string.choose_topic),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
 
             if (email.isEmpty()) {
@@ -86,10 +91,15 @@ class ContactsFragment : CartoonAbadFragment() {
             viewModel.sendMessage(selectedTopic!!, message, email)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
-                    override fun onComplete() {
-                        Snackbar.make( activity?.findViewById(R.id.contentRootView) as View, getString(R.string.successfully_send), Snackbar.LENGTH_SHORT).show()
-                        Toast.makeText(requireContext(),R.string.successfully_send,Toast.LENGTH_SHORT).show()
+                .subscribe(object :
+                    CartoonAbadSingleObserver<MessageResponse>(compositeDisposable) {
+                    override fun onSuccess(t: MessageResponse) {
+                        Timber.i(t.message)
+                        Snackbar.make(
+                            activity?.findViewById(R.id.contentRootView) as View,
+                           t.message,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 })
 
