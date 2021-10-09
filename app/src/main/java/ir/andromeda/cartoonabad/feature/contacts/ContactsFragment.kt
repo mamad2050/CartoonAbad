@@ -5,27 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadCompletableObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
-import ir.andromeda.cartoonabad.data.message.Message
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
-import ir.andromeda.cartoonabad.services.http.ApiService
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 class ContactsFragment : CartoonAbadFragment() {
@@ -35,7 +26,7 @@ class ContactsFragment : CartoonAbadFragment() {
     private val viewModel: ContactsViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
 
-    private var selectedTopic: String? = null
+    private var selectedTitle: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +43,7 @@ class ContactsFragment : CartoonAbadFragment() {
         setAutoTextViewValues()
 
         binding.autoTvTopic.setOnItemClickListener { parent, _, position, _ ->
-            selectedTopic = parent.getItemAtPosition(position) as String
+            selectedTitle = parent.getItemAtPosition(position) as String
         }
 //
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
@@ -66,7 +57,7 @@ class ContactsFragment : CartoonAbadFragment() {
             val email = binding.etlEmail.editText?.text.toString().trim()
             val message = binding.etlMessage.editText?.text.toString().trim()
 
-            if (selectedTopic.isNullOrEmpty()) {
+            if (selectedTitle.isNullOrEmpty()) {
                 Snackbar.make(
                     activity?.findViewById(R.id.contentRootView) as View,
                     getString(R.string.choose_topic),
@@ -82,29 +73,27 @@ class ContactsFragment : CartoonAbadFragment() {
                 binding.etlMessage.error = getString(R.string.do_not_leave_fields_empty)
             }
 
-            if (!selectedTopic.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
-                viewModel.sendMessage(selectedTopic!!, message, email)
+            if (!selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
+                viewModel.sendMessage(selectedTitle!!, message, email)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object :
+                        CartoonAbadSingleObserver<MessageResponse>(compositeDisposable) {
+                        override fun onSuccess(t: MessageResponse) {
+                            Timber.i(t.message)
+                            Snackbar.make(
+                                activity?.findViewById(R.id.contentRootView) as View,
+                                t.message,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+
+                            emptyAllFields()
+                        }
+                    })
             }
 
 
-
-            viewModel.sendMessage(selectedTopic!!, message, email)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object :
-                    CartoonAbadSingleObserver<MessageResponse>(compositeDisposable) {
-                    override fun onSuccess(t: MessageResponse) {
-                        Timber.i(t.message)
-                        Snackbar.make(
-                            activity?.findViewById(R.id.contentRootView) as View,
-                           t.message,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                })
-
         }
-
         (activity as DrawerLocker).setDrawerLocked(true)
     }
 
@@ -124,6 +113,17 @@ class ContactsFragment : CartoonAbadFragment() {
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
+    }
+
+    fun emptyAllFields() {
+//        binding.etlEmail.editText?.text?.clear()
+//        binding.etlMessage.editText?.text?.clear()
+//        binding.autoTvTopic.text.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
 
 }
