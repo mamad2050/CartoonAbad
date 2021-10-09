@@ -116,9 +116,10 @@ class ContactsFragment : CartoonAbadFragment() {
     }
 
     fun emptyAllFields() {
-//        binding.etlEmail.editText?.text?.clear()
-//        binding.etlMessage.editText?.text?.clear()
-//        binding.autoTvTopic.text.clear()
+        binding.etlEmail.editText?.text?.clear()
+        binding.etlMessage.editText?.text?.clear()
+        binding.autoTvTopic.text.clear()
+        selectedTitle = null
     }
 
     override fun onDestroy() {

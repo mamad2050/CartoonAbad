@@ -7,7 +7,7 @@
 
     <style name="NavigationDrawerTextStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/primary_regular</item>
-    </style>
+    </style>c
 
     <style name="MyTextInputLayout" parent="ThemeOverlay.AppCompat">
         <item name="colorPrimary">@color/white</item>
