@@ -45,7 +45,7 @@ class ContactsFragment : CartoonAbadFragment() {
         binding.autoTvTopic.setOnItemClickListener { parent, _, position, _ ->
             selectedTitle = parent.getItemAtPosition(position) as String
         }
-//
+
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }

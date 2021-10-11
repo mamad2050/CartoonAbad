@@ -22,5 +22,13 @@
     <string name="choose_topic">لطفا موضوع را انتخاب کنید</string>
     <string name="do_not_leave_fields_empty">لطفا فیلد را خالی نگذارید</string>
     <string name="successfully_send">پیام شما با موفقیت ارسال شد</string>
+    <string name="choose_plan">انتخاب اشتراک</string>
+    <string name="monthly">یک ماهه</string>
+    <string name="three_month">سه ماهه</string>
+    <string name="yearly">یک ساله</string>
+    <string name="buy">پرداخت</string>
+    <string name="benefits_of_buy_plan">مزایای اشتراک کارتون آباد</string>
+    <string name="access_to_all_animations">دسترسی به تمام کارتون ها</string>
+    <string name="remove_ads">حذف شدن تمام تبلیغات</string>
 
 </resources>

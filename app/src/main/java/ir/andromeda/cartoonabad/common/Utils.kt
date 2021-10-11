@@ -63,16 +63,8 @@ fun View.implementSpringAnimationTrait() {
 
         false
     }
-
-
-    fun convertDpToPixel(dp: Float, context: Context?): Float {
-        return if (context != null) {
-            val resources = context.resources
-            val metrics = resources.displayMetrics
-            dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        } else {
-            val metrics = Resources.getSystem().displayMetrics
-            dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        }
-    }
 }
+
+const val YEARLY = 1
+const val THREE_MONTH = 2
+const val MONTHLY = 3
