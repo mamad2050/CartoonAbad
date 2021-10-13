@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -26,13 +28,14 @@
             android:textSize="22sp" />
     </LinearLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="16dp"
-        app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/splash_progress"
-        app:lottie_speed="1.6" />
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="32dp"
+        app:SpinKit_Style="FadingCircle"
+        app:SpinKit_Color="@color/white"
+        />
 
-</RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
