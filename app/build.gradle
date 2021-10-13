@@ -1,9 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id "androidx.navigation.safeargs.kotlin"
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -73,6 +73,9 @@ dependencies {
     //timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    //poolakey
+    implementation "com.github.cafebazaar.Poolakey:poolakey:1.2.2"
+
     //fresco
     implementation 'com.facebook.fresco:fresco:2.5.0'
 
@@ -92,9 +95,10 @@ dependencies {
 //    implementation "androidx.tonyodev.fetch2fileserver:xfetch2fileserver:3.1.6"
     implementation "com.tonyodev.fetch2:fetch2:3.0.12"
 
-//lottie
+    //lottie
     implementation 'com.airbnb.android:lottie:4.2.0'
 
     //spin kit
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
 }

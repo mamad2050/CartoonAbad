@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad
 
+//import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource
 import android.app.Application
 import androidx.room.Room
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -7,11 +8,9 @@ import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
-import ir.andromeda.cartoonabad.data.episode.EpisodeLocalDataSource
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource
-//import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource
 import ir.andromeda.cartoonabad.data.message.MessageRepository
 import ir.andromeda.cartoonabad.data.message.MessageRepositoryImpl
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
@@ -55,6 +54,16 @@ class App : Application() {
             }
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
+
+            single {
+                Payment(
+                    this@App, PaymentConfiguration(
+                        SecurityCheck.Enable(
+                            rsaPublicKey = ""
+                        )
+                    )
+                )
+            }
 
             viewModel { HomeViewModel(get()) }
             viewModel { (animationId: String) -> ListViewModel(animationId, get(), get()) }

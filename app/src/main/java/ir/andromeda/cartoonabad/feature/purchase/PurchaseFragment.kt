@@ -58,6 +58,8 @@ class PurchaseFragment : CartoonAbadFragment() {
             selectedPlan = MONTHLY
         }
 
+
+
         (activity as DrawerLocker).setDrawerLocked(true)
     }
 
