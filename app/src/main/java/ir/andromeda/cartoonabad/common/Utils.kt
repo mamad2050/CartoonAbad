@@ -3,6 +3,7 @@ package ir.andromeda.cartoonabad.common
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
@@ -63,6 +64,16 @@ fun View.implementSpringAnimationTrait() {
 
         false
     }
+
+}
+
+
+inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        onSdk29()
+    else
+        null
+
 }
 
 const val YEARLY = 1

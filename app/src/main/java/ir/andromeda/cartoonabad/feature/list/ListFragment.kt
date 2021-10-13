@@ -12,6 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -45,6 +48,10 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
 
+    var readPermissionGranted = false
+    var writePermissionGranted = false
+    lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+
     private val args: ListFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -72,6 +79,12 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             binding.rvSeasons.adapter = adapter
 
         }
+
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
+                permission->
+            readPermissionGranted = permission[android.Manifest.permission.READ_EXTERNAL_STORAGE]?:readPermissionGranted
+            writePermissionGranted = permission[android.Manifest.permission.WRITE_EXTERNAL_STORAGE]?:writePermissionGranted
+        }
     }
 
     override fun onStop() {
@@ -94,13 +107,10 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             if (requireActivity().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
                 startDownloading(episode)
             } else {
-                requireActivity().requestPermissions(
-                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    EXTERNAL_STORAGE_PERMISSION_KEY
-                )
+
+                requestPermissions()
             }
 
         } else {
@@ -112,38 +122,58 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private fun startDownloading(episode: Episode) {
 
         val request = DownloadManager.Request(Uri.parse(episode.url))
-        request.setAllowedNetworkTypes( DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
 
         request.setTitle(episode.name)
         request.setDescription(episode.duration)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir("",
-           "CartoonAbad"+ File.separator + episode.url.substringAfterLast("/")
+        request.setDestinationInExternalPublicDir(
+            "",
+            "CartoonAbad" + File.separator + episode.url.substringAfterLast("/")
         )
 
-
-        val manager = requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val manager =
+            requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manager.enqueue(request)
 
-        Toast.makeText(requireContext(),"${episode.name} به صف دانلود اضافه شد ",Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            "${episode.name} به صف دانلود اضافه شد ",
+            Toast.LENGTH_SHORT
+        ).show()
 
     }
 
+    private fun requestPermissions() {
+        val hasReadPermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == EXTERNAL_STORAGE_PERMISSION_KEY && grantResults.isNotEmpty()
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED
-        ) {
+        val hasWritePermission = ContextCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
 
+        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+
+        readPermissionGranted = hasReadPermission
+        writePermissionGranted = hasWritePermission || minSdk29
+
+
+        val permissionToRequest = mutableListOf<String>()
+
+        if (!writePermissionGranted) {
+            permissionToRequest.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        else
-            Snackbar.make(binding.root,"You should accept permission",Snackbar.LENGTH_SHORT).show()
+
+        if (!readPermissionGranted) {
+            permissionToRequest.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (permissionToRequest.isNotEmpty()) {
+            permissionLauncher.launch(permissionToRequest.toTypedArray())
+        }
 
     }
-
 }
