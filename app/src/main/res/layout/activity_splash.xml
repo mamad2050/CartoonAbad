@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,14 +27,35 @@
             android:textSize="22sp" />
     </LinearLayout>
 
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:id="@+id/btn_retry"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        android:visibility="gone"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="48dp"/>
+
     <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/pb_splash"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="64dp"
+        app:SpinKit_Color="@color/white"
+        app:SpinKit_Style="FadingCircle" />
+
+    <TextView
+        android:id="@+id/tv_networkState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="32dp"
-        app:SpinKit_Style="FadingCircle"
-        app:SpinKit_Color="@color/white"
-        />
+        android:layout_marginBottom="24dp"
+        android:text="@string/no_network"
+        android:visibility="gone" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

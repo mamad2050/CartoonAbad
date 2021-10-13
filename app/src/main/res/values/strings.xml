@@ -30,5 +30,7 @@
     <string name="benefits_of_buy_plan">مزایای اشتراک کارتون آباد</string>
     <string name="access_to_all_animations">دسترسی به تمام کارتون ها</string>
     <string name="remove_ads">حذف شدن تمام تبلیغات</string>
+    <string name="no_network">اتصال برقرار نیست !</string>
+    <string name="retry">تلاش مجدد</string>
 
 </resources>

@@ -1,8 +1,9 @@
 package ir.andromeda.cartoonabad
 
-//import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource
+
 import android.app.Application
 import androidx.room.Room
+import com.downloader.PRDownloader
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
@@ -28,6 +29,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
+import com.downloader.PRDownloaderConfig
+
+
+
 
 class App : Application() {
 
@@ -35,6 +40,8 @@ class App : Application() {
         super.onCreate()
 
         Fresco.initialize(this)
+
+
 
         Timber.plant(Timber.DebugTree())
 
@@ -55,15 +62,15 @@ class App : Application() {
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
 
-            single {
-                Payment(
-                    this@App, PaymentConfiguration(
-                        SecurityCheck.Enable(
-                            rsaPublicKey = ""
-                        )
-                    )
-                )
-            }
+//            single {
+//                Payment(
+//                    this@App, PaymentConfiguration(
+//                        SecurityCheck.Enable(
+//                            rsaPublicKey = ""
+//                        )
+//                    )
+//                )
+//            }
 
             viewModel { HomeViewModel(get()) }
             viewModel { (animationId: String) -> ListViewModel(animationId, get(), get()) }

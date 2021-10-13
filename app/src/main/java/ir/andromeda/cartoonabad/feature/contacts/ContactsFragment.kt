@@ -15,7 +15,7 @@ import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
-import kotlinx.android.synthetic.main.fragment_contacts.*
+
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -51,8 +51,8 @@ class ContactsFragment : CartoonAbadFragment() {
         }
 
         binding.btnSend.setOnClickListener {
-            etlEmail.error = null
-            etlMessage.error = null
+            binding.etlEmail.error = null
+            binding.etlMessage.error = null
 
             val email = binding.etlEmail.editText?.text.toString().trim()
             val message = binding.etlMessage.editText?.text.toString().trim()

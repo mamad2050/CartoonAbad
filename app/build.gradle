@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+
     id "androidx.navigation.safeargs.kotlin"
     id 'kotlin-parcelize'
 }
@@ -74,7 +75,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     //poolakey
-    implementation "com.github.cafebazaar.Poolakey:poolakey:1.2.2"
+//    implementation "com.github.cafebazaar.Poolakey:poolakey:1.2.2"
 
     //fresco
     implementation 'com.facebook.fresco:fresco:2.5.0'
@@ -92,8 +93,8 @@ dependencies {
     implementation("com.google.android.exoplayer:exoplayer:2.15.1")
 
     //download manager
-//    implementation "androidx.tonyodev.fetch2fileserver:xfetch2fileserver:3.1.6"
-    implementation "com.tonyodev.fetch2:fetch2:3.0.12"
+    implementation 'com.mani:ThinDownloadManager:1.4.0'
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
 
     //lottie
     implementation 'com.airbnb.android:lottie:4.2.0'

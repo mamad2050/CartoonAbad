@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import android.content.Intent
 import android.net.Uri
@@ -65,7 +64,7 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
                     navController.navigate(R.id.navigateToFavoriteFragment)
                 }
             }
-            drawerLayout.close()
+            binding.drawerLayout.close()
             true
         }
     }

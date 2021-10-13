@@ -5,15 +5,15 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
+import android.view.View
+import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.databinding.ActivitySplashBinding
 import ir.andromeda.cartoonabad.feature.main.MainActivity
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : CartoonAbadActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,14 +22,11 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
-        if (checkNetworkConnection()) {
-            Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }, 3000)
-        } else {
-            Toast.makeText(this, "no network", Toast.LENGTH_SHORT).show()
+
+        checkCondition()
+
+        binding.btnRetry.setOnClickListener {
+            checkCondition()
         }
 
     }
@@ -44,11 +41,41 @@ class SplashActivity : AppCompatActivity() {
             return when {
                 actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                 actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-
                 else -> false
             }
 
         } else
             return false
     }
+
+    private fun goToHomeActivity() {
+
+        binding.tvNetworkState.visibility = View.GONE
+        binding.btnRetry.visibility = View.GONE
+        binding.pbSplash.visibility = View.VISIBLE
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 3000)
+    }
+
+    private fun noNetwork() {
+
+        binding.tvNetworkState.visibility = View.VISIBLE
+        binding.btnRetry.visibility = View.VISIBLE
+        binding.pbSplash.visibility = View.GONE
+
+    }
+
+    private fun checkCondition() {
+
+        if (checkNetworkConnection()) {
+            goToHomeActivity()
+        } else {
+            noNetwork()
+        }
+    }
+
 }

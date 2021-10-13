@@ -15,6 +15,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.*
 
 fun <T> Single<T>.asyncNetworkRequest(): Single<T> {
     return subscribeOn(Schedulers.io())
@@ -68,12 +69,8 @@ fun View.implementSpringAnimationTrait() {
 }
 
 
-inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-        onSdk29()
-    else
-        null
-
+ fun toMB(bytes: Long): String? {
+    return java.lang.String.format(Locale.ENGLISH, "%.2fMb", bytes / (1024.00 * 1024.00))
 }
 
 const val YEARLY = 1

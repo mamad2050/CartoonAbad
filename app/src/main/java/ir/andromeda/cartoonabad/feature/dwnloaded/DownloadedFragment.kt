@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.tonyodev.fetch2.*
-import com.tonyodev.fetch2core.DownloadBlock
-import com.tonyodev.fetch2core.Func
+
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.data.episode.Episode
@@ -15,8 +13,6 @@ import kotlin.Error
 
 class DownloadedFragment() : CartoonAbadFragment() {
 
-    private lateinit var fetch: Fetch
-    private lateinit var fetchConfiguration: FetchConfiguration
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

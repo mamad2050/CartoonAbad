@@ -18,7 +18,6 @@ import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
-import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
