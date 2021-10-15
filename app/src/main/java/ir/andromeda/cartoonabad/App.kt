@@ -1,6 +1,5 @@
 package ir.andromeda.cartoonabad
 
-
 import android.app.Application
 import androidx.room.Room
 import com.downloader.PRDownloader
@@ -31,17 +30,12 @@ import org.koin.dsl.module
 import timber.log.Timber
 import com.downloader.PRDownloaderConfig
 
-
-
-
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
         Fresco.initialize(this)
-
-
 
         Timber.plant(Timber.DebugTree())
 
