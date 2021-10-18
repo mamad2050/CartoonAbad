@@ -18,7 +18,6 @@ import android.net.Uri
 import ir.andromeda.cartoonabad.BuildConfig
 import java.lang.Exception
 
-
 class MainActivity : CartoonAbadActivity(), DrawerLocker {
 
     private lateinit var navController: NavController

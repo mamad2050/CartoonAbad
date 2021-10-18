@@ -1,9 +1,11 @@
 package ir.andromeda.cartoonabad.feature.purchase
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
@@ -12,6 +14,10 @@ import ir.andromeda.cartoonabad.common.THREE_MONTH
 import ir.andromeda.cartoonabad.common.YEARLY
 import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
+import ir.cafebazaar.poolakey.Connection
+import ir.cafebazaar.poolakey.Payment
+import ir.cafebazaar.poolakey.request.PurchaseRequest
+import org.koin.android.ext.android.inject
 
 class PurchaseFragment : CartoonAbadFragment() {
 
@@ -20,6 +26,9 @@ class PurchaseFragment : CartoonAbadFragment() {
 
     private lateinit var lastSelectedLayout: View
     private var selectedPlan: Int = YEARLY
+
+    private val payment: Payment by inject()
+    private var paymentConnection: Connection? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +44,8 @@ class PurchaseFragment : CartoonAbadFragment() {
         lastSelectedLayout = binding.layoutYearly
 
         binding.layoutYearly.setOnClickListener {
-            lastSelectedLayout.background =  ContextCompat.getDrawable(requireContext(), R.drawable.shape_default_plan)
+            lastSelectedLayout.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.shape_default_plan)
             lastSelectedLayout = it
             it.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.shape_selected_plan)
@@ -43,28 +53,94 @@ class PurchaseFragment : CartoonAbadFragment() {
         }
 
         binding.layoutThreeMonth.setOnClickListener {
-            lastSelectedLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.shape_default_plan)
-           lastSelectedLayout = it
+            lastSelectedLayout.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.shape_default_plan)
+            lastSelectedLayout = it
             it.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.shape_selected_plan)
             selectedPlan = THREE_MONTH
         }
 
         binding.layoutMonthly.setOnClickListener {
-            lastSelectedLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.shape_default_plan)
+            lastSelectedLayout.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.shape_default_plan)
             lastSelectedLayout = it
             it.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.shape_selected_plan)
             selectedPlan = MONTHLY
         }
 
-
+        binding.btnPurchase.setOnClickListener {
+            purchase()
+        }
 
         (activity as DrawerLocker).setDrawerLocked(true)
+    }
+
+    private fun purchase() {
+
+        val plan = when (selectedPlan) {
+            YEARLY -> "rearkneth645thewth56t"
+            THREE_MONTH -> "erigneotrht6h465ryjry"
+            MONTHLY -> "fdgnsgmsrymsryr6t516rt"
+            else -> "rearkneth645thewth56t"
+        }
+
+        val purchaseRequest = PurchaseRequest(
+            productId = plan,
+            requestCode = 1000,
+            payload = ""
+        )
+
+        paymentConnection = payment.connect {
+            connectionSucceed {
+
+                payment.subscribeProduct(
+                    this@PurchaseFragment,
+                    request = purchaseRequest
+                ) {
+                    purchaseFlowBegan {
+
+                    }
+                    failedToBeginFlow { throwable ->
+
+                    }
+                }
+
+            }
+            connectionFailed { throwable ->
+
+            }
+            disconnected {
+
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        payment.onActivityResult(requestCode, resultCode, data) {
+            purchaseSucceed {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.successPurchase),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            purchaseCanceled {
+
+            }
+            purchaseFailed {
+
+            }
+        }
+
     }
 
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
+        paymentConnection?.disconnect()
     }
 }

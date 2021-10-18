@@ -2,7 +2,6 @@ package ir.andromeda.cartoonabad
 
 import android.app.Application
 import androidx.room.Room
-import com.downloader.PRDownloader
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
@@ -23,15 +22,16 @@ import ir.andromeda.cartoonabad.feature.list.ListViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import ir.cafebazaar.poolakey.Payment
+import ir.cafebazaar.poolakey.config.PaymentConfiguration
+import ir.cafebazaar.poolakey.config.SecurityCheck
+import ir.cafebazaar.poolakey.entity.PurchaseInfo
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
-import com.downloader.PRDownloaderConfig
-import ir.cafebazaar.poolakey.Payment
-import ir.cafebazaar.poolakey.config.PaymentConfiguration
-import ir.cafebazaar.poolakey.config.SecurityCheck
 
 class App : Application() {
 
@@ -63,7 +63,10 @@ class App : Application() {
                 Payment(
                     this@App, PaymentConfiguration(
                         SecurityCheck.Enable(
-                            rsaPublicKey = ""
+                            rsaPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDDXVO1lzHbUz5z1ntxJoqcEinB" +
+                                    "Ls1Gts0JQKdda5OdLqkBXgKDKFNsP0Pt1JW0dTNKWmj4qe0V/PxBRybjg57+a7xXdBdOCx" +
+                                    "L8G9xvaF2LpgYOs0XjKM5JzIbowJ/XZ5jDLdD5IGLbtyYc4vDoo1eTXunhFIhyu76WCUZR" +
+                                    "/Zug0KJ9oRWYVrgdjWY3Ylx2pUlwrNMs1PXUbcfDKUQoXyaG1P/RYLh8rR2/fvZA99sCAwEAAQ=="
                         )
                     )
                 )
@@ -79,5 +82,7 @@ class App : Application() {
             androidContext(this@App)
             modules(myModules)
         }
+
     }
+
 }
