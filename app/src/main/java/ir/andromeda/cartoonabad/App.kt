@@ -29,6 +29,9 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
 import com.downloader.PRDownloaderConfig
+import ir.cafebazaar.poolakey.Payment
+import ir.cafebazaar.poolakey.config.PaymentConfiguration
+import ir.cafebazaar.poolakey.config.SecurityCheck
 
 class App : Application() {
 
@@ -56,15 +59,15 @@ class App : Application() {
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
 
-//            single {
-//                Payment(
-//                    this@App, PaymentConfiguration(
-//                        SecurityCheck.Enable(
-//                            rsaPublicKey = ""
-//                        )
-//                    )
-//                )
-//            }
+            single {
+                Payment(
+                    this@App, PaymentConfiguration(
+                        SecurityCheck.Enable(
+                            rsaPublicKey = ""
+                        )
+                    )
+                )
+            }
 
             viewModel { HomeViewModel(get()) }
             viewModel { (animationId: String) -> ListViewModel(animationId, get(), get()) }
