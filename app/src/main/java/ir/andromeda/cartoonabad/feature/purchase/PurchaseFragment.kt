@@ -12,9 +12,11 @@ import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.MONTHLY
 import ir.andromeda.cartoonabad.common.THREE_MONTH
 import ir.andromeda.cartoonabad.common.YEARLY
+import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.cafebazaar.poolakey.Connection
+import ir.cafebazaar.poolakey.ConnectionState
 import ir.cafebazaar.poolakey.Payment
 import ir.cafebazaar.poolakey.request.PurchaseRequest
 import org.koin.android.ext.android.inject
@@ -28,7 +30,7 @@ class PurchaseFragment : CartoonAbadFragment() {
     private var selectedPlan: Int = YEARLY
 
     private val payment: Payment by inject()
-    private var paymentConnection: Connection? = null
+    private lateinit var paymentConnection: Connection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +43,32 @@ class PurchaseFragment : CartoonAbadFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        startPaymentConnection()
+
+        customButtons()
+
+        binding.btnPurchase.setOnClickListener {
+            if (PurchaseContainer.purchaseInfo == null) {
+                if (paymentConnection.getState() == ConnectionState.Connected) {
+
+                    val purchaseId = when (selectedPlan) {
+                        YEARLY -> "rearkneth645thewth56t"
+                        THREE_MONTH -> "erigneotrht6h465ryjry"
+                        MONTHLY -> "fdgnsgmsrymsryr6t516rt"
+                        else -> "rearkneth645thewth56t"
+                    }
+
+                    subscribeProduct(purchaseId)
+                }
+            } else {
+                toast(getString(R.string.you_have_subscription))
+            }
+        }
+
+        (activity as DrawerLocker).setDrawerLocked(true)
+    }
+
+    private fun customButtons() {
         lastSelectedLayout = binding.layoutYearly
 
         binding.layoutYearly.setOnClickListener {
@@ -69,49 +97,36 @@ class PurchaseFragment : CartoonAbadFragment() {
                 ContextCompat.getDrawable(requireContext(), R.drawable.shape_selected_plan)
             selectedPlan = MONTHLY
         }
-
-        binding.btnPurchase.setOnClickListener {
-            purchase()
-        }
-
-        (activity as DrawerLocker).setDrawerLocked(true)
     }
 
-    private fun purchase() {
-
-        val plan = when (selectedPlan) {
-            YEARLY -> "rearkneth645thewth56t"
-            THREE_MONTH -> "erigneotrht6h465ryjry"
-            MONTHLY -> "fdgnsgmsrymsryr6t516rt"
-            else -> "rearkneth645thewth56t"
-        }
-
-        val purchaseRequest = PurchaseRequest(
-            productId = plan,
-            requestCode = 1000,
-            payload = ""
-        )
-
+    private fun startPaymentConnection() {
         paymentConnection = payment.connect {
             connectionSucceed {
-
-                payment.subscribeProduct(
-                    this@PurchaseFragment,
-                    request = purchaseRequest
-                ) {
-                    purchaseFlowBegan {
-
-                    }
-                    failedToBeginFlow { throwable ->
-
-                    }
-                }
-
             }
-            connectionFailed { throwable ->
-
+            connectionFailed {
             }
             disconnected {
+            }
+        }
+    }
+
+    private fun toast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun subscribeProduct(purchaseId: String) {
+        payment.subscribeProduct(
+            this@PurchaseFragment,
+            request = PurchaseRequest(
+                productId = purchaseId,
+                requestCode = 1000,
+                payload = ""
+            )
+        ) {
+            purchaseFlowBegan {
+
+            }
+            failedToBeginFlow {
 
             }
         }
@@ -122,11 +137,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
         payment.onActivityResult(requestCode, resultCode, data) {
             purchaseSucceed {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.successPurchase),
-                    Toast.LENGTH_SHORT
-                ).show()
+                toast(getString(R.string.success_purchase))
             }
             purchaseCanceled {
 
@@ -141,6 +152,6 @@ class PurchaseFragment : CartoonAbadFragment() {
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
-        paymentConnection?.disconnect()
+        paymentConnection.disconnect()
     }
 }

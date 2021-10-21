@@ -32,6 +32,8 @@
     <string name="remove_ads">حذف شدن تمام تبلیغات</string>
     <string name="no_network">اتصال برقرار نیست !</string>
     <string name="retry">تلاش مجدد</string>
-    <string name="successPurchase">اشتراک با موفقیت خریداری شد</string>
+    <string name="success_purchase">اشتراک با موفقیت خریداری شد</string>
+    <string name="did_not_connect_to_bazaar">اتصال به بازار برقرار نشد</string>
+    <string name="you_have_subscription">شما در حال حاضر اشتراک دارید و نمی توانید اشتراک جدیدی را خریداری کنید</string>
 
 </resources>
