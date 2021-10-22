@@ -47,7 +47,6 @@ class FavoriteViewModel(private val episodeRepository: EpisodeRepository) :
                     } else {
                         emptyStateLiveData.value = EmptyState(
                             true,
-                            R.string.empty_state_favorite
                         )
                     }
 

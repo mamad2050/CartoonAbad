@@ -39,7 +39,6 @@ class ContactsFragment : CartoonAbadFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         setAutoTextViewValues()
 
         binding.autoTvTopic.setOnItemClickListener { parent, _, position, _ ->

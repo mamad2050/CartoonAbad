@@ -2,17 +2,14 @@ package ir.andromeda.cartoonabad.feature.favorite
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.common.OnItemEventListener
-import ir.andromeda.cartoonabad.data.EmptyState
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
@@ -56,9 +53,9 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
 
         }
 
-        viewModel.emptyStateLiveData.observe(viewLifecycleOwner) {
-            if (it.mustShow) {
-                showEmptyState(R.layout.view_default_empty_state)
+        viewModel.emptyStateLiveData.observe(viewLifecycleOwner) { emptyState ->
+            if (emptyState.mustShow) {
+               showEmptyState(R.layout.view_default_empty_state)
             }
         }
 

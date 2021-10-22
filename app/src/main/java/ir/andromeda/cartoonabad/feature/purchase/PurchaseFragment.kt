@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.MONTHLY
@@ -20,6 +21,7 @@ import ir.cafebazaar.poolakey.ConnectionState
 import ir.cafebazaar.poolakey.Payment
 import ir.cafebazaar.poolakey.request.PurchaseRequest
 import org.koin.android.ext.android.inject
+import retrofit2.http.FormUrlEncoded
 
 class PurchaseFragment : CartoonAbadFragment() {
 
@@ -61,7 +63,7 @@ class PurchaseFragment : CartoonAbadFragment() {
                     subscribeProduct(purchaseId)
                 }
             } else {
-                toast(getString(R.string.you_have_subscription))
+                snackBar(getString(R.string.you_have_subscription))
             }
         }
 
@@ -110,8 +112,10 @@ class PurchaseFragment : CartoonAbadFragment() {
         }
     }
 
-    private fun toast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    private fun snackBar(message: String) {
+        Snackbar.make(
+            activity?.findViewById(R.id.contentRootView) as View, message, Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun subscribeProduct(purchaseId: String) {
@@ -137,7 +141,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
         payment.onActivityResult(requestCode, resultCode, data) {
             purchaseSucceed {
-                toast(getString(R.string.success_purchase))
+                snackBar(getString(R.string.success_purchase))
             }
             purchaseCanceled {
 
