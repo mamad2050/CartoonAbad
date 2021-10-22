@@ -26,8 +26,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     private var adapter: AnimationAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
-    private val payment: Payment by inject()
-    private lateinit var paymentConnection: Connection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +42,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkSubscription()
-
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
@@ -60,36 +56,9 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     }
 
-    private fun checkSubscription() {
-        paymentConnection = payment.connect {
-            connectionSucceed {
-                payment.getSubscribedProducts {
-                    querySucceed { purchasedItems ->
-                        if (purchasedItems.isNotEmpty()) {
-                            PurchaseContainer.setPurchaseInfo(purchasedItems[0])
-                        }
-                    }
-                    queryFailed {
-
-                    }
-                }
-            }
-            connectionFailed {
-                toast(getString(R.string.did_not_connect_to_bazaar))
-            }
-            disconnected {
-            }
-        }
-    }
-
     override fun onStop() {
         super.onStop()
         _binding = null
-        paymentConnection.disconnect()
-    }
-
-    private fun toast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     override fun onCLick(item: Animation) {

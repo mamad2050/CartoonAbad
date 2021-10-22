@@ -15,7 +15,13 @@ import ir.andromeda.cartoonabad.databinding.ActivityMainBinding
 import timber.log.Timber
 import android.content.Intent
 import android.net.Uri
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
+import ir.andromeda.cartoonabad.data.PurchaseContainer
+import ir.cafebazaar.poolakey.Connection
+import ir.cafebazaar.poolakey.Payment
+import org.koin.android.ext.android.inject
 import java.lang.Exception
 
 class MainActivity : CartoonAbadActivity(), DrawerLocker {
@@ -26,11 +32,16 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val payment: Payment by inject()
+    private lateinit var paymentConnection: Connection
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        checkSubscription()
 
         setSupportActionBar(binding.toolbar)
 
@@ -68,6 +79,34 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         }
     }
 
+    private fun checkSubscription() {
+        paymentConnection = payment.connect {
+            connectionSucceed {
+                payment.getSubscribedProducts {
+                    querySucceed { purchasedItems ->
+                        if (purchasedItems.isNotEmpty()) {
+                            PurchaseContainer.setPurchaseInfo(purchasedItems[0])
+                        }
+                    }
+                    queryFailed {
+
+                    }
+                }
+            }
+            connectionFailed {
+                snackBar(getString(R.string.did_not_connect_to_bazaar))
+            }
+            disconnected {
+            }
+        }
+    }
+
+    private fun snackBar(message: String) {
+        Snackbar.make(
+            binding.contentRootView, message, Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
     private fun rateApp() {
         //cafebazaar rate
         try {
@@ -96,6 +135,11 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         } catch (e: Exception) {
             Timber.e(e)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        paymentConnection.disconnect()
     }
 
     override fun onSupportNavigateUp(): Boolean {
