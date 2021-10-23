@@ -35,5 +35,7 @@
     <string name="success_purchase">اشتراک با موفقیت خریداری شد</string>
     <string name="did_not_connect_to_bazaar">اتصال به بازار برقرار نشد</string>
     <string name="you_have_subscription">شما در حال حاضر اشتراک دارید</string>
+    <string name="you">شما</string>
+    <string name="day_have_subscription">روز اشتراک دارید</string>
 
 </resources>
