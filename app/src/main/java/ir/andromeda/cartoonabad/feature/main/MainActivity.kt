@@ -16,13 +16,18 @@ import timber.log.Timber
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
+import ir.andromeda.cartoonabad.common.MONTHLY
+import ir.andromeda.cartoonabad.common.THREE_MONTH
+import ir.andromeda.cartoonabad.common.YEARLY
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.cafebazaar.poolakey.Connection
 import ir.cafebazaar.poolakey.Payment
 import org.koin.android.ext.android.inject
 import java.lang.Exception
+import java.util.*
 
 class MainActivity : CartoonAbadActivity(), DrawerLocker {
 
@@ -86,6 +91,10 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
                     querySucceed { purchasedItems ->
                         if (purchasedItems.isNotEmpty()) {
                             PurchaseContainer.setPurchaseInfo(purchasedItems[0])
+                            setSubscriptionDays(
+                                purchasedItems[0].purchaseTime,
+                                purchasedItems[0].productId
+                            )
                         }
                     }
                     queryFailed {
@@ -99,6 +108,23 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
             disconnected {
             }
         }
+    }
+
+    private fun setSubscriptionDays(purchaseTime: Long, orderId: String) {
+        val day: Long = when (orderId) {
+            "rearkneth645thewth56t" -> 365L
+            "erigneotrht6h465ryjry" -> 90L
+            "fdgnsgmsrymsryr6t516rt" -> 30L
+            else -> 0L
+        }
+        val endTime: Long = purchaseTime + (86400000L * day)
+        val startCalendar = Calendar.getInstance()
+        val endCalendar = Calendar.getInstance()
+        endCalendar.timeInMillis = endTime
+        val subscriptionDays =
+            (endCalendar.get(Calendar.DAY_OF_YEAR) - startCalendar.get(Calendar.DAY_OF_YEAR)).toString()
+        binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays).text =
+            getString(R.string.you) + " " + subscriptionDays + " " + getString(R.string.day_have_subscription)
     }
 
     private fun snackBar(message: String) {
