@@ -1,57 +1,34 @@
 package ir.andromeda.cartoonabad.feature.list
 
-import android.app.DownloadManager
 import android.app.ProgressDialog
+import android.app.Service
 import android.content.*
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.DownloadListener
-import android.webkit.MimeTypeMap
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.helper.widget.MotionEffect.AUTO
 import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.downloader.Error
-import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
-import com.downloader.PRDownloaderConfig
-import com.google.android.exoplayer2.offline.Downloader
-import com.google.android.material.snackbar.Snackbar
-import com.thin.downloadmanager.DefaultRetryPolicy
-import com.thin.downloadmanager.DownloadRequest
-import com.thin.downloadmanager.DownloadStatusListenerV1
-import com.thin.downloadmanager.ThinDownloadManager
-import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
-import ir.andromeda.cartoonabad.common.EXTERNAL_STORAGE_PERMISSION_KEY
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.common.toMB
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
-import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
-import java.io.File
-import java.net.URL
-import java.security.Permission
-import java.util.jar.Manifest
+
 
 class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
@@ -60,11 +37,11 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-
+    private lateinit var serviceIntent: Intent
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-
+    private lateinit var downloadService: DownloadService
     private val args: ListFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -73,6 +50,15 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        serviceIntent = Intent(activity, DownloadService::class.java)
+        activity?.bindService(serviceIntent, serviceConnection, Service.BIND_AUTO_CREATE)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -140,81 +126,65 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-//        val request = DownloadManager.Request(Uri.parse(episode.url))
-//        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+//        var downloadId = 0
+//        val dialog = ProgressDialog(requireContext())
+//        dialog.setTitle("Downloading")
+//        dialog.setMessage("Preparing")
+//        dialog.setCancelable(false)
+//        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+//        dialog.setButton(
+//            DialogInterface.BUTTON_NEGATIVE,
+//            "Cancel"
+//        ) { dialog, _ ->
 //
-//        request.setTitle(episode.name)
-//        request.setDescription(episode.duration)
-//        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//        request.setDestinationInExternalPublicDir(
-//            Environment.DIRECTORY_DOWNLOADS,
-//            "CartoonAbad" + File.separator + episode.url.substringAfterLast("/")
-//        )
+//            dialog.dismiss()
+//            PRDownloader.cancel(downloadId)
+//        }
 //
+//        val config = PRDownloaderConfig.newBuilder()
+//            .setDatabaseEnabled(true)
+//            .build()
+//        PRDownloader.initialize(requireContext(), config)
+
+//        val dirPath =
+//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+
+//                    File.separator + "CartoonAbad" + File.separator
+//        val fileName = episode.url.substringAfterLast('/')
+
+//        downloadId = PRDownloader.download(episode.url, dirPath, fileName)
+//            .build()
+//            .setOnStartOrResumeListener {
+//                dialog.setTitle("Started")
+//                dialog.show()
+//            }
+//            .setOnProgressListener { progress ->
+//                val progressPercent = progress.currentBytes * 100 / progress.totalBytes
+//                dialog.progress = progressPercent.toInt()
+//                dialog.setMessage(toMB(progress.currentBytes) + "/" + toMB(progress.totalBytes))
 //
-//        val manager =
-//            requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//            }
+//            .setOnCancelListener {
+//                Toast.makeText(requireContext(), "Download Canceled", Toast.LENGTH_SHORT).show()
+//            }
+//            .setOnPauseListener {
 //
-//        manager.enqueue(request)
+//            }
+//            .start(object : OnDownloadListener {
+//                override fun onDownloadComplete() {
+//
+//                    Toast.makeText(requireContext(), "Download Complete", Toast.LENGTH_SHORT).show()
+//                    dialog.dismiss()
+//                }
+//
+//                override fun onError(error: Error?) {
+//                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+//
+//                }
+//
+//            })
 
-        var downloadId = 0
-        val dialog = ProgressDialog(requireContext())
-        dialog.setTitle("Downloading")
-        dialog.setMessage("Preparing")
-        dialog.setCancelable(false)
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-        dialog.setButton(
-            DialogInterface.BUTTON_NEGATIVE,
-            "Cancel"
-        ) { dialog, _ ->
-
-            dialog.dismiss()
-            PRDownloader.cancel(downloadId)
-
-
-        }
-
-        val config = PRDownloaderConfig.newBuilder()
-            .setDatabaseEnabled(true)
-            .build()
-        PRDownloader.initialize(requireContext(), config)
-
-        val dirPath =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+
-                    File.separator + "CartoonAbad" + File.separator
-        val fileName = episode.url.substringAfterLast('/')
-
-        downloadId = PRDownloader.download(episode.url, dirPath, fileName)
-            .build()
-            .setOnStartOrResumeListener {
-                dialog.setTitle("Started")
-                dialog.show()
-            }
-            .setOnProgressListener { progress ->
-                val progressPercent = progress.currentBytes * 100 / progress.totalBytes
-                dialog.progress = progressPercent.toInt()
-                dialog.setMessage(toMB(progress.currentBytes) + "/" + toMB(progress.totalBytes))
-
-            }
-            .setOnCancelListener {
-                Toast.makeText(requireContext(), "Download Canceled", Toast.LENGTH_SHORT).show()
-            }
-            .setOnPauseListener {
-
-            }
-            .start(object : OnDownloadListener {
-                override fun onDownloadComplete() {
-
-                    Toast.makeText(requireContext(), "Download Complete", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                }
-
-                override fun onError(error: Error?) {
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-
-                }
-
-            })
+        val downloadService = DownloadService()
+        downloadService.startDownload(episode)
 
     }
 
@@ -247,6 +217,18 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
         if (permissionToRequest.isNotEmpty()) {
             permissionLauncher.launch(permissionToRequest.toTypedArray())
+        }
+
+    }
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as DownloadService.EpisodeBinder
+            downloadService = binder.getService()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+
         }
 
     }
