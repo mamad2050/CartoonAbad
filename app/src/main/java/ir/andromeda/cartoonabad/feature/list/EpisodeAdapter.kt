@@ -22,17 +22,13 @@ class EpisodeAdapter(
 
     ) : RecyclerView.Adapter<EpisodeAdapter.MyViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
         return MyViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_episode, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-
         holder.bindEpisode(episodes[position])
     }
 
@@ -83,7 +79,11 @@ class EpisodeAdapter(
             }
 
             ivDownload.setOnClickListener {
-                listener.onDownloadClick(episode)
+                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition <= 9) {
+                    EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
+                } else {
+                    listener.onDownloadClick(episode)
+                }
             }
 
         }
