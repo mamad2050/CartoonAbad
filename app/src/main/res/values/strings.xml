@@ -33,9 +33,11 @@
     <string name="no_network">اتصال برقرار نیست !</string>
     <string name="retry">تلاش مجدد</string>
     <string name="success_purchase">اشتراک با موفقیت خریداری شد</string>
-    <string name="did_not_connect_to_bazaar">اتصال به بازار برقرار نشد</string>
     <string name="you_have_subscription">شما در حال حاضر اشتراک دارید</string>
     <string name="you">شما</string>
     <string name="day_have_subscription">روز اشتراک دارید</string>
+    <string name="unknown_error">خطای نامشخص</string>
+    <string name="connection_to_bazaar_failed">اتصال به بازار برقرار نشد لطفا وارد حساب کاربری خود در بازار شوید</string>
+    <string name="purchase_failed">خرید اشتراک ناموفق بود</string>
 
 </resources>

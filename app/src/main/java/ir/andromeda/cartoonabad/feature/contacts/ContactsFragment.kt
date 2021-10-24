@@ -12,9 +12,13 @@ import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
+import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -96,6 +100,24 @@ class ContactsFragment : CartoonAbadFragment() {
         (activity as DrawerLocker).setDrawerLocked(true)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showError(cartoonAbadEvent: CartoonAbadEvent) {
+        when (cartoonAbadEvent.type) {
+            CartoonAbadEvent.Type.SIMPLE -> snackBar(
+                cartoonAbadEvent.stringMessage
+                    ?: getString(cartoonAbadEvent.resMessage)
+            )
+
+        }
+
+    }
+
+    private fun snackBar(message: String) {
+        Snackbar.make(
+            activity?.findViewById(R.id.contentRootView) as View, message, Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
     private fun setAutoTextViewValues() {
         val topics: MutableList<String> = ArrayList()
         topics.add(getString(R.string.error_in_purchase))
@@ -108,10 +130,15 @@ class ContactsFragment : CartoonAbadFragment() {
         binding.autoTvTopic.setAdapter(adapter)
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
 
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
+        EventBus.getDefault().unregister(this)
     }
 
     fun emptyAllFields() {

@@ -17,6 +17,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.common.MONTHLY
@@ -70,7 +71,12 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
                     navController.navigate(R.id.navigateToContactsFragment)
                 }
                 R.id.downloadedFragment -> {
-                    navController.navigate(R.id.navigateToDownloadedFragment)
+                    if (PurchaseContainer.purchaseInfo == null) {
+                        //TODO show dialog and bring to PurchaseFragment
+                        snackBar("پرداخت کن عههههه")
+                    } else {
+                        navController.navigate(R.id.navigateToDownloadedFragment)
+                    }
                 }
                 R.id.purchaseFragment -> {
                     navController.navigate(R.id.navigateToPurchaseFragment)
@@ -98,12 +104,12 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
                         }
                     }
                     queryFailed {
-
+                        snackBar(getString(R.string.connection_to_bazaar_failed))
                     }
                 }
             }
             connectionFailed {
-                snackBar(getString(R.string.did_not_connect_to_bazaar))
+                snackBar(getString(R.string.install_bazaar_app))
             }
             disconnected {
             }
@@ -125,6 +131,9 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
             (endCalendar.get(Calendar.DAY_OF_YEAR) - startCalendar.get(Calendar.DAY_OF_YEAR)).toString()
         binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays).text =
             getString(R.string.you) + " " + subscriptionDays + " " + getString(R.string.day_have_subscription)
+        binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays)
+            .setTextColor(ContextCompat.getColor(this, R.color.green))
+
     }
 
     private fun snackBar(message: String) {
@@ -175,9 +184,9 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
 
     override fun setDrawerLocked(shouldLock: Boolean) {
         if (shouldLock) {
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         } else {
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
     }
 

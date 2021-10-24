@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
@@ -13,6 +12,7 @@ import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.MONTHLY
 import ir.andromeda.cartoonabad.common.THREE_MONTH
 import ir.andromeda.cartoonabad.common.YEARLY
+import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
@@ -20,8 +20,10 @@ import ir.cafebazaar.poolakey.Connection
 import ir.cafebazaar.poolakey.ConnectionState
 import ir.cafebazaar.poolakey.Payment
 import ir.cafebazaar.poolakey.request.PurchaseRequest
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
-import retrofit2.http.FormUrlEncoded
 
 class PurchaseFragment : CartoonAbadFragment() {
 
@@ -106,6 +108,7 @@ class PurchaseFragment : CartoonAbadFragment() {
             connectionSucceed {
             }
             connectionFailed {
+                snackBar(getString(R.string.install_bazaar_app))
             }
             disconnected {
             }
@@ -131,7 +134,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
             }
             failedToBeginFlow {
-
+                snackBar(getString(R.string.purchase_failed))
             }
         }
     }
@@ -147,7 +150,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
             }
             purchaseFailed {
-
+                snackBar(getString(R.string.purchase_failed))
             }
         }
 

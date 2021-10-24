@@ -3,6 +3,7 @@ package ir.andromeda.cartoonabad.common
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 abstract class CartoonAbadCompletableObserver(private val compositeDisposable: CompositeDisposable) :
@@ -12,6 +13,7 @@ abstract class CartoonAbadCompletableObserver(private val compositeDisposable: C
     }
 
     override fun onError(e: Throwable) {
+        EventBus.getDefault().post(CartoonAbadExceptionMapper.map(e))
         Timber.e(e)
     }
 }

@@ -22,7 +22,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/no_account"
-        android:textAppearance="?textAppearanceBody1"
-        android:textColor="@android:color/holo_green_light" />
+        android:textAppearance="?textAppearanceBody1" />
 
 </LinearLayout>

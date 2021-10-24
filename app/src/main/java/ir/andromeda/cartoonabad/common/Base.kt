@@ -1,19 +1,26 @@
 package ir.andromeda.cartoonabad.common
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.data.EmptyState
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.lang.IllegalStateException
 
 
@@ -22,7 +29,6 @@ abstract class CartoonAbadFragment() : Fragment(), CartoonAbadView {
         get() = view as CoordinatorLayout
     override val viewContext: Context?
         get() = context
-
 }
 
 abstract class CartoonAbadActivity() : AppCompatActivity(), CartoonAbadView {

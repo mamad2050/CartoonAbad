@@ -18,13 +18,19 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.downloader.PRDownloader
+import com.google.android.material.snackbar.Snackbar
+import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -58,7 +64,29 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         serviceIntent = Intent(activity, DownloadService::class.java)
         activity?.bindService(serviceIntent, serviceConnection, Service.BIND_AUTO_CREATE)
 
+        EventBus.getDefault().register(this)
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showError(cartoonAbadEvent: CartoonAbadEvent) {
+        when (cartoonAbadEvent.type) {
+            CartoonAbadEvent.Type.SIMPLE -> snackBar(
+                cartoonAbadEvent.stringMessage
+                    ?: getString(cartoonAbadEvent.resMessage)
+            )
+
+            CartoonAbadEvent.Type.PURCHASE -> {
+                //TODO show dialog and bring to PurchaseFragment
+                snackBar("پرداخت کن عههههه")
+            }
+        }
+
+    }
+
+    private fun snackBar(message: String) {
+        Snackbar.make(
+            activity?.findViewById(R.id.contentRootView) as View, message, Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,6 +122,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         super.onStop()
         _binding = null
         (activity as DrawerLocker).setDrawerLocked(false)
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onEpisodeClick(episode: Episode) {
