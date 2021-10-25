@@ -39,5 +39,7 @@
     <string name="unknown_error">خطای نامشخص</string>
     <string name="connection_to_bazaar_failed">اتصال به بازار برقرار نشد لطفا وارد حساب کاربری خود در بازار شوید</string>
     <string name="purchase_failed">خرید اشتراک ناموفق بود</string>
+    <string name="go_to_purchase_fragment">رفتن به صفحه اشتراک ها</string>
+    <string name="dialog_purchase_help_text">برای اینکه بتونی به تمام کارتون ها و قابلیت دانلود کارتون ها دسترسی پیدا کنی باید اشتراک برنامه رو بخری :)</string>
 
 </resources>

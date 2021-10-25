@@ -156,6 +156,11 @@ class PurchaseFragment : CartoonAbadFragment() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)

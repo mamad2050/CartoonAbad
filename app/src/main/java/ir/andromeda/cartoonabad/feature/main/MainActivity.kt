@@ -18,6 +18,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.common.MONTHLY
@@ -72,8 +73,7 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
                 }
                 R.id.downloadedFragment -> {
                     if (PurchaseContainer.purchaseInfo == null) {
-                        //TODO show dialog and bring to PurchaseFragment
-                        snackBar("پرداخت کن عههههه")
+                        navController.navigate(R.id.navigateToPurchaseAlertDialog)
                     } else {
                         navController.navigate(R.id.navigateToDownloadedFragment)
                     }

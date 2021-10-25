@@ -25,6 +25,9 @@
         <action
             android:id="@+id/navigateToContactsFragment"
             app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/navigateToPurchaseAlertDialog"
+            app:destination="@id/purchaseAlertDialog" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -47,6 +50,9 @@
         <action
             android:id="@+id/action_listFragment_to_downloadedFragment"
             app:destination="@id/downloadedFragment" />
+        <action
+            android:id="@+id/navigateToPurchaseAlertDialog"
+            app:destination="@id/purchaseAlertDialog" />
     </fragment>
     <fragment
         android:id="@+id/purchaseFragment"
@@ -58,4 +64,12 @@
         android:name="ir.andromeda.cartoonabad.feature.contacts.ContactsFragment"
         android:label="@string/contacts"
         tools:layout="@layout/fragment_contacts" />
+    <dialog
+        android:id="@+id/purchaseAlertDialog"
+        android:name="ir.andromeda.cartoonabad.feature.purchase.PurchaseAlertDialog"
+        android:label="PurchaseAlertDialog" >
+        <action
+            android:id="@+id/action_purchaseAlertDialog_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </dialog>
 </navigation>

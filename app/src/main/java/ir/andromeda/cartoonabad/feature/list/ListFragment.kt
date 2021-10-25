@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.helper.widget.MotionEffect.AUTO
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -76,8 +77,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             )
 
             CartoonAbadEvent.Type.PURCHASE -> {
-                //TODO show dialog and bring to PurchaseFragment
-                snackBar("پرداخت کن عههههه")
+                findNavController().navigate(R.id.navigateToPurchaseAlertDialog)
             }
         }
 
