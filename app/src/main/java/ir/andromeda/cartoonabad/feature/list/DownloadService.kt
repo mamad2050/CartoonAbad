@@ -29,9 +29,6 @@ class DownloadService(
             .setDatabaseEnabled(true)
             .build()
         PRDownloader.initialize(baseContext, config)
-
-
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -44,12 +41,11 @@ class DownloadService(
 
 
     override fun onDownloadComplete() {
-//        Toast.makeText(baseContext, "COMPLETE", Toast.LENGTH_SHORT).show()
+
 
     }
 
     override fun onError(error: Error?) {
-//        Toast.makeText(baseContext, "ERROR", Toast.LENGTH_SHORT).show()
 
     }
 
