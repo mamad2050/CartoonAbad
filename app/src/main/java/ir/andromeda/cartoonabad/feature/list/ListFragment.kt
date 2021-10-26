@@ -1,5 +1,7 @@
 package ir.andromeda.cartoonabad.feature.list
 
+import android.app.Notification
+import android.app.NotificationManager
 import android.app.ProgressDialog
 import android.app.Service
 import android.content.*
@@ -10,19 +12,20 @@ import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.helper.widget.MotionEffect.AUTO
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.downloader.PRDownloader
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
@@ -36,8 +39,8 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-
-class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
+class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
+    DownloadService.OnDownloadEventListener {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
@@ -143,10 +146,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             ) {
                 startDownloading(episode)
             } else {
-
                 requestPermissions()
             }
-
         } else {
             startDownloading(episode)
         }
@@ -215,6 +216,34 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         val downloadService = DownloadService()
         downloadService.startDownload(episode)
 
+        downloadService.listener = this
+//                    initPendingIntent()
+
+//        notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+//
+////                        .setContentIntent(pendingIntent)
+//            .setContentTitle("app")
+//            .setOnlyAlertOnce(true)
+//            .setPriority(Notification.PRIORITY_HIGH)
+//            .build()
+
+//        private lateinit var notification: Notification
+//        private lateinit var notificationManager: NotificationManager
+//        private lateinit var intent: Intent
+////    private lateinit var pendingIntent: PendingIntent
+//        notificationManager = getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
+//        notificationManager.notify(10000, notification)
+//        startForeground(10000, notification)
+
+        //    private fun initPendingIntent() {
+//
+//        intent = Intent(this, MainActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+//
+//        pendingIntent = PendingIntent.getActivity(this, PENDING_INTENT_CODE, intent, 0)
+//
+//    }
+
     }
 
     private fun requestPermissions() {
@@ -259,6 +288,25 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         override fun onServiceDisconnected(name: ComponentName?) {
 
         }
+
+    }
+
+    override fun onDownloadStarted() {
+        Toast.makeText(requireContext(),"Start",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDownloadCompleted() {
+        Toast.makeText(requireContext(),"Complete",Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onDownloadCanceled() {
+        Toast.makeText(requireContext(),"Cancel",Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onErrorDownload() {
+        Toast.makeText(requireContext(),"Error",Toast.LENGTH_SHORT).show()
 
     }
 

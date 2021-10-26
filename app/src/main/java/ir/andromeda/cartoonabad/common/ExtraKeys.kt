@@ -3,3 +3,6 @@ package ir.andromeda.cartoonabad.common
 const val EXTRA_KEY_DATA = "data"
 const val EXTRA_KEY_ID = "id"
 const val EXTERNAL_STORAGE_PERMISSION_KEY = 1000
+const val PENDING_INTENT_CODE = 100
+const val NOTIFICATION_CHANNEL_ID = "CHANNEL"
+const val NOTIFICATION_CHANNEL_NAME = "DOWNLOAD_CHANNEL"
