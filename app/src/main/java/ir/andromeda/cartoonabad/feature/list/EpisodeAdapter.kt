@@ -54,7 +54,7 @@ class EpisodeAdapter(
             else
                 ivFavorite.setImageResource(R.drawable.ic_baseline_star_border_24)
 
-            if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 9) {
+            if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 4) {
                 ivFavorite.visibility = View.INVISIBLE
                 ivDownload.visibility = View.INVISIBLE
                 ivLock.visibility = View.VISIBLE
@@ -71,7 +71,7 @@ class EpisodeAdapter(
             }
 
             itemView.setOnClickListener {
-                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 9) {
+                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 4) {
                     EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
                 } else {
                     listener.onEpisodeClick(episode)
@@ -79,7 +79,7 @@ class EpisodeAdapter(
             }
 
             ivDownload.setOnClickListener {
-                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition <= 9) {
+                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition <= 4) {
                     EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
                 } else {
                     listener.onDownloadClick(episode)
