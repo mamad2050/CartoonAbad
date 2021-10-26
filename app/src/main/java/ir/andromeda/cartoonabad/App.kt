@@ -1,8 +1,15 @@
 package ir.andromeda.cartoonabad
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import androidx.room.Room
+import com.downloader.PRDownloader
+import com.downloader.PRDownloaderConfig
 import com.facebook.drawee.backends.pipeline.Fresco
+import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
+import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_NAME
 import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
@@ -38,7 +45,22 @@ class App : Application() {
 
         Fresco.initialize(this)
 
+     val config = PRDownloaderConfig.newBuilder()
+            .setDatabaseEnabled(true)
+            .build()
+        PRDownloader.initialize(baseContext, config)
+
         Timber.plant(Timber.DebugTree())
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+            val notificationChannel =
+                NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID,
+                    NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH
+                )
+        }
 
         val myModules = module {
 
@@ -69,6 +91,7 @@ class App : Application() {
                     )
                 )
             }
+
 
             viewModel { HomeViewModel(get()) }
             viewModel { (animationId: String) -> ListViewModel(animationId, get(), get()) }
