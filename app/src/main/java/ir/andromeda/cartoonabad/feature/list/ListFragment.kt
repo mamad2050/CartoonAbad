@@ -17,15 +17,18 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.exoplayer2.offline.DownloadService.startForeground
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
+import ir.andromeda.cartoonabad.common.toMB
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
@@ -53,6 +56,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var downloadService: DownloadService
     private val args: ListFragmentArgs by navArgs()
+    private lateinit var notification: NotificationCompat.Builder
+    private lateinit var notificationManager: NotificationManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -156,93 +161,13 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
 
     private fun startDownloading(episode: Episode) {
 
-//        var downloadId = 0
-//        val dialog = ProgressDialog(requireContext())
-//        dialog.setTitle("Downloading")
-//        dialog.setMessage("Preparing")
-//        dialog.setCancelable(false)
-//        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-//        dialog.setButton(
-//            DialogInterface.BUTTON_NEGATIVE,
-//            "Cancel"
-//        ) { dialog, _ ->
-//
-//            dialog.dismiss()
-//            PRDownloader.cancel(downloadId)
-//        }
-//
-//        val config = PRDownloaderConfig.newBuilder()
-//            .setDatabaseEnabled(true)
-//            .build()
-//        PRDownloader.initialize(requireContext(), config)
-
-//        val dirPath =
-//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath+
-//                    File.separator + "CartoonAbad" + File.separator
-//        val fileName = episode.url.substringAfterLast('/')
-
-//        downloadId = PRDownloader.download(episode.url, dirPath, fileName)
-//            .build()
-//            .setOnStartOrResumeListener {
-//                dialog.setTitle("Started")
-//                dialog.show()
-//            }
-//            .setOnProgressListener { progress ->
-//                val progressPercent = progress.currentBytes * 100 / progress.totalBytes
-//                dialog.progress = progressPercent.toInt()
-//                dialog.setMessage(toMB(progress.currentBytes) + "/" + toMB(progress.totalBytes))
-//
-//            }
-//            .setOnCancelListener {
-//                Toast.makeText(requireContext(), "Download Canceled", Toast.LENGTH_SHORT).show()
-//            }
-//            .setOnPauseListener {
-//
-//            }
-//            .start(object : OnDownloadListener {
-//                override fun onDownloadComplete() {
-//
-//                    Toast.makeText(requireContext(), "Download Complete", Toast.LENGTH_SHORT).show()
-//                    dialog.dismiss()
-//                }
-//
-//                override fun onError(error: Error?) {
-//                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-//
-//                }
-//
-//            })
-
         val downloadService = DownloadService()
         downloadService.startDownload(episode)
 
         downloadService.listener = this
-//                    initPendingIntent()
 
-//        notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                        .setContentIntent(pendingIntent)
-//            .setContentTitle("app")
-//            .setOnlyAlertOnce(true)
-//            .setPriority(Notification.PRIORITY_HIGH)
-//            .build()
-
-//        private lateinit var notification: Notification
-//        private lateinit var notificationManager: NotificationManager
-//        private lateinit var intent: Intent
-////    private lateinit var pendingIntent: PendingIntent
-//        notificationManager = getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
-//        notificationManager.notify(10000, notification)
-//        startForeground(10000, notification)
-
-        //    private fun initPendingIntent() {
-//
-//        intent = Intent(this, MainActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-//
-//        pendingIntent = PendingIntent.getActivity(this, PENDING_INTENT_CODE, intent, 0)
-//
-//    }
+        notificationManager =
+            requireActivity().getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
 
     }
 
@@ -292,22 +217,43 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
     }
 
     override fun onDownloadStarted() {
-        Toast.makeText(requireContext(),"Start",Toast.LENGTH_SHORT).show()
+
+        Toast.makeText(requireContext(), "Start", Toast.LENGTH_SHORT).show()
+
+        notification = NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID)
+        notification.setContentTitle("cartoonAbad")
+        notification.setSmallIcon(R.mipmap.ic_launcher)
+        notification.setContentText("Downloading...")
+        notification.setOnlyAlertOnce(true)
+        notification.addAction(1, "Cancel", null)
+        notification.setStyle(NotificationCompat.BigTextStyle())
+
+        notificationManager.notify(100, notification.build())
+
+
     }
 
     override fun onDownloadCompleted() {
-        Toast.makeText(requireContext(),"Complete",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Complete", Toast.LENGTH_SHORT).show()
 
     }
 
     override fun onDownloadCanceled() {
-        Toast.makeText(requireContext(),"Cancel",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
 
     }
 
     override fun onErrorDownload() {
-        Toast.makeText(requireContext(),"Error",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
 
     }
 
+    override fun onProgressListener(percent: String, p: Long) {
+
+//        dialog.progress = p.toInt()
+//        dialog.setMessage(percent)
+        notification.setProgress(100, p.toInt(), false)
+        notificationManager.notify(100, notification.build())
+
+    }
 }
