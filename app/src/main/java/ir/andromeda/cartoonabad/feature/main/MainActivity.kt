@@ -123,12 +123,12 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
             "fdgnsgmsrymsryr6t516rt" -> 30L
             else -> 0L
         }
-        val endTime: Long = purchaseTime + (86400000L * day)
+        val endTime: Long = purchaseTime + (86400000L * (day+1))
         val startCalendar = Calendar.getInstance()
         val endCalendar = Calendar.getInstance()
         endCalendar.timeInMillis = endTime
         val subscriptionDays =
-            (endCalendar.get(Calendar.DAY_OF_YEAR) - startCalendar.get(Calendar.DAY_OF_YEAR)).toString()
+            ((endCalendar.timeInMillis - startCalendar.timeInMillis) / 86400000L).toString()
         binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays).text =
             getString(R.string.you) + " " + subscriptionDays + " " + getString(R.string.day_have_subscription)
         binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays)
