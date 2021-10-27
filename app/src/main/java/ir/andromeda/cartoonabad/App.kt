@@ -14,6 +14,8 @@ import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
+import ir.andromeda.cartoonabad.data.downloaded.DownloadedEpisodeRepository
+import ir.andromeda.cartoonabad.data.downloaded.DownloadedEpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource
@@ -23,6 +25,7 @@ import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
 import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
+import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.list.ListViewModel
@@ -80,6 +83,7 @@ class App : Application() {
             }
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
+            factory<DownloadedEpisodeRepository> { DownloadedEpisodeRepositoryImpl(get<AppDataBase>().downloadDao()) }
 
             single {
                 Payment(
@@ -99,6 +103,7 @@ class App : Application() {
             viewModel { (animationId: String) -> ListViewModel(animationId, get(), get()) }
             viewModel { FavoriteViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
+            viewModel { DownloadedViewModel(get()) }
         }
 
         startKoin {

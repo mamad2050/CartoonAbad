@@ -8,17 +8,31 @@ import android.view.ViewGroup
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.data.episode.Episode
+import ir.andromeda.cartoonabad.databinding.FragmentDownloadedBinding
+import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
+import ir.andromeda.cartoonabad.feature.favorite.FavoriteAdapter
+import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
+import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.Error
 
 class DownloadedFragment() : CartoonAbadFragment() {
 
+    private var _binding: FragmentDownloadedBinding? = null
+    private val binding  get() =  _binding!!
+    private var adapter: DownloadedAdapter? = null
+    private val imageLoadingService: ImageLoadingService by inject()
+    private val viewModel: FavoriteViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_downloaded, container, false)
+        _binding = FragmentDownloadedBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,107 +41,15 @@ class DownloadedFragment() : CartoonAbadFragment() {
         (activity as DrawerLocker).setDrawerLocked(true)
 
 
-//        fetchConfiguration = FetchConfiguration.Builder(requireContext())
-//            .setDownloadConcurrentLimit(1)
-//            .build()
-//
-//        fetch = Fetch.Impl.getInstance(fetchConfiguration)
-//
-//        val address = "/downloads/test.txt"
-//        val request = Request(episode.url, address)
-//
-//        request.priority = Priority.HIGH
-//        request.networkType = NetworkType.ALL
-//        request.addHeader("clientKey", "SD78DF93_3947&MVNGHE1WONG")
-//        fetch.enqueue(request,
-//            {
-//            }
-//        ) {
-//        }
-//
-//        val fetchListener = object : FetchListener {
-//            override fun onAdded(download: Download) {
-//
-//            }
-//
-//            override fun onCancelled(download: Download) {
-//
-//            }
-//
-//            override fun onCompleted(download: Download) {
-//
-//            }
-//
-//            override fun onDeleted(download: Download) {
-//
-//            }
-//
-//            override fun onDownloadBlockUpdated(
-//                download: Download,
-//                downloadBlock: DownloadBlock,
-//                totalBlocks: Int
-//            ) {
-//
-//            }
-//
-//            override fun onError(
-//                download: Download,
-//                error: com.tonyodev.fetch2.Error,
-//                throwable: Throwable?
-//            ) {
-//                val error = download.error
-//            }
-//
-//            override fun onPaused(download: Download) {
-//
-//            }
-//
-//            override fun onProgress(
-//                download: Download,
-//                etaInMilliSeconds: Long,
-//                downloadedBytesPerSecond: Long
-//            ) {
-//                if (request.id === download.id) {
-////                    updateDownload(download, etaInMilliSeconds)
-//                }
-//                val progress: Int = download.progress
-//            }
-//
-//            override fun onQueued(download: Download, waitingOnNetwork: Boolean) {
-//                if (request.id == download.id) {
-////                    showDownloadInList(download);
-//                }
-//            }
-//
-//            override fun onRemoved(download: Download) {
-//
-//            }
-//
-//            override fun onResumed(download: Download) {
-//
-//            }
-//
-//            override fun onStarted(
-//                download: Download,
-//                downloadBlocks: List<DownloadBlock>,
-//                totalBlocks: Int
-//            ) {
-//
-//            }
-//
-//            override fun onWaitingNetwork(download: Download) {
-//
-//            }
-//
-//        }
-//
-//        fetch.addListener(fetchListener)
-
-
     }
 
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
