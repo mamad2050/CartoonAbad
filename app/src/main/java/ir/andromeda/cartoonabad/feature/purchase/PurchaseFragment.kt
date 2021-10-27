@@ -48,7 +48,7 @@ class PurchaseFragment : CartoonAbadFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
+        startPaymentConnection()
 
         viewModel.progressBarLiveData.observe(viewLifecycleOwner){
             setProgressIndicator(it)
@@ -57,18 +57,15 @@ class PurchaseFragment : CartoonAbadFragment() {
         viewModel.subscriptionsLiveData.observe(viewLifecycleOwner){
 
             binding.txtDurationMonthly.text = it[0].duration
-            binding.txtPriceMonthly.text = formatPrice(it[0].price.toInt())
+            binding.txtPriceMonthly.text = formatPrice(it[0].price)
 
             binding.txtDurationSeasonly.text = it[1].duration
-            binding.txtPriceSeasonly.text = formatPrice(it[1].price.toInt())
+            binding.txtPriceSeasonly.text = formatPrice(it[1].price)
 
             binding.txtDurationYearly.text = it[2].duration
-            binding.txtPriceYearly.text = formatPrice(it[2].price.toInt())
-
-            startPaymentConnection()
+            binding.txtPriceYearly.text = formatPrice(it[2].price)
 
             customButtons()
-
 
         }
 
