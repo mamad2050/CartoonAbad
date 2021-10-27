@@ -36,7 +36,6 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,7 +49,6 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
                 binding.rvFavorites.adapter = adapter
                 Timber.i(it.toString())
             }
-
         }
 
         viewModel.emptyStateLiveData.observe(viewLifecycleOwner) { emptyState ->
@@ -58,7 +56,6 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
                showEmptyState(R.layout.view_default_empty_state)
             }
         }
-
     }
 
     override fun onDestroy() {
