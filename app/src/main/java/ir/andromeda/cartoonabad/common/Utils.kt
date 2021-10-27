@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.os.Build
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
@@ -15,6 +17,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.text.DecimalFormat
 import java.util.*
 
 fun <T> Single<T>.asyncNetworkRequest(): Single<T> {
@@ -71,6 +74,31 @@ fun View.implementSpringAnimationTrait() {
 
  fun toMB(bytes: Long): String? {
     return java.lang.String.format(Locale.ENGLISH, "%.2fMb", bytes / (1024.00 * 1024.00))
+}
+
+
+fun formatPrice(
+    price: Number,
+    unitRelativeSizeFactor: Float = 0.9f
+): SpannableString {
+    val currencyLabel = "تومان"
+    val spannableString = SpannableString("${decimalFormatter(price.toInt())} $currencyLabel")
+    spannableString.setSpan(
+        RelativeSizeSpan(unitRelativeSizeFactor),
+        spannableString.indexOf(currencyLabel),
+        spannableString.length,
+        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    return spannableString
+}
+
+
+
+fun decimalFormatter(price: Int): String {
+
+    val decimalFormat = DecimalFormat("###,###")
+    return decimalFormat.format(price)
+
 }
 
 const val YEARLY = 1

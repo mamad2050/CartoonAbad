@@ -24,11 +24,16 @@ import ir.andromeda.cartoonabad.data.message.MessageRepositoryImpl
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
+import ir.andromeda.cartoonabad.data.subscription.SubscriptionDataSource
+import ir.andromeda.cartoonabad.data.subscription.SubscriptionRemoteDataSource
+import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepository
+import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepositoryImpl
 import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
 import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.list.ListViewModel
+import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -78,12 +83,16 @@ class App : Application() {
             factory<SeasonRepository> {
                 SeasonRepositoryImpl(
                     SeasonRemoteDataSource(get()),
-                    get<AppDataBase>().episodeDao(),
+                    get<AppDataBase>().episodeDao()
                 )
             }
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
+
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
+
             factory<DownloadedRepository> { DownloadedRepositoryImpl(get<AppDataBase>().downloadDao()) }
+
+            factory<SubscriptionRepository> {SubscriptionRepositoryImpl(SubscriptionRemoteDataSource(get())) }
 
             single {
                 Payment(
@@ -104,6 +113,7 @@ class App : Application() {
             viewModel { FavoriteViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
+            viewModel { PurchaseViewModel(get()) }
         }
 
         startKoin {

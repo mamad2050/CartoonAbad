@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadFragment
-import ir.andromeda.cartoonabad.common.MONTHLY
-import ir.andromeda.cartoonabad.common.THREE_MONTH
-import ir.andromeda.cartoonabad.common.YEARLY
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
@@ -24,6 +21,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PurchaseFragment : CartoonAbadFragment() {
 
@@ -36,6 +34,8 @@ class PurchaseFragment : CartoonAbadFragment() {
     private val payment: Payment by inject()
     private lateinit var paymentConnection: Connection
 
+    private val viewModel : PurchaseViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,9 +47,30 @@ class PurchaseFragment : CartoonAbadFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startPaymentConnection()
 
-        customButtons()
+
+
+        viewModel.progressBarLiveData.observe(viewLifecycleOwner){
+            setProgressIndicator(it)
+        }
+
+        viewModel.subscriptionsLiveData.observe(viewLifecycleOwner){
+
+            binding.txtDurationMonthly.text = it[0].duration
+            binding.txtPriceMonthly.text = formatPrice(it[0].price.toInt())
+
+            binding.txtDurationSeasonly.text = it[1].duration
+            binding.txtPriceSeasonly.text = formatPrice(it[1].price.toInt())
+
+            binding.txtDurationYearly.text = it[2].duration
+            binding.txtPriceYearly.text = formatPrice(it[2].price.toInt())
+
+            startPaymentConnection()
+
+            customButtons()
+
+
+        }
 
         binding.btnPurchase.setOnClickListener {
             if (PurchaseContainer.purchaseInfo == null) {

@@ -8,6 +8,7 @@ import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.message.Message
 import ir.andromeda.cartoonabad.data.season.Season
+import ir.andromeda.cartoonabad.data.subscription.Subscription
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -31,6 +32,9 @@ interface ApiService {
         @Field("message") message: String,
         @Field("email") email: String
     ): Single<MessageResponse>
+
+    @GET("getSubscriptions.php")
+    fun getSubscriptions() : Single<List<Subscription>>
 
 
 }

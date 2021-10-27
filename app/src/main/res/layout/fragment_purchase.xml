@@ -47,20 +47,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <TextView
+                    android:id="@+id/txt_price_yearly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
-                    android:text="95,000 تومان"
                     android:textAppearance="?textAppearanceHeadline6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/txt_duration_yearly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="@string/yearly"
                     android:textAppearance="?textAppearanceHeadline6"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -79,20 +79,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/layoutYearly">
 
                 <TextView
+                    android:id="@+id/txt_price_seasonly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
-                    android:text="35,000 تومان"
                     android:textAppearance="?textAppearanceHeadline6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/txt_duration_seasonly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="@string/three_month"
                     android:textAppearance="?textAppearanceHeadline6"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -111,20 +111,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/layoutThreeMonth">
 
                 <TextView
+                    android:id="@+id/txt_price_monthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
-                    android:text="15,000 تومان"
+
                     android:textAppearance="?textAppearanceHeadline6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/txt_duration_monthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:text="@string/monthly"
                     android:textAppearance="?textAppearanceHeadline6"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
