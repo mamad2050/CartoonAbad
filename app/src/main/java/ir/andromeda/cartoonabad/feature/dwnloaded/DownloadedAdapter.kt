@@ -7,15 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedEpisode
-import ir.andromeda.cartoonabad.data.episode.Episode
-import ir.andromeda.cartoonabad.feature.favorite.FavoriteAdapter
+import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
 class DownloadedAdapter(
 
-    private val episodes: MutableList<DownloadedEpisode>,
+    private val episodes: MutableList<Downloaded>,
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener
 
@@ -40,7 +38,7 @@ class DownloadedAdapter(
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
         private val ivDelete = itemView.findViewById<ImageView>(R.id.iv_episode_delete)
 
-        fun bindEpisode(episode: DownloadedEpisode) {
+        fun bindEpisode(episode: Downloaded) {
 
             imageLoadingService.load(ivImage, episode.image)
             tvName.text = episode.name
@@ -52,7 +50,6 @@ class DownloadedAdapter(
                 listener.onRemoveClick(episode)
                 episodes.remove(episode)
                 notifyItemRemoved(absoluteAdapterPosition)
-
             }
 
         }
@@ -60,9 +57,9 @@ class DownloadedAdapter(
 
     interface EpisodeEventListener {
 
-        fun onRemoveClick(episode: DownloadedEpisode)
+        fun onRemoveClick(episode: Downloaded)
 
-        fun onEpisodeClick(episode: DownloadedEpisode)
+        fun onEpisodeClick(episode: Downloaded)
 
     }
 }

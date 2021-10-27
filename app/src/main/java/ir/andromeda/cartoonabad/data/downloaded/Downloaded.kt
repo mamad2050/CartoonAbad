@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "downloads")
 @Parcelize
-data class DownloadedEpisode(
+data class Downloaded(
     val duration: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int,
@@ -19,4 +19,5 @@ data class DownloadedEpisode(
     val path: String
 ) : Parcelable {
     var isDownload = false
+
 }

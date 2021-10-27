@@ -1,8 +1,6 @@
 package ir.andromeda.cartoonabad.feature.list
 
-import android.app.Notification
 import android.app.NotificationManager
-import android.app.ProgressDialog
 import android.app.Service
 import android.content.*
 import android.content.pm.PackageManager
@@ -17,19 +15,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.exoplayer2.offline.DownloadService.startForeground
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
-import ir.andromeda.cartoonabad.common.toMB
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
+import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
@@ -213,15 +209,14 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
         override fun onServiceDisconnected(name: ComponentName?) {
 
         }
-
     }
 
-    override fun onDownloadStarted() {
+    override fun onDownloadStarted(episodeName: String) {
 
         Toast.makeText(requireContext(), "Start", Toast.LENGTH_SHORT).show()
 
         notification = NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID)
-        notification.setContentTitle("cartoonAbad")
+        notification.setContentTitle(episodeName)
         notification.setSmallIcon(R.mipmap.ic_launcher)
         notification.setContentText("Downloading...")
         notification.setOnlyAlertOnce(true)
@@ -233,9 +228,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
 
     }
 
-    override fun onDownloadCompleted() {
+    override fun onDownloadCompleted(downloadedEpisode :Downloaded) {
         Toast.makeText(requireContext(), "Complete", Toast.LENGTH_SHORT).show()
-
+        viewModel.addEpisodeToDownloads(downloadedEpisode)
     }
 
     override fun onDownloadCanceled() {
@@ -253,6 +248,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
 //        dialog.progress = p.toInt()
 //        dialog.setMessage(percent)
         notification.setProgress(100, p.toInt(), false)
+        notification.setContentText(percent)
         notificationManager.notify(100, notification.build())
 
     }

@@ -7,13 +7,14 @@ import android.os.Environment
 import android.os.IBinder
 import com.downloader.*
 import ir.andromeda.cartoonabad.common.toMB
+import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import java.io.File
 
 
 class DownloadService(
 
-) : Service(), OnDownloadListener {
+) : Service() {
 
     private val binder: IBinder = EpisodeBinder()
     private var downloadId = 0
@@ -48,11 +49,13 @@ class DownloadService(
 
     fun startDownload(episode: Episode) {
 
+        val episodePath = episode.url.substringAfterLast('/')
+
         downloadId =
-            PRDownloader.download(episode.url, dirPath, episode.url.substringAfterLast('/'))
+            PRDownloader.download(episode.url, dirPath, episodePath)
                 .build()
                 .setOnStartOrResumeListener {
-                    listener.onDownloadStarted()
+                    listener.onDownloadStarted(episode.name)
                 }
 
                 .setOnProgressListener { progress ->
@@ -70,23 +73,32 @@ class DownloadService(
                 .setOnPauseListener {
 
                 }
-                .start(this)
-    }
+                .start(object : OnDownloadListener {
+                    override fun onDownloadComplete() {
 
+                        val downloaded = Downloaded(
+                            episode.duration,
+                            episode.id,
+                            episode.image,
+                            episode.name,
+                            episode.season_id,
+                            episodePath
+                        )
 
-    override fun onDownloadComplete() {
-        listener.onDownloadCompleted()
+                        listener.onDownloadCompleted(downloaded)
+                    }
 
-    }
+                    override fun onError(error: Error?) {
+                        listener.onErrorDownload()
+                    }
 
-    override fun onError(error: Error?) {
-        listener.onErrorDownload()
+                })
     }
 
     interface OnDownloadEventListener {
 
-        fun onDownloadStarted()
-        fun onDownloadCompleted()
+        fun onDownloadStarted(episodeName: String)
+        fun onDownloadCompleted(downloadedEpisode: Downloaded)
         fun onDownloadCanceled()
         fun onErrorDownload()
         fun onProgressListener(percent: String, p: Long)

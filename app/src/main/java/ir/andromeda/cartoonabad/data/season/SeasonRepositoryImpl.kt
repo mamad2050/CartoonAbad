@@ -5,7 +5,7 @@ import ir.andromeda.cartoonabad.data.episode.EpisodeLocalDataSource
 
 class SeasonRepositoryImpl(
     private val remoteDataSource: SeasonRemoteDataSource,
-    private val localDataSource: EpisodeLocalDataSource
+    private val localDataSource: EpisodeLocalDataSource,
 
 ) : SeasonRepository {
 

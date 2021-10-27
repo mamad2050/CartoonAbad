@@ -6,16 +6,15 @@ import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.EmptyState
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedEpisode
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedEpisodeRepository
-import ir.andromeda.cartoonabad.data.episode.Episode
+import ir.andromeda.cartoonabad.data.downloaded.Downloaded
+import ir.andromeda.cartoonabad.data.downloaded.DownloadedRepository
 import timber.log.Timber
 
-class DownloadedViewModel(private val episodeRepository: DownloadedEpisodeRepository) :
+class DownloadedViewModel(private val repository: DownloadedRepository) :
     CartoonAbadViewModel() {
 
 
-    val downloadedEpisodeLiveData = MutableLiveData<List<DownloadedEpisode>>()
+    val downloadedEpisodeLiveData = MutableLiveData<List<Downloaded>>()
     val emptyStateLiveData = MutableLiveData<EmptyState>()
 
     init {
@@ -23,8 +22,8 @@ class DownloadedViewModel(private val episodeRepository: DownloadedEpisodeReposi
         getDownloadedEpisodes()
     }
 
-    fun removeFromDownloads(episode: DownloadedEpisode) {
-        episodeRepository.deleteFromDownloads(episode)
+    fun removeFromDownloads(episode: Downloaded) {
+        repository.deleteFromDownloads(episode)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                 override fun onComplete() {
@@ -36,11 +35,11 @@ class DownloadedViewModel(private val episodeRepository: DownloadedEpisodeReposi
 
     private fun getDownloadedEpisodes() {
 
-        episodeRepository.getDownloadedEpisodes()
+        repository.getDownloadedEpisodes()
             .asyncNetworkRequest()
             .subscribe(object :
-                CartoonAbadSingleObserver<List<DownloadedEpisode>>(compositeDisposable) {
-                override fun onSuccess(t: List<DownloadedEpisode>) {
+                CartoonAbadSingleObserver<List<Downloaded>>(compositeDisposable) {
+                override fun onSuccess(t: List<Downloaded>) {
                     if (t.isNotEmpty()) {
                         downloadedEpisodeLiveData.value = t
                     } else {
