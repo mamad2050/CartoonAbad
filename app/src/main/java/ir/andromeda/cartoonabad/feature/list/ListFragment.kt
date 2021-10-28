@@ -247,7 +247,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         readPermissionGranted = hasReadPermission
         writePermissionGranted = hasWritePermission
 
-
         val permissionToRequest = mutableListOf<String>()
 
         if (!writePermissionGranted) {
