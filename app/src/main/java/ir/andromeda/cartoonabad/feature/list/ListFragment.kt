@@ -173,7 +173,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             setTitle(episode.name)
             setDescription("CartoonAbad")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setDestinationInExternalPublicDir(
+            setDestinationInExternalFilesDir(requireContext(),
                 Environment.DIRECTORY_DOWNLOADS,"CartoonABad" + File.separator + episode.url.substringAfterLast('/')
             )
 
