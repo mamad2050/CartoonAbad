@@ -10,7 +10,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.databinding.ActivityMainBinding
 import timber.log.Timber
 import android.content.Intent
@@ -21,9 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
-import ir.andromeda.cartoonabad.common.MONTHLY
-import ir.andromeda.cartoonabad.common.THREE_MONTH
-import ir.andromeda.cartoonabad.common.YEARLY
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.cafebazaar.poolakey.Connection
 import ir.cafebazaar.poolakey.Payment
@@ -118,12 +115,12 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
 
     private fun setSubscriptionDays(purchaseTime: Long, orderId: String) {
         val day: Long = when (orderId) {
-            "rearkneth645thewth56t" -> 365L
-            "erigneotrht6h465ryjry" -> 90L
-            "fdgnsgmsrymsryr6t516rt" -> 30L
+            YEARLY_PRODUCT_ID -> 365L
+            THREE_MONTH_PRODUCT_ID -> 90L
+            MONTHLY_PRODUCT_ID -> 30L
             else -> 0L
         }
-        val endTime: Long = purchaseTime + (86400000L * (day+1))
+        val endTime: Long = purchaseTime + (86400000L * (day + 1))
         val startCalendar = Calendar.getInstance()
         val endCalendar = Calendar.getInstance()
         endCalendar.timeInMillis = endTime

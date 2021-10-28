@@ -34,7 +34,7 @@ class PurchaseFragment : CartoonAbadFragment() {
     private val payment: Payment by inject()
     private lateinit var paymentConnection: Connection
 
-    private val viewModel : PurchaseViewModel by viewModel()
+    private val viewModel: PurchaseViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,11 +50,11 @@ class PurchaseFragment : CartoonAbadFragment() {
 
         startPaymentConnection()
 
-        viewModel.progressBarLiveData.observe(viewLifecycleOwner){
+        viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
 
-        viewModel.subscriptionsLiveData.observe(viewLifecycleOwner){
+        viewModel.subscriptionsLiveData.observe(viewLifecycleOwner) {
 
             binding.txtDurationMonthly.text = it[0].duration
             binding.txtPriceMonthly.text = formatPrice(it[0].price)
@@ -74,10 +74,10 @@ class PurchaseFragment : CartoonAbadFragment() {
                 if (paymentConnection.getState() == ConnectionState.Connected) {
 
                     val purchaseId = when (selectedPlan) {
-                        YEARLY -> "rearkneth645thewth56t"
-                        THREE_MONTH -> "erigneotrht6h465ryjry"
-                        MONTHLY -> "fdgnsgmsrymsryr6t516rt"
-                        else -> "rearkneth645thewth56t"
+                        YEARLY -> YEARLY_PRODUCT_ID
+                        THREE_MONTH -> THREE_MONTH_PRODUCT_ID
+                        MONTHLY -> MONTHLY_PRODUCT_ID
+                        else -> YEARLY_PRODUCT_ID
                     }
 
                     subscribeProduct(purchaseId)
