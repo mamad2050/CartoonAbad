@@ -18,14 +18,12 @@ class DownloadService(
 
     private val binder: IBinder = EpisodeBinder()
     private var downloadId = 0
-    private val dirPath =
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath +
-                File.separator + "CartoonAbad" + File.separator
 
     lateinit var listener: OnDownloadEventListener
 
     override fun onCreate() {
         super.onCreate()
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -49,50 +47,50 @@ class DownloadService(
 
     fun startDownload(episode: Episode) {
 
-        val episodePath = episode.url.substringAfterLast('/')
-
-        downloadId =
-            PRDownloader.download(episode.url, dirPath, episodePath)
-                .build()
-                .setOnStartOrResumeListener {
-                    listener.onDownloadStarted(episode.name)
-                }
-
-                .setOnProgressListener { progress ->
-
-                    val progressPercent = progress.currentBytes * 100 / progress.totalBytes
-                    listener.onProgressListener(
-                        toMB(progress.currentBytes) + "/" + toMB(progress.totalBytes),
-                        progressPercent
-                    )
-
-                }
-                .setOnCancelListener {
-                    listener.onDownloadCanceled()
-                }
-                .setOnPauseListener {
-
-                }
-                .start(object : OnDownloadListener {
-                    override fun onDownloadComplete() {
-
-                        val downloaded = Downloaded(
-                            episode.duration,
-                            episode.id,
-                            episode.image,
-                            episode.name,
-                            episode.season_id,
-                            episodePath
-                        )
-
-                        listener.onDownloadCompleted(downloaded)
-                    }
-
-                    override fun onError(error: Error?) {
-                        listener.onErrorDownload()
-                    }
-
-                })
+//        val episodePath = episode.url.substringAfterLast('/')
+//
+//        downloadId =
+//            PRDownloader.download(episode.url, dirPath, episodePath)
+//                .build()
+//                .setOnStartOrResumeListener {
+//                    listener.onDownloadStarted(episode.name)
+//                }
+//
+//                .setOnProgressListener { progress ->
+//
+//                    val progressPercent = progress.currentBytes * 100 / progress.totalBytes
+//                    listener.onProgressListener(
+//                        toMB(progress.currentBytes) + "/" + toMB(progress.totalBytes),
+//                        progressPercent
+//                    )
+//
+//                }
+//                .setOnCancelListener {
+//                    listener.onDownloadCanceled()
+//                }
+//                .setOnPauseListener {
+//
+//                }
+//                .start(object : OnDownloadListener {
+//                    override fun onDownloadComplete() {
+//
+//                        val downloaded = Downloaded(
+//                            episode.duration,
+//                            episode.id,
+//                            episode.image,
+//                            episode.name,
+//                            episode.season_id,
+//                            episodePath
+//                        )
+//
+//                        listener.onDownloadCompleted(downloaded)
+//                    }
+//
+//                    override fun onError(error: Error?) {
+//                        listener.onErrorDownload()
+//                    }
+//
+//                })
     }
 
     interface OnDownloadEventListener {

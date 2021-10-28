@@ -1,11 +1,14 @@
 package ir.andromeda.cartoonabad.feature.list
 
+import android.app.DownloadManager
 import android.app.NotificationManager
 import android.app.Service
 import android.content.*
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,29 +35,36 @@ import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
+import java.io.File
 
-class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
-    DownloadService.OnDownloadEventListener {
+class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-    private lateinit var serviceIntent: Intent
+    private val dirPath =
+        Environment.DIRECTORY_DOWNLOADS + File.separator + "CartoonAbad" + File.separator
+
+    //    private lateinit var serviceIntent: Intent
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    private lateinit var downloadService: DownloadService
+
+    //    private lateinit var downloadService: DownloadService
     private val args: ListFragmentArgs by navArgs()
-    private lateinit var notification: NotificationCompat.Builder
-    private lateinit var notificationManager: NotificationManager
+//    private lateinit var notification: NotificationCompat.Builder
+//    private lateinit var notificationManager: NotificationManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,8 +77,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
     override fun onStart() {
         super.onStart()
 
-        serviceIntent = Intent(activity, DownloadService::class.java)
-        activity?.bindService(serviceIntent, serviceConnection, Service.BIND_AUTO_CREATE)
+//        serviceIntent = Intent(activity, DownloadService::class.java)
+//        activity?.bindService(serviceIntent, serviceConnection, Service.BIND_AUTO_CREATE)
 
         EventBus.getDefault().register(this)
     }
@@ -157,13 +168,84 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
 
     private fun startDownloading(episode: Episode) {
 
-        val downloadService = DownloadService()
-        downloadService.startDownload(episode)
+//        val downloadService = DownloadService()
 
-        downloadService.listener = this
+//        downloadService.startDownload(episode)
 
-        notificationManager =
-            requireActivity().getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
+//        downloadService.listener = this
+
+//        notificationManager =
+//            requireActivity().getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
+
+
+        val downloadManager =
+            requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadUri = Uri.parse(episode.url)
+
+        val request = DownloadManager.Request(downloadUri).apply {
+
+            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            setAllowedOverRoaming(false)
+            setTitle(episode.name)
+            setDescription("CartoonAbad")
+            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            setDestinationInExternalPublicDir(
+                dirPath, episode.url.substringAfterLast('/')
+            )
+
+        }
+
+        val downloadId = downloadManager.enqueue(request)
+
+        val query = DownloadManager.Query().setFilterById(downloadId)
+
+        lifecycleScope.launchWhenStarted {
+
+            var isDownloading = true
+            while (isDownloading) {
+                val cursor = downloadManager.query(query)
+                cursor.moveToFirst()
+                if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                    isDownloading = false
+                }
+                val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                downloadStatus(episode, status)
+                cursor.close()
+            }
+        }
+    }
+
+
+    private fun downloadStatus(episode: Episode, status: Int) {
+
+        when (status) {
+            DownloadManager.STATUS_FAILED -> Toast.makeText(
+                requireContext(),
+                "Failed",
+                Toast.LENGTH_SHORT
+            ).show()
+            DownloadManager.STATUS_PAUSED -> Toast.makeText(
+                requireContext(),
+                "Paused",
+                Toast.LENGTH_SHORT
+            ).show()
+            DownloadManager.STATUS_SUCCESSFUL -> {
+
+                val downloaded = Downloaded(
+                    episode.duration,
+                    episode.id,
+                    episode.image,
+                    episode.name,
+                    episode.season_id,
+                    episode.url.substringAfterLast('/')
+                )
+                viewModel.addEpisodeToDownloads(downloaded)
+
+                Toast.makeText(requireContext(), "Completed", Toast.LENGTH_SHORT).show()
+
+            }
+            else -> Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -200,56 +282,56 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener,
 
     }
 
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as DownloadService.EpisodeBinder
-            downloadService = binder.getService()
-        }
+//    private val serviceConnection = object : ServiceConnection {
+//        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+//            val binder = service as DownloadService.EpisodeBinder
+//            downloadService = binder.getService()
+//        }
+//
+//        override fun onServiceDisconnected(name: ComponentName?) {
+//
+//        }
+//    }
 
-        override fun onServiceDisconnected(name: ComponentName?) {
+//    override fun onDownloadStarted(episodeName: String) {
 
-        }
-    }
-
-    override fun onDownloadStarted(episodeName: String) {
-
-        Toast.makeText(requireContext(), "Start", Toast.LENGTH_SHORT).show()
-
-        notification = NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID)
-        notification.setContentTitle(episodeName)
-        notification.setSmallIcon(R.mipmap.ic_launcher)
-        notification.setContentText("Downloading...")
-        notification.setOnlyAlertOnce(true)
-        notification.addAction(1, "Cancel", null)
-        notification.setStyle(NotificationCompat.BigTextStyle())
-
-        notificationManager.notify(100, notification.build())
+//        Toast.makeText(requireContext(), "Start", Toast.LENGTH_SHORT).show()
+//
+//        notification = NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID)
+//        notification.setContentTitle(episodeName)
+//        notification.setSmallIcon(R.mipmap.ic_launcher)
+//        notification.setContentText("Downloading...")
+//        notification.setOnlyAlertOnce(true)
+//        notification.addAction(1, "Cancel", null)
+//        notification.setStyle(NotificationCompat.BigTextStyle())
+//
+//        notificationManager.notify(100, notification.build())
 
 
-    }
+//    }
 
-    override fun onDownloadCompleted(downloadedEpisode :Downloaded) {
-        Toast.makeText(requireContext(), "Complete", Toast.LENGTH_SHORT).show()
-        viewModel.addEpisodeToDownloads(downloadedEpisode)
-    }
+//    override fun onDownloadCompleted(downloadedEpisode :Downloaded) {
+//        Toast.makeText(requireContext(), "Complete", Toast.LENGTH_SHORT).show()
+//        viewModel.addEpisodeToDownloads(downloadedEpisode)
+//    }
+//
+//    override fun onDownloadCanceled() {
+//        Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
+//
+//    }
+//
+//    override fun onErrorDownload() {
+//        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+//
+//    }
 
-    override fun onDownloadCanceled() {
-        Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
-
-    }
-
-    override fun onErrorDownload() {
-        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-
-    }
-
-    override fun onProgressListener(percent: String, p: Long) {
-
-//        dialog.progress = p.toInt()
-//        dialog.setMessage(percent)
-        notification.setProgress(100, p.toInt(), false)
-        notification.setContentText(percent)
-        notificationManager.notify(100, notification.build())
-
-    }
+//    override fun onProgressListener(percent: String, p: Long) {
+//
+////        dialog.progress = p.toInt()
+////        dialog.setMessage(percent)
+//        notification.setProgress(100, p.toInt(), false)
+//        notification.setContentText(percent)
+//        notificationManager.notify(100, notification.build())
+//
+//    }
 }

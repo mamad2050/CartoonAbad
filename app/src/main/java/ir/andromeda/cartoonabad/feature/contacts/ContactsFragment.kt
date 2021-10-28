@@ -1,10 +1,12 @@
 package ir.andromeda.cartoonabad.feature.contacts
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -22,6 +24,8 @@ import org.greenrobot.eventbus.ThreadMode
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ContactsFragment : CartoonAbadFragment() {
 
@@ -29,7 +33,7 @@ class ContactsFragment : CartoonAbadFragment() {
     private val binding get() = _binding!!
     private val viewModel: ContactsViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
-
+    private var isAllow = true
     private var selectedTitle: String? = null
 
     override fun onCreateView(
@@ -76,10 +80,21 @@ class ContactsFragment : CartoonAbadFragment() {
                 binding.etlMessage.error = getString(R.string.do_not_leave_fields_empty)
             }
 
-            if (!selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
+            if (isAllow && !selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
                 viewModel.sendMessage(selectedTitle!!, message, email)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally {
+                        isAllow = false
+                        val timer =object :CountDownTimer(60000,1000){
+                            override fun onTick(millisUntilFinished: Long) {
+                            }
+                            override fun onFinish() {
+                               isAllow = true
+                            }
+                        }
+                        timer.start()
+                    }
                     .subscribe(object :
                         CartoonAbadSingleObserver<MessageResponse>(compositeDisposable) {
                         override fun onSuccess(t: MessageResponse) {
@@ -93,6 +108,10 @@ class ContactsFragment : CartoonAbadFragment() {
                             emptyAllFields()
                         }
                     })
+            }
+
+            if (!isAllow) {
+                Toast.makeText(requireContext(),"not allow",Toast.LENGTH_SHORT).show()
             }
 
 
