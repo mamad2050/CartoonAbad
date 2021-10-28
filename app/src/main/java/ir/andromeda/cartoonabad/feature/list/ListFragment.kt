@@ -173,7 +173,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             setTitle(episode.name)
             setDescription("CartoonAbad")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setDestinationInExternalFilesDir(requireContext(),
+            setDestinationInExternalPublicDir(
                 Environment.DIRECTORY_DOWNLOADS,"CartoonABad" + File.separator + episode.url.substringAfterLast('/')
             )
 
@@ -228,7 +228,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 Toast.makeText(requireContext(), "Completed", Toast.LENGTH_SHORT).show()
 
             }
-            else -> Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+
         }
 
     }
@@ -244,10 +244,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
 
-        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
         readPermissionGranted = hasReadPermission
-        writePermissionGranted = hasWritePermission || minSdk29
+        writePermissionGranted = hasWritePermission
 
 
         val permissionToRequest = mutableListOf<String>()
