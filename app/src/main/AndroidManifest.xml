@@ -6,12 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <queries>
-        <package android:name="ir.andromeda.cartoonabad"/>
-    </queries>
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+
     <application
         android:name=".App"
         android:requestLegacyExternalStorage="true"
@@ -38,12 +37,6 @@
             android:name=".feature.main.MainActivity"
             android:exported="true">
         </activity>
-       <service android:name="ir.andromeda.cartoonabad.feature.list.DownloadService"
-
-           android:enabled="true"
-           android:exported="true"
-
-           />
 
     </application>
 

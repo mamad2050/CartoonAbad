@@ -56,15 +56,12 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val dirPath =
         Environment.DIRECTORY_DOWNLOADS + File.separator + "CartoonAbad" + File.separator
 
-    //    private lateinit var serviceIntent: Intent
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
-    //    private lateinit var downloadService: DownloadService
     private val args: ListFragmentArgs by navArgs()
-//    private lateinit var notification: NotificationCompat.Builder
-//    private lateinit var notificationManager: NotificationManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,9 +73,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
-
-//        serviceIntent = Intent(activity, DownloadService::class.java)
-//        activity?.bindService(serviceIntent, serviceConnection, Service.BIND_AUTO_CREATE)
 
         EventBus.getDefault().register(this)
     }
@@ -168,16 +162,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-//        val downloadService = DownloadService()
-
-//        downloadService.startDownload(episode)
-
-//        downloadService.listener = this
-
-//        notificationManager =
-//            requireActivity().getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
-
-
         val downloadManager =
             requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val downloadUri = Uri.parse(episode.url)
@@ -190,7 +174,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             setDescription("CartoonAbad")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             setDestinationInExternalPublicDir(
-                dirPath, episode.url.substringAfterLast('/')
+                Environment.DIRECTORY_DOWNLOADS,"CartoonABad" + File.separator + episode.url.substringAfterLast('/')
             )
 
         }
@@ -282,56 +266,4 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     }
 
-//    private val serviceConnection = object : ServiceConnection {
-//        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-//            val binder = service as DownloadService.EpisodeBinder
-//            downloadService = binder.getService()
-//        }
-//
-//        override fun onServiceDisconnected(name: ComponentName?) {
-//
-//        }
-//    }
-
-//    override fun onDownloadStarted(episodeName: String) {
-
-//        Toast.makeText(requireContext(), "Start", Toast.LENGTH_SHORT).show()
-//
-//        notification = NotificationCompat.Builder(requireContext(), NOTIFICATION_CHANNEL_ID)
-//        notification.setContentTitle(episodeName)
-//        notification.setSmallIcon(R.mipmap.ic_launcher)
-//        notification.setContentText("Downloading...")
-//        notification.setOnlyAlertOnce(true)
-//        notification.addAction(1, "Cancel", null)
-//        notification.setStyle(NotificationCompat.BigTextStyle())
-//
-//        notificationManager.notify(100, notification.build())
-
-
-//    }
-
-//    override fun onDownloadCompleted(downloadedEpisode :Downloaded) {
-//        Toast.makeText(requireContext(), "Complete", Toast.LENGTH_SHORT).show()
-//        viewModel.addEpisodeToDownloads(downloadedEpisode)
-//    }
-//
-//    override fun onDownloadCanceled() {
-//        Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
-//
-//    }
-//
-//    override fun onErrorDownload() {
-//        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-//
-//    }
-
-//    override fun onProgressListener(percent: String, p: Long) {
-//
-////        dialog.progress = p.toInt()
-////        dialog.setMessage(percent)
-//        notification.setProgress(100, p.toInt(), false)
-//        notification.setContentText(percent)
-//        notificationManager.notify(100, notification.build())
-//
-//    }
 }
