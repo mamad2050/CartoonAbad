@@ -162,6 +162,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
         payment.onActivityResult(requestCode, resultCode, data) {
             purchaseSucceed {
+                PurchaseContainer.setPurchaseInfo(it)
                 snackBar(getString(R.string.success_purchase))
             }
             purchaseCanceled {
