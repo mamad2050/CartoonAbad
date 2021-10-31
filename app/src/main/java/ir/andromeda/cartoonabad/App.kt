@@ -77,6 +77,8 @@ class App : Application() {
             single { createApiServiceInstance() }
             single<ImageLoadingService> { FrescoImageLoadingService() }
 
+            single { getSharedPreferences("sharedPref", MODE_PRIVATE) }
+
             single { Room.databaseBuilder(this@App, AppDataBase::class.java, "db_app").build() }
 
             factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }

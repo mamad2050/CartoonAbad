@@ -1,19 +1,19 @@
 package ir.andromeda.cartoonabad.feature.contacts
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
+import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
@@ -21,7 +21,7 @@ import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.util.*
@@ -35,6 +35,7 @@ class ContactsFragment : CartoonAbadFragment() {
     private val compositeDisposable = CompositeDisposable()
     private var isAllow = true
     private var selectedTitle: String? = null
+    private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,8 @@ class ContactsFragment : CartoonAbadFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        checkCanSendMessage()
 
         setAutoTextViewValues()
 
@@ -82,19 +85,7 @@ class ContactsFragment : CartoonAbadFragment() {
 
             if (isAllow && !selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
                 viewModel.sendMessage(selectedTitle!!, message, email)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doFinally {
-                        isAllow = false
-                        val timer =object :CountDownTimer(60000,1000){
-                            override fun onTick(millisUntilFinished: Long) {
-                            }
-                            override fun onFinish() {
-                               isAllow = true
-                            }
-                        }
-                        timer.start()
-                    }
+                    .asyncNetworkRequest()
                     .subscribe(object :
                         CartoonAbadSingleObserver<MessageResponse>(compositeDisposable) {
                         override fun onSuccess(t: MessageResponse) {
@@ -105,13 +96,21 @@ class ContactsFragment : CartoonAbadFragment() {
                                 Snackbar.LENGTH_SHORT
                             ).show()
 
-                            emptyAllFields()
+                            sharedPreferences.edit()
+                                .putLong(
+                                    "messageTime",
+                                    Calendar.getInstance().timeInMillis + (86400000L * 2)
+                                )
+                                .apply()
+
+                            findNavController().popBackStack()
+
                         }
                     })
             }
 
             if (!isAllow) {
-                Toast.makeText(requireContext(),"not allow",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "not allow", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -129,6 +128,14 @@ class ContactsFragment : CartoonAbadFragment() {
 
         }
 
+    }
+
+    private fun checkCanSendMessage() {
+        val time = sharedPreferences.getLong("messageTime", 0)
+        if (time > Calendar.getInstance().timeInMillis) {
+            binding.scrollView.visibility = View.GONE
+            binding.messageView.visibility = View.VISIBLE
+        }
     }
 
     private fun snackBar(message: String) {
@@ -158,13 +165,6 @@ class ContactsFragment : CartoonAbadFragment() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
         EventBus.getDefault().unregister(this)
-    }
-
-    fun emptyAllFields() {
-        binding.etlEmail.editText?.text?.clear()
-        binding.etlMessage.editText?.text?.clear()
-        binding.autoTvTopic.text.clear()
-        selectedTitle = null
     }
 
     override fun onDestroy() {
