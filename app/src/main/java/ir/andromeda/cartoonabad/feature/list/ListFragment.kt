@@ -47,7 +47,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-
+    var isDownloading = false
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -149,40 +149,46 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-        val downloadManager =
-            requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val downloadUri = Uri.parse(episode.url)
+        if (!isDownloading){
+            val downloadManager =
+                requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
-        val request = DownloadManager.Request(downloadUri).apply {
+            val downloadUri = Uri.parse(episode.url)
 
-            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-            setAllowedOverRoaming(false)
-            setTitle(episode.name)
-            setDescription("CartoonAbad")
-            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
-            )
-        }
+            val request = DownloadManager.Request(downloadUri).apply {
 
-        val downloadId = downloadManager.enqueue(request)
-
-        CoroutineScope(Dispatchers.IO).launch{
-            val query = DownloadManager.Query().setFilterById(downloadId)
-            var isDownloading = true
-            while (isDownloading) {
-                val cursor = downloadManager.query(query)
-                cursor.moveToFirst()
-                if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-                    isDownloading = false
-                }
-                val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                downloadStatus(episode, status)
-                cursor.close()
-
+                setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                setAllowedOverRoaming(false)
+                setTitle(episode.name)
+                setDescription("CartoonAbad")
+                setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS,
+                    "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
+                )
             }
+
+            val downloadId = downloadManager.enqueue(request)
+
+            CoroutineScope(Dispatchers.IO).launch{
+                val query = DownloadManager.Query().setFilterById(downloadId)
+                isDownloading = true
+                while (isDownloading) {
+                    val cursor = downloadManager.query(query)
+                    cursor.moveToFirst()
+                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                        isDownloading = false
+                    }
+                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    downloadStatus(episode, status)
+                    cursor.close()
+
+                }
+            }
+        }else {
+            snackBar(getString(R.string.download_status))
         }
+
 
     }
 
