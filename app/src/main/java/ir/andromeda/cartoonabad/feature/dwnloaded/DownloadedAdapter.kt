@@ -13,7 +13,7 @@ import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
 class DownloadedAdapter(
 
-    private val episodes: MutableList<Downloaded>,
+    private val downloadedList: MutableList<Downloaded>,
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener
 
@@ -27,10 +27,10 @@ class DownloadedAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bindEpisode(episodes[position])
+        holder.bindEpisode(downloadedList[position])
     }
 
-    override fun getItemCount(): Int = episodes.size
+    override fun getItemCount(): Int = downloadedList.size
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
@@ -38,17 +38,17 @@ class DownloadedAdapter(
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
         private val ivDelete = itemView.findViewById<ImageView>(R.id.iv_episode_delete)
 
-        fun bindEpisode(episode: Downloaded) {
+        fun bindEpisode(downloaded: Downloaded) {
 
-            imageLoadingService.load(ivImage, episode.image)
-            tvName.text = episode.name
-            tvDuration.text = episode.duration
+            imageLoadingService.load(ivImage, downloaded.image)
+            tvName.text = downloaded.name
+            tvDuration.text = downloaded.duration
 
-            itemView.setOnClickListener { listener.onEpisodeClick(episode) }
+            itemView.setOnClickListener { listener.onEpisodeClick(downloaded) }
 
             ivDelete.setOnClickListener {
-                listener.onRemoveClick(episode)
-                episodes.remove(episode)
+                listener.onRemoveClick(downloaded)
+                downloadedList.remove(downloaded)
                 notifyItemRemoved(absoluteAdapterPosition)
             }
 
@@ -57,9 +57,9 @@ class DownloadedAdapter(
 
     interface EpisodeEventListener {
 
-        fun onRemoveClick(episode: Downloaded)
+        fun onRemoveClick(downloaded: Downloaded)
 
-        fun onEpisodeClick(episode: Downloaded)
+        fun onEpisodeClick(downloaded: Downloaded)
 
     }
 }

@@ -174,7 +174,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             setDescription("CartoonAbad")
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,"CartoonABad" + File.separator + episode.url.substringAfterLast('/')
+                Environment.DIRECTORY_DOWNLOADS,
+                "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
             )
 
         }
@@ -215,13 +216,17 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             ).show()
             DownloadManager.STATUS_SUCCESSFUL -> {
 
+                val path =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                        .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
+
                 val downloaded = Downloaded(
                     episode.duration,
                     episode.id,
                     episode.image,
                     episode.name,
                     episode.season_id,
-                    episode.url.substringAfterLast('/')
+                    path
                 )
                 viewModel.addEpisodeToDownloads(downloaded)
 

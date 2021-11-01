@@ -14,7 +14,7 @@ class DownloadedViewModel(private val repository: DownloadedRepository) :
     CartoonAbadViewModel() {
 
 
-    val downloadedEpisodeLiveData = MutableLiveData<List<Downloaded>>()
+    val downloadedEpisodeLiveData = MutableLiveData<MutableList<Downloaded>>()
     val emptyStateLiveData = MutableLiveData<EmptyState>()
 
     init {
@@ -41,7 +41,7 @@ class DownloadedViewModel(private val repository: DownloadedRepository) :
                 CartoonAbadSingleObserver<List<Downloaded>>(compositeDisposable) {
                 override fun onSuccess(t: List<Downloaded>) {
                     if (t.isNotEmpty()) {
-                        downloadedEpisodeLiveData.value = t
+                        downloadedEpisodeLiveData.value = t as MutableList<Downloaded>
                     } else {
                         emptyStateLiveData.value = EmptyState(
                             true,
