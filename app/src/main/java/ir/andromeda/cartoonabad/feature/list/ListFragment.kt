@@ -1,24 +1,19 @@
 package ir.andromeda.cartoonabad.feature.list
 
 import android.app.DownloadManager
-import android.app.NotificationManager
-import android.app.Service
 import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
@@ -35,15 +29,15 @@ import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 import java.io.File
 
 class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
@@ -53,16 +47,12 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-    private val dirPath =
-        Environment.DIRECTORY_DOWNLOADS + File.separator + "CartoonAbad" + File.separator
-    private lateinit var onDownloadCompleteReceiver: BroadcastReceiver
 
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     private val args: ListFragmentArgs by navArgs()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,9 +64,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
+
         EventBus.getDefault().register(this)
     }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun showError(cartoonAbadEvent: CartoonAbadEvent) {
         when (cartoonAbadEvent.type) {
@@ -89,7 +79,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 findNavController().navigate(R.id.navigateToPurchaseAlertDialog)
             }
         }
-
     }
 
     private fun snackBar(message: String) {
@@ -115,7 +104,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             binding.rvSeasons.adapter = adapter
 
         }
-
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
                 readPermissionGranted =
@@ -157,7 +145,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         } else {
             startDownloading(episode)
         }
-
     }
 
     private fun startDownloading(episode: Episode) {
@@ -177,40 +164,27 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 Environment.DIRECTORY_DOWNLOADS,
                 "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
             )
-
         }
 
         val downloadId = downloadManager.enqueue(request)
-//        lifecycleScope.launchWhenStarted {
-//        }
 
-
-        onDownloadCompleteReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-
-//               val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-
-                val query = DownloadManager.Query().setFilterById(downloadId)
-                var isDownloading = true
-                while (isDownloading) {
-                    val cursor = downloadManager.query(query)
-                    cursor.moveToFirst()
-                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-                        isDownloading = false
-                    }
-                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                    downloadStatus(episode, status)
-                    cursor.close()
-
+        CoroutineScope(Dispatchers.IO).launch{
+            val query = DownloadManager.Query().setFilterById(downloadId)
+            var isDownloading = true
+            while (isDownloading) {
+                val cursor = downloadManager.query(query)
+                cursor.moveToFirst()
+                if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                    isDownloading = false
                 }
+                val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                downloadStatus(episode, status)
+                cursor.close()
 
             }
-
-
         }
 
     }
-
 
     private fun downloadStatus(episode: Episode, status: Int) {
 
@@ -240,9 +214,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                     path
                 )
                 viewModel.addEpisodeToDownloads(downloaded)
-
-                Toast.makeText(requireContext(), "Completed", Toast.LENGTH_SHORT).show()
-
             }
 
         }
