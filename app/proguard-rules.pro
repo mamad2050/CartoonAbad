@@ -19,3 +19,29 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepclassmembers enum * { *; }
+-keep class **.R$* { *; }
+-keep interface ir.tapsell.sdk.NoProguard
+-keep interface ir.tapsell.sdk.NoNameProguard
+-keep class * implements ir.tapsell.sdk.NoProguard { *; }
+-keep interface * extends ir.tapsell.sdk.NoProguard { *; }
+-keep enum * implements ir.tapsell.sdk.NoProguard { *; }
+-keepnames class * implements ir.tapsell.sdk.NoNameProguard { *; }
+-keepnames class * extends android.app.Activity
+-keep class ir.tapsell.plus.model.** { *; }
+-keep class ir.tapsell.sdk.models.** { *; }
+
+-keep class ir.tapsell.sdk.nativeads.TapsellNativeVideoAdLoader$Builder {*;}
+
+-keepclasseswithmembers class * {
+    native <methods>;
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keep interface ir.tapsell.plus.NoProguard
+-keep interface * extends ir.tapsell.plus.NoProguard { *; }
+-keep class * implements ir.tapsell.plus.NoProguard { *; }

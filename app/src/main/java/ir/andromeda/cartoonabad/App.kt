@@ -40,6 +40,10 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.cafebazaar.poolakey.Payment
 import ir.cafebazaar.poolakey.config.PaymentConfiguration
 import ir.cafebazaar.poolakey.config.SecurityCheck
+import ir.tapsell.plus.TapsellPlus
+import ir.tapsell.plus.TapsellPlusInitListener
+import ir.tapsell.plus.model.AdNetworkError
+import ir.tapsell.plus.model.AdNetworks
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -53,7 +57,7 @@ class App : Application() {
 
         Fresco.initialize(this)
 
-     val config = PRDownloaderConfig.newBuilder()
+        val config = PRDownloaderConfig.newBuilder()
             .setDatabaseEnabled(true)
             .build()
         PRDownloader.initialize(baseContext, config)
@@ -94,7 +98,11 @@ class App : Application() {
 
             factory<DownloadedRepository> { DownloadedRepositoryImpl(get<AppDataBase>().downloadDao()) }
 
-            factory<SubscriptionRepository> {SubscriptionRepositoryImpl(SubscriptionRemoteDataSource(get())) }
+            factory<SubscriptionRepository> {
+                SubscriptionRepositoryImpl(
+                    SubscriptionRemoteDataSource(get())
+                )
+            }
 
             single {
                 Payment(
@@ -109,9 +117,28 @@ class App : Application() {
                 )
             }
 
+            single {
+
+                TapsellPlus.initialize(
+                    applicationContext,
+                    "dalbmfhclofnmdmmootbopmasiiiptkcqrtdobqcekrsinhgrjahabkccijdifgoorskol",
+                    object : TapsellPlusInitListener {
+                        override fun onInitializeSuccess(p0: AdNetworks?) {
+                            Timber.i(p0?.name)
+                        }
+
+                        override fun onInitializeFailed(p0: AdNetworks?, p1: AdNetworkError?) {
+                            Timber.e(p1?.errorMessage)
+                        }
+
+                    }
+                )
+
+            }
+
 
             viewModel { HomeViewModel(get()) }
-            viewModel { (animationId: String) -> ListViewModel(animationId, get(), get(),get()) }
+            viewModel { (animationId: String) -> ListViewModel(animationId, get(), get(), get()) }
             viewModel { FavoriteViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }

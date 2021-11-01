@@ -55,6 +55,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
     private val dirPath =
         Environment.DIRECTORY_DOWNLOADS + File.separator + "CartoonAbad" + File.separator
+    private lateinit var onDownloadCompleteReceiver: BroadcastReceiver
 
     var readPermissionGranted = false
     var writePermissionGranted = false
@@ -73,7 +74,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
-
         EventBus.getDefault().register(this)
     }
 
@@ -181,23 +181,34 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         }
 
         val downloadId = downloadManager.enqueue(request)
+//        lifecycleScope.launchWhenStarted {
+//        }
 
-        val query = DownloadManager.Query().setFilterById(downloadId)
 
-        lifecycleScope.launchWhenStarted {
+        onDownloadCompleteReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
 
-            var isDownloading = true
-            while (isDownloading) {
-                val cursor = downloadManager.query(query)
-                cursor.moveToFirst()
-                if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-                    isDownloading = false
+//                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+
+                val query = DownloadManager.Query().setFilterById(downloadId)
+                var isDownloading = true
+                while (isDownloading) {
+                    val cursor = downloadManager.query(query)
+                    cursor.moveToFirst()
+                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                        isDownloading = false
+                    }
+                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    downloadStatus(episode, status)
+                    cursor.close()
+
                 }
-                val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                downloadStatus(episode, status)
-                cursor.close()
+
             }
+
+
         }
+
     }
 
 
@@ -267,5 +278,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         }
 
     }
-
 }
+
+
+
