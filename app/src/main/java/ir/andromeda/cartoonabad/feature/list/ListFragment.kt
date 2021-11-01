@@ -188,7 +188,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         onDownloadCompleteReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
 
-//                val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+//               val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
 
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 var isDownloading = true
