@@ -3,19 +3,16 @@ package ir.andromeda.cartoonabad.feature.player
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.Util
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityPlayerBinding
-import ir.andromeda.cartoonabad.databinding.CustomPlayerControlViewBinding
 
 
 class PlayerActivity : CartoonAbadActivity() {

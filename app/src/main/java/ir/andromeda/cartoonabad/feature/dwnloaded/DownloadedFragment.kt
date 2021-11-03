@@ -41,7 +41,8 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as DrawerLocker).setDrawerLocked(true)
+        if (activity is DrawerLocker)
+            (activity as DrawerLocker).setDrawerLocked(true)
 
         viewModel.downloadedEpisodeLiveData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
@@ -69,7 +70,8 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
 
     override fun onStop() {
         super.onStop()
-        (activity as DrawerLocker).setDrawerLocked(false)
+        if (activity is DrawerLocker)
+            (activity as DrawerLocker).setDrawerLocked(false)
     }
 
     override fun onDestroy() {

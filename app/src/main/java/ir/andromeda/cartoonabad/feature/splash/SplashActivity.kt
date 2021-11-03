@@ -16,6 +16,7 @@ import ir.andromeda.cartoonabad.feature.main.MainActivity
 class SplashActivity : CartoonAbadActivity() {
 
     private lateinit var binding: ActivitySplashBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -25,8 +26,8 @@ class SplashActivity : CartoonAbadActivity() {
 
         checkCondition()
 
-        binding.btnRetry.setOnClickListener {
-            checkCondition()
+        binding.btnExit.setOnClickListener {
+            onBackPressed()
         }
 
     }
@@ -50,8 +51,6 @@ class SplashActivity : CartoonAbadActivity() {
 
     private fun goToHomeActivity() {
 
-        binding.tvNetworkState.visibility = View.GONE
-        binding.btnRetry.visibility = View.GONE
         binding.pbSplash.visibility = View.VISIBLE
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -61,14 +60,6 @@ class SplashActivity : CartoonAbadActivity() {
         }, 3000)
     }
 
-    private fun noNetwork() {
-
-        binding.tvNetworkState.visibility = View.VISIBLE
-        binding.btnRetry.visibility = View.VISIBLE
-        binding.pbSplash.visibility = View.GONE
-
-    }
-
     private fun checkCondition() {
 
         if (checkNetworkConnection()) {
@@ -76,6 +67,12 @@ class SplashActivity : CartoonAbadActivity() {
         } else {
             noNetwork()
         }
+    }
+
+    private fun noNetwork() {
+        binding.isOnlineLayout.visibility = View.GONE
+        binding.pbSplash.visibility = View.GONE
+        binding.isOfflineLayout.visibility = View.VISIBLE
     }
 
 }

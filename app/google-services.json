@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "783977766214",
+    "project_id": "cartoonabad-bebc2",
+    "storage_bucket": "cartoonabad-bebc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783977766214:android:51e483552ba83ba17ad947",
+        "android_client_info": {
+          "package_name": "ir.andromeda.cartoonabad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783977766214-k05rcf4ibit7f412st39off8p508h70t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ir.andromeda.cartoonabad",
+            "certificate_hash": "7952cd69f3b630a0056b3baf36d9181767b3a696"
+          }
+        },
+        {
+          "client_id": "783977766214-bfvhu2o8r02qmq24te26nk3nbbj5mv4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHDSxnDST__3xnARDgNSWCOwfIQyI3qDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783977766214-bfvhu2o8r02qmq24te26nk3nbbj5mv4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

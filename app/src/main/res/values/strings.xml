@@ -44,5 +44,7 @@
     <string name="go_to_purchase_fragment">رفتن به صفحه اشتراک ها</string>
     <string name="dialog_purchase_help_text">برای اینکه بتونی به تمام کارتون ها و قابلیت دانلود کارتون ها دسترسی پیدا کنی باید اشتراک برنامه رو بخری :)</string>
     <string name="contacts_message">قبلا پیامت رو ارسال کردی\nاز طریق ایمیلی که وارد کردی باهات در ارتباط خواهیم بود :)\nبعد از 2 روز دوباره میتونی پیام بفرستی</string>
+    <string name="exit">خروج</string>
+    <string name="splash_help">در حالت آفلاین \nفقط به کارتون های دانلود شده دسترسی داری</string>
 
 </resources>
