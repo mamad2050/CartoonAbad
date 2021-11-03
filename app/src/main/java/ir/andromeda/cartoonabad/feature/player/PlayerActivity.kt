@@ -3,16 +3,26 @@ package ir.andromeda.cartoonabad.feature.player
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.Util
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_AD
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityPlayerBinding
+import ir.andromeda.cartoonabad.databinding.CustomPlayerControlViewBinding
+import ir.tapsell.plus.AdRequestCallback
+import ir.tapsell.plus.AdShowListener
+import ir.tapsell.plus.TapsellPlus
+import ir.tapsell.plus.model.TapsellPlusAdModel
+import ir.tapsell.plus.model.TapsellPlusErrorModel
+import ir.tapsell.sdk.Tapsell.requestAd
 
 
 class PlayerActivity : CartoonAbadActivity() {
@@ -42,7 +52,10 @@ class PlayerActivity : CartoonAbadActivity() {
 
         //making screen landscape
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
     }
+
+
 
     private fun initializePlayer() {
         player = SimpleExoPlayer.Builder(this)

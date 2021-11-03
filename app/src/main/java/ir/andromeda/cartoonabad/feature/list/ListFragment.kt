@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
@@ -29,6 +30,11 @@ import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import ir.tapsell.plus.AdRequestCallback
+import ir.tapsell.plus.AdShowListener
+import ir.tapsell.plus.TapsellPlus
+import ir.tapsell.plus.model.TapsellPlusAdModel
+import ir.tapsell.plus.model.TapsellPlusErrorModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,7 +57,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-
+    private var adResponseId: String? = null
     private val args: ListFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -64,7 +70,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
-
+        requestAd()
         EventBus.getDefault().register(this)
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -123,9 +129,12 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     }
 
     override fun onEpisodeClick(episode: Episode) {
+
         startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
             putExtra(EXTRA_KEY_DATA, episode)
+
         })
+        showAd()
     }
 
     override fun onFavoriteClick(episode: Episode) {
@@ -254,6 +263,43 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             permissionLauncher.launch(permissionToRequest.toTypedArray())
         }
 
+    }
+
+    private fun requestAd() {
+        TapsellPlus.requestInterstitialAd(
+            requireActivity(),
+            ZONE_ID_INTERSTITIAL_AD,
+            object : AdRequestCallback() {
+                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.response(tapsellPlusAdModel)
+                    adResponseId = tapsellPlusAdModel.responseId
+//                    showAd()
+                }
+
+                override fun error(message: String?) {}
+            })
+    }
+
+    private fun showAd(){
+
+        TapsellPlus.showInterstitialAd(requireActivity(), adResponseId,
+            object : AdShowListener() {
+                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onOpened(tapsellPlusAdModel)
+                }
+
+                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onClosed(tapsellPlusAdModel)
+                }
+
+                override fun onRewarded(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onRewarded(tapsellPlusAdModel)
+                }
+
+                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
+                    super.onError(tapsellPlusErrorModel)
+                }
+            })
     }
 }
 

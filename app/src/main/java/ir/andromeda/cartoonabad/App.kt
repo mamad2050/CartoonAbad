@@ -57,6 +57,23 @@ class App : Application() {
 
         Fresco.initialize(this)
 
+
+        TapsellPlus.initialize(
+            applicationContext,
+            "dalbmfhclofnmdmmootbopmasiiiptkcqrtdobqcekrsinhgrjahabkccijdifgoorskol",
+            object : TapsellPlusInitListener {
+                override fun onInitializeSuccess(p0: AdNetworks?) {
+                    Timber.i(p0?.name)
+                }
+
+                override fun onInitializeFailed(p0: AdNetworks?, p1: AdNetworkError?) {
+                    Timber.e(p1?.errorMessage)
+                }
+
+            }
+        )
+
+
         val config = PRDownloaderConfig.newBuilder()
             .setDatabaseEnabled(true)
             .build()
@@ -117,24 +134,11 @@ class App : Application() {
                 )
             }
 
-            single {
 
-                TapsellPlus.initialize(
-                    applicationContext,
-                    "dalbmfhclofnmdmmootbopmasiiiptkcqrtdobqcekrsinhgrjahabkccijdifgoorskol",
-                    object : TapsellPlusInitListener {
-                        override fun onInitializeSuccess(p0: AdNetworks?) {
-                            Timber.i(p0?.name)
-                        }
 
-                        override fun onInitializeFailed(p0: AdNetworks?, p1: AdNetworkError?) {
-                            Timber.e(p1?.errorMessage)
-                        }
 
-                    }
-                )
 
-            }
+
 
 
             viewModel { HomeViewModel(get()) }

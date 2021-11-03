@@ -14,6 +14,8 @@
         android:layout_height="match_parent"
         android:background="?playerBackground"
         android:keepScreenOn="true"
-        app:controller_layout_id="@layout/custom_player_control_view" />
+        app:controller_layout_id="@layout/custom_player_control_view" >
+
+    </com.google.android.exoplayer2.ui.PlayerView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
