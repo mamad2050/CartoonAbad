@@ -57,7 +57,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-//    var isDownloading = false
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -111,6 +110,18 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
         viewModel.seasonsLiveData.observe(viewLifecycleOwner) {
 
+            viewModel.downloadsLiveData.observe(viewLifecycleOwner) { downloads ->
+
+                downloads.forEach { downloaded ->
+                    it.forEach { seasons ->
+                        seasons.episodeList.forEach {episode->
+                            if (downloaded.id == episode.id){
+                                episode.isDownloaded = true
+                            }
+                        }
+                    }
+                }
+            }
             binding.rvSeasons.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             adapter = SeasonAdapter(it, imageLoadingService, requireContext(), this)
@@ -190,7 +201,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val query = DownloadManager.Query().setFilterById(downloadId)
-                 isDownload = true
+                isDownload = true
                 while (isDownload) {
                     val cursor = downloadManager.query(query)
                     cursor.moveToFirst()
@@ -238,6 +249,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                     path
                 )
                 viewModel.addEpisodeToDownloads(downloaded)
+
             }
 
         }

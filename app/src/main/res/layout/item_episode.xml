@@ -47,8 +47,22 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/shape_circle"
-            android:padding="4dp"
+            android:padding="2dp"
             android:src="@drawable/ic_file_download_white_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
+            app:layout_constraintVertical_bias="0.47" />
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:visibility="gone"
+            android:id="@+id/spinKit_download"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:padding="4dp"
+            app:SpinKit_Style="Circle"
+            android:background="@drawable/shape_circle"
             app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_episode_image"

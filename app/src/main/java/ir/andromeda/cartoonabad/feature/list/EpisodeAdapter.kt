@@ -54,6 +54,13 @@ class EpisodeAdapter(
             else
                 ivFavorite.setImageResource(R.drawable.ic_baseline_star_border_24)
 
+
+            if (episode.isDownloaded)
+                ivDownload.setImageResource(R.drawable.ic_check)
+            else
+                ivDownload.setImageResource(R.drawable.ic_file_download_white_24dp)
+
+
             if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 4) {
                 ivFavorite.visibility = View.INVISIBLE
                 ivDownload.visibility = View.INVISIBLE
@@ -69,7 +76,6 @@ class EpisodeAdapter(
                 episode.isFavorite = !episode.isFavorite
                 notifyItemChanged(absoluteAdapterPosition)
             }
-
             itemView.setOnClickListener {
                 if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 4) {
                     EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
@@ -77,7 +83,6 @@ class EpisodeAdapter(
                     listener.onEpisodeClick(episode)
                 }
             }
-
             ivDownload.setOnClickListener {
                 if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition <= 4) {
                     EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
@@ -85,9 +90,7 @@ class EpisodeAdapter(
                     listener.onDownloadClick(episode)
                 }
             }
-
         }
-
     }
 }
 

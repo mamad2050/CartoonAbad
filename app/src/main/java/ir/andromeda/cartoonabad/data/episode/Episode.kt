@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.IgnoredOnParcel
 
 @Entity(tableName = "episodes")
 @Parcelize
@@ -16,5 +17,7 @@ data class Episode(
     val season_id: String,
     val url: String
 ) : Parcelable {
+
     var isFavorite = false
+    var isDownloaded = false
 }

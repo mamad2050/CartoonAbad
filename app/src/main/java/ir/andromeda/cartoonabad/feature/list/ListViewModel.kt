@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.list
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.common.CartoonAbadCompletableObserver
@@ -23,8 +24,18 @@ class ListViewModel(
     CartoonAbadViewModel() {
 
     val seasonsLiveData = MutableLiveData<List<Season>>()
+    val downloadsLiveData = MutableLiveData<List<Downloaded>>()
 
     init {
+        downloadRepository.getDownloadedEpisodes()
+            .doFinally { progressBarLiveData.postValue(false) }
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<List<Downloaded>>(compositeDisposable) {
+                override fun onSuccess(t: List<Downloaded>) {
+                    downloadsLiveData.value = t
+                }
+            })
+
         showSeasons()
     }
 
@@ -36,7 +47,7 @@ class ListViewModel(
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
                 override fun onSuccess(t: List<Season>) {
-                    Timber.i(t.toString())
+
                     seasonsLiveData.value = t
                 }
             })
