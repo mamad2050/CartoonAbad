@@ -158,7 +158,7 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
             var shareMessage =
-                "سلااااام، توی برنامه ی کارتون آباد میتونی کارتون های معروف و قشنگی رو به رایگان ببینی.\n\nاز لینک زیر دانلودش کن."
+                "سلااااام، توی برنامه ی کارتون آباد میتونی کارتون های معروف و قشنگی رو بصورت رایگان ببینی.\n\nاز لینک زیر دانلودش کن."
             //cafebazaar link
             shareMessage =
                 "${shareMessage}\n\nhttps://cafebazaar.ir/app/${BuildConfig.APPLICATION_ID}"

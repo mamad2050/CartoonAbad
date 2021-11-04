@@ -25,6 +25,7 @@ import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_VIDEO_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
+import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
@@ -71,7 +72,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
-        requestAd()
         EventBus.getDefault().register(this)
     }
 
@@ -139,7 +139,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             putExtra(EXTRA_KEY_DATA, episode)
 
         })
-        showAd()
+        if (PurchaseContainer.purchaseInfo == null) {
+            requestAd()
+        }
     }
 
     override fun onFavoriteClick(episode: Episode) {
@@ -271,6 +273,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     }
 
     private fun requestAd() {
+
         TapsellPlus.requestInterstitialAd(
             requireActivity(),
             ZONE_ID_INTERSTITIAL_VIDEO_AD,
@@ -278,6 +281,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.response(tapsellPlusAdModel)
                     adResponseId = tapsellPlusAdModel.responseId
+                    showAd()
                 }
 
                 override fun error(message: String?) {}

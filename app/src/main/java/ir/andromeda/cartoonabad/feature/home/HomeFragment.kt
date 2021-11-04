@@ -14,6 +14,7 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
 import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_VIDEO_AD
+import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -82,7 +83,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     override fun onStart() {
         super.onStart()
-        requestAd()
         EventBus.getDefault().register(this)
     }
 
@@ -93,7 +93,10 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     }
 
     override fun onCLick(item: Animation) {
-        showAd()
+
+        if (PurchaseContainer.purchaseInfo == null){
+            requestAd()
+        }
         val action = HomeFragmentDirections.navigateToListFragment(item)
         Navigation.findNavController(requireView()).navigate(action)
     }
@@ -106,6 +109,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.response(tapsellPlusAdModel)
                     adResponseId = tapsellPlusAdModel.responseId
+                    showAd()
                 }
 
                 override fun error(message: String?) {}
