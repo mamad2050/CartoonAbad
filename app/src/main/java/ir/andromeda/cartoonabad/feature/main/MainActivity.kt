@@ -46,7 +46,6 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         setContentView(view)
 
         checkSubscription()
-
         setSupportActionBar(binding.toolbar)
 
         navHostFragment =

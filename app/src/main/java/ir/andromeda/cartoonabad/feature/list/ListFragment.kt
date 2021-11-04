@@ -48,6 +48,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.io.File
 
+var isDownload = false
+
 class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private var _binding: FragmentListBinding? = null
@@ -55,7 +57,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
-    var isDownloading = false
+//    var isDownloading = false
     var readPermissionGranted = false
     var writePermissionGranted = false
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -165,7 +167,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-        if (!isDownloading) {
+        if (!isDownload) {
             val downloadManager =
                 requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
@@ -188,12 +190,12 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val query = DownloadManager.Query().setFilterById(downloadId)
-                isDownloading = true
-                while (isDownloading) {
+                 isDownload = true
+                while (isDownload) {
                     val cursor = downloadManager.query(query)
                     cursor.moveToFirst()
                     if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-                        isDownloading = false
+                        isDownload = false
                     }
                     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                     downloadStatus(episode, status)

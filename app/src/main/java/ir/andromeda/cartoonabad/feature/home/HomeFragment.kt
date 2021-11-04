@@ -111,7 +111,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                     adResponseId = tapsellPlusAdModel.responseId
                     showAd()
                 }
-
                 override fun error(message: String?) {}
             })
     }
