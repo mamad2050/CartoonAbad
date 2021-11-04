@@ -114,8 +114,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
                 downloads.forEach { downloaded ->
                     it.forEach { seasons ->
-                        seasons.episodeList.forEach {episode->
-                            if (downloaded.id == episode.id){
+                        seasons.episodeList.forEach { episode ->
+                            if (downloaded.id == episode.id) {
                                 episode.isDownloaded = true
                             }
                         }
@@ -178,6 +178,11 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
+//        val file = File(episode.url.substringAfterLast('/'))
+//        if (file.exists()){
+//           snackBar(getString(R.string.already_downloaded))
+//        }
+
         if (!isDownload) {
             val downloadManager =
                 requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -200,20 +205,27 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             val downloadId = downloadManager.enqueue(request)
 
             CoroutineScope(Dispatchers.IO).launch {
+
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 isDownload = true
+
                 while (isDownload) {
                     val cursor = downloadManager.query(query)
-                    cursor.moveToFirst()
-                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-                        isDownload = false
+
+                    if (cursor != null && cursor.moveToFirst()) {
+
+                        if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                            isDownload = false
+                        }
+                        val status =
+                            cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                        downloadStatus(episode, status)
+                        cursor.close()
                     }
-                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                    downloadStatus(episode, status)
-                    cursor.close()
 
                 }
             }
+
         } else {
             snackBar(getString(R.string.download_status))
         }
@@ -224,16 +236,19 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private fun downloadStatus(episode: Episode, status: Int) {
 
         when (status) {
-            DownloadManager.STATUS_FAILED -> Toast.makeText(
-                requireContext(),
-                "Failed",
-                Toast.LENGTH_SHORT
-            ).show()
-            DownloadManager.STATUS_PAUSED -> Toast.makeText(
-                requireContext(),
-                "Paused",
-                Toast.LENGTH_SHORT
-            ).show()
+
+            DownloadManager.STATUS_FAILED -> isDownload = false
+
+            DownloadManager.STATUS_PAUSED -> {
+            }
+
+            DownloadManager.STATUS_PENDING -> {
+            }
+
+            DownloadManager.STATUS_RUNNING -> {
+            }
+
+
             DownloadManager.STATUS_SUCCESSFUL -> {
 
                 val path =
@@ -251,6 +266,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 viewModel.addEpisodeToDownloads(downloaded)
 
             }
+            else -> isDownload = false
 
         }
 
