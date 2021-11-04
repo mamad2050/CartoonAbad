@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_AD
+import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_VIDEO_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.downloaded.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
@@ -268,12 +268,11 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private fun requestAd() {
         TapsellPlus.requestInterstitialAd(
             requireActivity(),
-            ZONE_ID_INTERSTITIAL_AD,
+            ZONE_ID_INTERSTITIAL_VIDEO_AD,
             object : AdRequestCallback() {
                 override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.response(tapsellPlusAdModel)
                     adResponseId = tapsellPlusAdModel.responseId
-//                    showAd()
                 }
 
                 override fun error(message: String?) {}
