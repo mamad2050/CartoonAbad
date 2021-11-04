@@ -24,6 +24,7 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_VIDEO_AD
+import ir.andromeda.cartoonabad.common.ZONE_ID_REWARD_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.downloaded.Downloaded
@@ -58,7 +59,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
     var readPermissionGranted = false
+    private val isAllowToBackPress = true
     var writePermissionGranted = false
+    private lateinit var downloadManager : DownloadManager
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var adResponseId: String? = null
     private val args: ListFragmentArgs by navArgs()
@@ -73,6 +76,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
+         downloadManager =
+            requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         EventBus.getDefault().register(this)
     }
 
@@ -111,11 +116,11 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         viewModel.seasonsLiveData.observe(viewLifecycleOwner) {
 
             viewModel.downloadsLiveData.observe(viewLifecycleOwner) { downloads ->
-
                 downloads.forEach { downloaded ->
+                    val file = File(downloaded.path)
                     it.forEach { seasons ->
                         seasons.episodeList.forEach { episode ->
-                            if (downloaded.id == episode.id) {
+                            if (episode.id == downloaded.id && file.exists()) {
                                 episode.isDownloaded = true
                             }
                         }
@@ -178,14 +183,14 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-//        val file = File(episode.url.substringAfterLast('/'))
-//        if (file.exists()){
-//           snackBar(getString(R.string.already_downloaded))
-//        }
+        val file = File(  Environment.DIRECTORY_DOWNLOADS,
+            "CartoonAbad" + File.separator + episode.url.substringAfterLast('/'))
+        if (file.exists()){
+           snackBar(getString(R.string.already_downloaded))
+        }
 
-        if (!isDownload) {
-            val downloadManager =
-                requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+      else  if (!isDownload) {
+
 
             val downloadUri = Uri.parse(episode.url)
 
@@ -304,9 +309,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun requestAd() {
 
-        TapsellPlus.requestInterstitialAd(
+        TapsellPlus.requestRewardedVideoAd(
             requireActivity(),
-            ZONE_ID_INTERSTITIAL_VIDEO_AD,
+            ZONE_ID_REWARD_AD,
             object : AdRequestCallback() {
                 override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.response(tapsellPlusAdModel)
@@ -320,7 +325,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun showAd() {
 
-        TapsellPlus.showInterstitialAd(requireActivity(), adResponseId,
+        TapsellPlus.showRewardedVideoAd(requireActivity(), adResponseId,
             object : AdShowListener() {
                 override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onOpened(tapsellPlusAdModel)
@@ -332,6 +337,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
                 override fun onRewarded(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onRewarded(tapsellPlusAdModel)
+
                 }
 
                 override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
@@ -339,6 +345,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 }
             })
     }
+
 }
 
 
