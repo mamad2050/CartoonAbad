@@ -15,8 +15,8 @@ import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import timber.log.Timber
 
 class ListViewModel(
-    animationId: String,
-    seasonRepository: SeasonRepository,
+    private val animationId: String,
+    private val seasonRepository: SeasonRepository,
     private val episodeRepository: EpisodeRepository,
     private val downloadRepository: DownloadedRepository
 ) :
@@ -25,7 +25,10 @@ class ListViewModel(
     val seasonsLiveData = MutableLiveData<List<Season>>()
 
     init {
+        showSeasons()
+    }
 
+    fun showSeasons() {
         progressBarLiveData.value = true
 
         seasonRepository.getSeasons(animationId.toInt())

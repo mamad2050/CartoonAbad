@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
@@ -73,13 +74,17 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         requestAd()
         EventBus.getDefault().register(this)
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun showError(cartoonAbadEvent: CartoonAbadEvent) {
         when (cartoonAbadEvent.type) {
-            CartoonAbadEvent.Type.SIMPLE -> snackBar(
-                cartoonAbadEvent.stringMessage
-                    ?: getString(cartoonAbadEvent.resMessage)
-            )
+            CartoonAbadEvent.Type.SIMPLE -> {
+                val connectionView = showConnectionLost(true)
+                connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
+                    showConnectionLost(false)
+                    viewModel.showSeasons()
+                }
+            }
 
             CartoonAbadEvent.Type.PURCHASE -> {
                 findNavController().navigate(R.id.navigateToPurchaseAlertDialog)
@@ -158,7 +163,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-        if (!isDownloading){
+        if (!isDownloading) {
             val downloadManager =
                 requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
@@ -179,7 +184,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
             val downloadId = downloadManager.enqueue(request)
 
-            CoroutineScope(Dispatchers.IO).launch{
+            CoroutineScope(Dispatchers.IO).launch {
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 isDownloading = true
                 while (isDownloading) {
@@ -194,7 +199,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
                 }
             }
-        }else {
+        } else {
             snackBar(getString(R.string.download_status))
         }
 
@@ -279,7 +284,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             })
     }
 
-    private fun showAd(){
+    private fun showAd() {
 
         TapsellPlus.showInterstitialAd(requireActivity(), adResponseId,
             object : AdShowListener() {

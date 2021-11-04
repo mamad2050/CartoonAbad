@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
@@ -46,6 +47,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
@@ -62,12 +64,14 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun showError(cartoonAbadEvent: CartoonAbadEvent) {
         when (cartoonAbadEvent.type) {
-            CartoonAbadEvent.Type.SIMPLE -> snackBar(
-                cartoonAbadEvent.stringMessage
-                    ?: getString(cartoonAbadEvent.resMessage)
-            )
+            CartoonAbadEvent.Type.SIMPLE -> {
+                val connectionView = showConnectionLost(true)
+                connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
+                    showConnectionLost(false)
+                    viewModel.showAnimationList()
+                }
+            }
         }
-
     }
 
     private fun snackBar(message: String) {
@@ -115,9 +119,11 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onOpened(tapsellPlusAdModel)
                 }
+
                 override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onClosed(tapsellPlusAdModel)
                 }
+
                 override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
                     super.onError(tapsellPlusErrorModel)
                 }
