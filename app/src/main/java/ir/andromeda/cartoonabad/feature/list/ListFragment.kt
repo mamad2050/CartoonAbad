@@ -61,7 +61,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     var readPermissionGranted = false
     private val isAllowToBackPress = true
     var writePermissionGranted = false
-    private lateinit var downloadManager : DownloadManager
+    private lateinit var downloadManager: DownloadManager
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var adResponseId: String? = null
     private val args: ListFragmentArgs by navArgs()
@@ -76,7 +76,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onStart() {
         super.onStart()
-         downloadManager =
+        downloadManager =
             requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         EventBus.getDefault().register(this)
     }
@@ -183,17 +183,16 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-        val file = File(  Environment.DIRECTORY_DOWNLOADS,
-            "CartoonAbad" + File.separator + episode.url.substringAfterLast('/'))
-        if (file.exists()){
-           snackBar(getString(R.string.already_downloaded))
-        }
 
-      else  if (!isDownload) {
+        val filePath =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
 
+        if (File(filePath).exists()) {
+            snackBar(getString(R.string.already_downloaded))
+        } else if (!isDownload) {
 
             val downloadUri = Uri.parse(episode.url)
-
             val request = DownloadManager.Request(downloadUri).apply {
 
                 setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
@@ -215,19 +214,15 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 isDownload = true
 
                 while (isDownload) {
+
                     val cursor = downloadManager.query(query)
-
                     if (cursor != null && cursor.moveToFirst()) {
-
-                        if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-                            isDownload = false
-                        }
                         val status =
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                         downloadStatus(episode, status)
+
                         cursor.close()
                     }
-
                 }
             }
 
@@ -255,6 +250,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
 
             DownloadManager.STATUS_SUCCESSFUL -> {
+
+                isDownload = false
 
                 val path =
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
