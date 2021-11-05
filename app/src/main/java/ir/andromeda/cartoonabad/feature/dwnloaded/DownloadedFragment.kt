@@ -46,8 +46,10 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
             if (it.isNotEmpty()) {
                 it.forEach { downloaded ->
                     val file = File(downloaded.path)
-                    if (!file.exists())
+                    if (!file.exists()) {
                         it.remove(downloaded)
+                        viewModel.removeFromDownloads(downloaded)
+                    }
                 }
                 if (it.isEmpty())
                     showEmptyState(R.layout.view_download_empty_state)

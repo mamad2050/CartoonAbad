@@ -22,8 +22,8 @@ class DownloadedViewModel(private val repository: DownloadedRepository) :
         getDownloadedEpisodes()
     }
 
-    fun removeFromDownloads(episode: Downloaded) {
-        repository.deleteFromDownloads(episode)
+    fun removeFromDownloads(downloaded: Downloaded) {
+        repository.deleteFromDownloads(downloaded)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                 override fun onComplete() {
