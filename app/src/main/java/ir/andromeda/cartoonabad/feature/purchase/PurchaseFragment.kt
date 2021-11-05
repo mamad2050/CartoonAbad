@@ -47,7 +47,6 @@ class PurchaseFragment : CartoonAbadFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         startPaymentConnection()
 
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {

@@ -1,6 +1,7 @@
 package ir.andromeda.cartoonabad.feature.home
 
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.Single
 import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.asyncNetworkRequest
@@ -28,6 +29,10 @@ class HomeViewModel(private val animationRepository: AnimationRepository) : Cart
                     Timber.i(t.toString())
                 }
             })
+    }
+
+    fun getVersionNumber(): Single<Int> {
+        return animationRepository.getVersion()
     }
 
 

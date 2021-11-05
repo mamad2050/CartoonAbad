@@ -33,7 +33,6 @@ class ContactsFragment : CartoonAbadFragment() {
     private val binding get() = _binding!!
     private val viewModel: ContactsViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
-    private var isAllow = true
     private var selectedTitle: String? = null
     private val sharedPreferences: SharedPreferences by inject()
 
@@ -83,7 +82,7 @@ class ContactsFragment : CartoonAbadFragment() {
                 binding.etlMessage.error = getString(R.string.do_not_leave_fields_empty)
             }
 
-            if (isAllow && !selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
+            if (!selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
                 viewModel.sendMessage(selectedTitle!!, message, email)
                     .asyncNetworkRequest()
                     .subscribe(object :
@@ -108,11 +107,6 @@ class ContactsFragment : CartoonAbadFragment() {
                         }
                     })
             }
-
-            if (!isAllow) {
-                Toast.makeText(requireContext(), "not allow", Toast.LENGTH_SHORT).show()
-            }
-
 
         }
         (activity as DrawerLocker).setDrawerLocked(true)

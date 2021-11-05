@@ -49,5 +49,8 @@
     <string name="access_download">قابلیت دانلود کارتون و دیدن دانلود شده ها</string>
     <string name="no_internet_connection">اینترنت نداری!</string>
     <string name="retry">تلاش مجدد</string>
+    <string name="update">آپدیت برنامه</string>
+    <string name="dialog_update_help_text">سلاااااام، نسخه ی جدیدی برای برنامه منتشر کردیم.\nزود آپدیت کن که از تغییرات جا نمونی</string>
+    <string name="get_new_version">دریافت نسخه جدید</string>
 
 </resources>
