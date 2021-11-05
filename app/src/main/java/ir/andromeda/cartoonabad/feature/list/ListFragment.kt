@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
@@ -138,6 +139,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                         ?: writePermissionGranted
             }
     }
+
     override fun onStop() {
         super.onStop()
         _binding = null
@@ -208,7 +210,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                     if (cursor != null && cursor.moveToFirst()) {
                         val status =
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                        downloadStatus(status,episode)
+                        downloadStatus(status, episode)
                         cursor.close()
                     }
                 }
@@ -328,6 +330,17 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         viewModel.addEpisodeToDownloads(downloaded)
 
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "ListFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
+    }
+
 }
 
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
@@ -163,6 +164,18 @@ class PurchaseFragment : CartoonAbadFragment() {
             purchaseSucceed {
                 PurchaseContainer.setPurchaseInfo(it)
                 snackBar(getString(R.string.success_purchase))
+
+                val plan = when (selectedPlan) {
+                    YEARLY -> "YEARLY"
+                    THREE_MONTH -> "THREE_MONTH"
+                    MONTHLY -> "MONTHLY"
+                    else -> "YEARLY"
+                }
+                FirebaseAnalytics.getInstance(requireContext())
+                    .logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, Bundle().apply {
+                        putString(FirebaseAnalytics.Param.PAYMENT_TYPE, plan)
+                    })
+
             }
             purchaseCanceled {
 
@@ -183,5 +196,15 @@ class PurchaseFragment : CartoonAbadFragment() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
         paymentConnection.disconnect()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "PurchaseFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
@@ -77,6 +78,16 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
         startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
             putExtra(EXTRA_KEY_DATA, episode)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "FavoriteFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
     }
 
 }

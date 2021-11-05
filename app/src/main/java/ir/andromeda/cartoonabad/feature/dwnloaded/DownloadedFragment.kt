@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
@@ -97,5 +98,15 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
         startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
             putExtra(EXTRA_KEY_DATA, episode)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "DownloadedFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
     }
 }

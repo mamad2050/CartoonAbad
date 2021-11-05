@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.R
@@ -99,6 +100,12 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     override fun onCLick(item: Animation) {
 
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle().apply {
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Animation")
+                putString(FirebaseAnalytics.Param.ITEM_ID, item.name)
+            })
+
         if (PurchaseContainer.purchaseInfo == null) {
             requestAd()
         }
@@ -147,6 +154,16 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
                     super.onError(tapsellPlusErrorModel)
                 }
+            })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
             })
     }
 

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
@@ -164,6 +165,16 @@ class ContactsFragment : CartoonAbadFragment() {
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "ContactsFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
     }
 
 }
