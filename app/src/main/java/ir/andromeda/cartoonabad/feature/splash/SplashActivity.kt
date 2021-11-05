@@ -51,6 +51,7 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
 
     private fun goToHomeActivity() {
         binding.pbSplash.visibility = View.VISIBLE
+
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -59,10 +60,8 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
     }
 
     private fun checkNetworkCondition() {
-
         if (checkNetworkConnection()) {
             binding.swipeRefreshLayout.isEnabled = false
-            Toast.makeText(this, "در حال انتقال به حالت آنلاین", Toast.LENGTH_SHORT).show()
             goToHomeActivity()
         } else {
             noNetwork()
@@ -79,6 +78,7 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
     }
 
     override fun onRefresh() {
+        Toast.makeText(this, "در حال انتقال به حالت آنلاین", Toast.LENGTH_SHORT).show()
         checkNetworkCondition()
     }
 }
