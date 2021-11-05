@@ -24,18 +24,8 @@ class ListViewModel(
     CartoonAbadViewModel() {
 
     val seasonsLiveData = MutableLiveData<List<Season>>()
-    val downloadsLiveData = MutableLiveData<List<Downloaded>>()
 
     init {
-        downloadRepository.getDownloadedEpisodes()
-            .doFinally { progressBarLiveData.postValue(false) }
-            .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<List<Downloaded>>(compositeDisposable) {
-                override fun onSuccess(t: List<Downloaded>) {
-                    downloadsLiveData.value = t
-                }
-            })
-
         showSeasons()
     }
 

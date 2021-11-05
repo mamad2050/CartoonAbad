@@ -10,6 +10,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,11 +37,13 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
 import ir.tapsell.plus.TapsellPlus
+import ir.tapsell.plus.TapsellPlusManager
 import ir.tapsell.plus.model.TapsellPlusAdModel
 import ir.tapsell.plus.model.TapsellPlusErrorModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -59,7 +62,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
     var readPermissionGranted = false
-    private val isAllowToBackPress = true
     var writePermissionGranted = false
     private lateinit var downloadManager: DownloadManager
     lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -78,6 +80,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         super.onStart()
         downloadManager =
             requireActivity().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
         EventBus.getDefault().register(this)
     }
 
@@ -114,16 +117,13 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         }
 
         viewModel.seasonsLiveData.observe(viewLifecycleOwner) {
-
-            viewModel.downloadsLiveData.observe(viewLifecycleOwner) { downloads ->
-                downloads.forEach { downloaded ->
-                    val file = File(downloaded.path)
-                    it.forEach { seasons ->
-                        seasons.episodeList.forEach { episode ->
-                            if (episode.id == downloaded.id && file.exists()) {
-                                episode.isDownloaded = true
-                            }
-                        }
+            it.forEach { seasons ->
+                seasons.episodeList.forEach { episode ->
+                    val filePath =
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                            .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
+                    if (File(filePath).exists()) {
+                        episode.isDownloaded = true
                     }
                 }
             }
@@ -183,44 +183,39 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     private fun startDownloading(episode: Episode) {
 
-
         val filePath =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
 
         if (File(filePath).exists()) {
             snackBar(getString(R.string.already_downloaded))
-        } else if (!isDownload) {
+        } else if (!isDownload && !File(filePath).exists()) {
 
             val downloadUri = Uri.parse(episode.url)
-            val request = DownloadManager.Request(downloadUri).apply {
+            val request = DownloadManager.Request(downloadUri)
 
-                setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-                setAllowedOverRoaming(false)
-                setTitle(episode.name)
-                setDescription("CartoonAbad")
-                setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                setDestinationInExternalPublicDir(
-                    Environment.DIRECTORY_DOWNLOADS,
-                    "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
-                )
-            }
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            request.setAllowedOverRoaming(false)
+            request.setTitle(episode.name)
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
+            )
 
             val downloadId = downloadManager.enqueue(request)
 
-            CoroutineScope(Dispatchers.IO).launch {
+            addToDownloadDB(episode)
 
+            CoroutineScope(Dispatchers.IO).launch {
                 val query = DownloadManager.Query().setFilterById(downloadId)
                 isDownload = true
-
                 while (isDownload) {
-
                     val cursor = downloadManager.query(query)
                     if (cursor != null && cursor.moveToFirst()) {
                         val status =
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                        downloadStatus(episode, status)
-
+                        downloadStatus(status)
                         cursor.close()
                     }
                 }
@@ -229,11 +224,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         } else {
             snackBar(getString(R.string.download_status))
         }
-
-
     }
 
-    private fun downloadStatus(episode: Episode, status: Int) {
+    private fun downloadStatus(status: Int) {
 
         when (status) {
 
@@ -248,25 +241,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             DownloadManager.STATUS_RUNNING -> {
             }
 
-
             DownloadManager.STATUS_SUCCESSFUL -> {
-
                 isDownload = false
-
-                val path =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
-
-                val downloaded = Downloaded(
-                    episode.duration,
-                    episode.id,
-                    episode.image,
-                    episode.name,
-                    episode.season_id,
-                    path
-                )
-                viewModel.addEpisodeToDownloads(downloaded)
-
             }
             else -> isDownload = false
 
@@ -326,6 +302,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             object : AdShowListener() {
                 override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onOpened(tapsellPlusAdModel)
+
                 }
 
                 override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
@@ -343,6 +320,21 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             })
     }
 
+    private fun addToDownloadDB(episode: Episode) {
+        val path =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
+
+        val downloaded = Downloaded(
+            episode.duration,
+            episode.id,
+            episode.image,
+            episode.name,
+            episode.season_id,
+            path
+        )
+        viewModel.addEpisodeToDownloads(downloaded)
+    }
 }
 
 
