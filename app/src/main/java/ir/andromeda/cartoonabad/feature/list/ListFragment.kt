@@ -138,6 +138,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                         ?: writePermissionGranted
             }
     }
+
     override fun onStop() {
         super.onStop()
         _binding = null
@@ -202,13 +203,13 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val query = DownloadManager.Query().setFilterById(downloadId)
-                isDownload = true
+
                 while (isDownload) {
                     val cursor = downloadManager.query(query)
                     if (cursor != null && cursor.moveToFirst()) {
                         val status =
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                        downloadStatus(status,episode)
+                        downloadStatus(status, episode)
                         cursor.close()
                     }
                 }
@@ -227,8 +228,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             }
             DownloadManager.STATUS_RUNNING -> {
             }
-
-            DownloadManager.STATUS_FAILED -> isDownload = false
+            DownloadManager.STATUS_FAILED -> {
+            }
             DownloadManager.STATUS_SUCCESSFUL -> {
                 isDownload = false
                 activity?.runOnUiThread {
@@ -236,7 +237,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 }
             }
 
-            else -> isDownload = false
+            else -> {
+            }
 
         }
 

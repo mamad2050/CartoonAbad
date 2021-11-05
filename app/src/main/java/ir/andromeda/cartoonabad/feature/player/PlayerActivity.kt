@@ -3,6 +3,7 @@ package ir.andromeda.cartoonabad.feature.player
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.TextView
 import com.google.android.exoplayer2.MediaItem
@@ -13,6 +14,7 @@ import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityPlayerBinding
+import java.io.File
 
 
 class PlayerActivity : CartoonAbadActivity() {
@@ -24,7 +26,7 @@ class PlayerActivity : CartoonAbadActivity() {
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
-
+    private lateinit var mediaItem: MediaItem
     private lateinit var episode: Episode
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,17 +48,22 @@ class PlayerActivity : CartoonAbadActivity() {
     }
 
 
-
     private fun initializePlayer() {
         player = SimpleExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
                 binding.playerView.player = exoPlayer
 
-                val mediaItem =
-                    MediaItem.fromUri(episode.url)
-                exoPlayer.setMediaItem(mediaItem)
+                val filePath =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                        .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
 
+                mediaItem = if (File(filePath).exists())
+                    MediaItem.fromUri(filePath)
+                else
+                    MediaItem.fromUri(episode.url)
+
+                exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.seekTo(currentWindow, playbackPosition)
                 exoPlayer.prepare()
