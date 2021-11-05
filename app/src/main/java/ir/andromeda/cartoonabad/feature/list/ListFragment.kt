@@ -138,7 +138,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                         ?: writePermissionGranted
             }
     }
-
     override fun onStop() {
         super.onStop()
         _binding = null

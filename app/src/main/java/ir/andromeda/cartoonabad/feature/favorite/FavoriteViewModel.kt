@@ -36,7 +36,7 @@ class FavoriteViewModel(private val episodeRepository: EpisodeRepository) :
         getFavoriteEpisodes()
     }
 
-     fun getFavoriteEpisodes() {
+     private fun getFavoriteEpisodes() {
 
         episodeRepository.getFavoriteEpisodes()
             .asyncNetworkRequest()

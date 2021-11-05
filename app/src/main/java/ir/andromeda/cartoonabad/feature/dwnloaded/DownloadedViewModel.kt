@@ -40,15 +40,18 @@ class DownloadedViewModel(private val repository: DownloadedRepository) :
             .subscribe(object :
                 CartoonAbadSingleObserver<List<Downloaded>>(compositeDisposable) {
                 override fun onSuccess(t: List<Downloaded>) {
-                    if (t.isNotEmpty()) {
-                        downloadedEpisodeLiveData.value = t as MutableList<Downloaded>
-                    } else {
-                        emptyStateLiveData.value = EmptyState(
-                            true,
-                        )
+                    try {
+                        if (t.isNotEmpty()) {
+                            downloadedEpisodeLiveData.value = t as MutableList<Downloaded>
+                        } else {
+                            emptyStateLiveData.value = EmptyState(
+                                true,
+                            )
+                        }
+                    } catch (error: Throwable) {
+                        Timber.e(error)
                     }
                 }
             })
     }
-
 }
