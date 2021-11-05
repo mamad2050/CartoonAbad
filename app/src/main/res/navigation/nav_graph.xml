@@ -28,6 +28,9 @@
         <action
             android:id="@+id/navigateToPurchaseAlertDialog"
             app:destination="@id/purchaseAlertDialog" />
+        <action
+            android:id="@+id/navigateToUpdateAlertDialog"
+            app:destination="@id/updateAlertDialog" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -72,4 +75,8 @@
             android:id="@+id/action_purchaseAlertDialog_to_purchaseFragment"
             app:destination="@id/purchaseFragment" />
     </dialog>
+    <dialog
+        android:id="@+id/updateAlertDialog"
+        android:name="ir.andromeda.cartoonabad.feature.update.UpdateAlertDialog"
+        android:label="UpdateAlertDialog" />
 </navigation>

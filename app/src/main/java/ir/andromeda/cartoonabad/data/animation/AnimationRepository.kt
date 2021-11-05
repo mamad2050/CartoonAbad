@@ -6,4 +6,6 @@ interface AnimationRepository {
 
     fun getAnimations(): Single<List<Animation>>
 
+    fun getVersion(): Single<Int>
+
 }
