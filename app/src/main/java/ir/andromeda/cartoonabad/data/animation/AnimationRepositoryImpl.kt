@@ -4,7 +4,10 @@ import io.reactivex.Single
 
 class AnimationRepositoryImpl(
     private val remoteDataSource: AnimationDataSource
-) : AnimationRepository{
+) : AnimationRepository {
 
     override fun getAnimations(): Single<List<Animation>> = remoteDataSource.getAnimations()
+
+    override fun getVersion(): Single<Int> = remoteDataSource.getVersion()
+
 }

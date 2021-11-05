@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.disposables.CompositeDisposable
+import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadFragment
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
-import ir.andromeda.cartoonabad.common.OnItemEventListener
-import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
-import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_VIDEO_AD
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
@@ -36,6 +36,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     private var adResponseId: String? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
+    private val compositeDisposable = CompositeDisposable()
 
 
     override fun onCreateView(
@@ -59,6 +60,8 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             adapter = AnimationAdapter(it, imageLoadingService, this)
             binding.rvAnimations.adapter = adapter
         }
+
+        showUpdateDialog()
 
     }
 
@@ -90,11 +93,13 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         super.onStop()
         _binding = null
         EventBus.getDefault().unregister(this)
+        compositeDisposable.dispose()
     }
+
 
     override fun onCLick(item: Animation) {
 
-        if (PurchaseContainer.purchaseInfo == null){
+        if (PurchaseContainer.purchaseInfo == null) {
             requestAd()
         }
         val action = HomeFragmentDirections.navigateToListFragment(item)
@@ -111,7 +116,19 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                     adResponseId = tapsellPlusAdModel.responseId
                     showAd()
                 }
+
                 override fun error(message: String?) {}
+            })
+    }
+
+    private fun showUpdateDialog() {
+        viewModel.getVersionNumber()
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<Int>(compositeDisposable) {
+                override fun onSuccess(t: Int) {
+                    if (t > BuildConfig.VERSION_CODE)
+                        findNavController().navigate(R.id.navigateToUpdateAlertDialog)
+                }
             })
     }
 
