@@ -36,6 +36,8 @@ interface ApiService {
     @GET("getSubscriptions.php")
     fun getSubscriptions() : Single<List<Subscription>>
 
+    @GET("getAppVersion.php")
+    fun getAppVersion() : Single<Int>
 
 }
 

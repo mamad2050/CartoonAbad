@@ -192,17 +192,16 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         } else if (!isDownload && !File(filePath).exists()) {
 
             val downloadUri = Uri.parse(episode.url)
-            val request = DownloadManager.Request(downloadUri)
-
-            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-            request.setAllowedOverRoaming(false)
-            request.setTitle(episode.name)
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
-            )
-
+            val request = DownloadManager.Request(downloadUri).apply {
+                setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                setAllowedOverRoaming(false)
+                setTitle(episode.name)
+                setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_DOWNLOADS,
+                    "CartoonAbad" + File.separator + episode.url.substringAfterLast('/')
+                )
+            }
             val downloadId = downloadManager.enqueue(request)
 
             addToDownloadDB(episode)
