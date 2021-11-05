@@ -189,7 +189,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
         if (File(filePath).exists()) {
             snackBar(getString(R.string.already_downloaded))
-        } else if (!isDownload && !File(filePath).exists()) {
+        } else if (!File(filePath).exists()) {
 
             val downloadUri = Uri.parse(episode.url)
             val request = DownloadManager.Request(downloadUri).apply {
@@ -220,8 +220,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 }
             }
 
-        } else {
-            snackBar(getString(R.string.download_status))
         }
     }
 

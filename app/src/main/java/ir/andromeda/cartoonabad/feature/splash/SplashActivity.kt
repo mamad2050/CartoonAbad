@@ -9,11 +9,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.Toast
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.databinding.ActivitySplashBinding
 import ir.andromeda.cartoonabad.feature.main.MainActivity
 
-class SplashActivity : CartoonAbadActivity() {
+class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivitySplashBinding
 
@@ -24,11 +26,9 @@ class SplashActivity : CartoonAbadActivity() {
 
         supportActionBar?.hide()
 
-        checkCondition()
+        checkNetworkCondition()
 
-        binding.btnExit.setOnClickListener {
-            onBackPressed()
-        }
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
 
     }
 
@@ -50,9 +50,7 @@ class SplashActivity : CartoonAbadActivity() {
     }
 
     private fun goToHomeActivity() {
-
         binding.pbSplash.visibility = View.VISIBLE
-
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -60,9 +58,11 @@ class SplashActivity : CartoonAbadActivity() {
         }, 3000)
     }
 
-    private fun checkCondition() {
+    private fun checkNetworkCondition() {
 
         if (checkNetworkConnection()) {
+            binding.swipeRefreshLayout.isEnabled = false
+            Toast.makeText(this, "در حال انتقال به حالت آنلاین", Toast.LENGTH_SHORT).show()
             goToHomeActivity()
         } else {
             noNetwork()
@@ -70,9 +70,15 @@ class SplashActivity : CartoonAbadActivity() {
     }
 
     private fun noNetwork() {
+
         binding.isOnlineLayout.visibility = View.GONE
         binding.pbSplash.visibility = View.GONE
         binding.isOfflineLayout.visibility = View.VISIBLE
+        binding.swipeRefreshLayout.isRefreshing = false
+        Toast.makeText(this, "اینترنت وصل نیست :)", Toast.LENGTH_SHORT).show()
     }
 
+    override fun onRefresh() {
+        checkNetworkCondition()
+    }
 }
