@@ -1,6 +1,7 @@
 package ir.andromeda.cartoonabad.data.animation
 
 import io.reactivex.Single
+import ir.andromeda.cartoonabad.data.AppData
 
 class AnimationRepositoryImpl(
     private val remoteDataSource: AnimationDataSource
@@ -8,6 +9,6 @@ class AnimationRepositoryImpl(
 
     override fun getAnimations(): Single<List<Animation>> = remoteDataSource.getAnimations()
 
-    override fun getVersion(): Single<Int> = remoteDataSource.getVersion()
+    override fun getVersion(): Single<AppData> = remoteDataSource.getVersion()
 
 }

@@ -1,17 +1,13 @@
 package ir.andromeda.cartoonabad.services.http
 
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import com.google.gson.annotations.SerializedName
 import io.reactivex.Single
-import ir.andromeda.cartoonabad.data.message.MessageResponse
+import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.animation.Animation
-import ir.andromeda.cartoonabad.data.message.Message
+import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.subscription.Subscription
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,10 +30,10 @@ interface ApiService {
     ): Single<MessageResponse>
 
     @GET("getSubscriptions.php")
-    fun getSubscriptions() : Single<List<Subscription>>
+    fun getSubscriptions(): Single<List<Subscription>>
 
     @GET("getAppVersion.php")
-    fun getAppVersion() : Single<Int>
+    fun getAppVersion(): Single<AppData>
 
 }
 

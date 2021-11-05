@@ -13,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
+import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.animation.Animation
@@ -30,6 +31,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var adapter: AnimationAdapter? = null
@@ -37,7 +39,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,7 +97,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         compositeDisposable.dispose()
     }
 
-
     override fun onCLick(item: Animation) {
 
         if (PurchaseContainer.purchaseInfo == null) {
@@ -124,9 +124,9 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     private fun showUpdateDialog() {
         viewModel.getVersionNumber()
             .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<Int>(compositeDisposable) {
-                override fun onSuccess(t: Int) {
-                    if (t > BuildConfig.VERSION_CODE)
+            .subscribe(object : CartoonAbadSingleObserver<AppData>(compositeDisposable) {
+                override fun onSuccess(t: AppData) {
+                    if (t.version.toInt() > BuildConfig.VERSION_CODE)
                         findNavController().navigate(R.id.navigateToUpdateAlertDialog)
                 }
             })
