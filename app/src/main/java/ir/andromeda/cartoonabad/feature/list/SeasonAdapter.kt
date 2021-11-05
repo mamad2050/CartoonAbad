@@ -24,6 +24,7 @@ class SeasonAdapter(
 
     ) : RecyclerView.Adapter<SeasonAdapter.MyViewHolder>() {
 
+    private lateinit var episodeAdapter : EpisodeAdapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_season, parent, false)
@@ -63,12 +64,15 @@ class SeasonAdapter(
 
             rvEpisodes.layoutManager =
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            val episodeAdapter =
+             episodeAdapter =
                 EpisodeAdapter(season.episodeList, imageLoadingService, episodeListener)
             rvEpisodes.adapter = episodeAdapter
 
         }
 
+    }
+     fun updateEpisode(episode: Episode){
+        episodeAdapter.updateEpisode(episode)
     }
 
 }

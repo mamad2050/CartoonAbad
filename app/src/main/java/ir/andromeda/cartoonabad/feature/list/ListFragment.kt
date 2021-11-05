@@ -10,8 +10,6 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -24,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_VIDEO_AD
 import ir.andromeda.cartoonabad.common.ZONE_ID_REWARD_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
@@ -37,13 +34,11 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
 import ir.tapsell.plus.TapsellPlus
-import ir.tapsell.plus.TapsellPlusManager
 import ir.tapsell.plus.model.TapsellPlusAdModel
 import ir.tapsell.plus.model.TapsellPlusErrorModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -214,7 +209,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                     if (cursor != null && cursor.moveToFirst()) {
                         val status =
                             cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                        downloadStatus(status)
+                        downloadStatus(status,episode)
                         cursor.close()
                     }
                 }
@@ -223,24 +218,25 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
         }
     }
 
-    private fun downloadStatus(status: Int) {
+    private fun downloadStatus(status: Int, episode: Episode) {
 
         when (status) {
 
-            DownloadManager.STATUS_FAILED -> isDownload = false
-
             DownloadManager.STATUS_PAUSED -> {
             }
-
             DownloadManager.STATUS_PENDING -> {
             }
-
             DownloadManager.STATUS_RUNNING -> {
             }
 
+            DownloadManager.STATUS_FAILED -> isDownload = false
             DownloadManager.STATUS_SUCCESSFUL -> {
                 isDownload = false
+                activity?.runOnUiThread {
+                    adapter?.updateEpisode(episode)
+                }
             }
+
             else -> isDownload = false
 
         }
@@ -331,6 +327,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
             path
         )
         viewModel.addEpisodeToDownloads(downloaded)
+
     }
 }
 

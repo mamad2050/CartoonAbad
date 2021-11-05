@@ -92,6 +92,13 @@ class EpisodeAdapter(
             }
         }
     }
+
+    fun updateEpisode(episode: Episode){
+        episode.isDownloaded = true
+        notifyDataSetChanged()
+    }
+
+
 }
 
 
