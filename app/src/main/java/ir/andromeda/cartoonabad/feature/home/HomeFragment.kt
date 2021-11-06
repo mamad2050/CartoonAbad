@@ -102,7 +102,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle().apply {
-                putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Animation")
+                putString(FirebaseAnalytics.Param.CONTENT_TYPE, item.name)
                 putString(FirebaseAnalytics.Param.ITEM_ID, item.name)
             })
 

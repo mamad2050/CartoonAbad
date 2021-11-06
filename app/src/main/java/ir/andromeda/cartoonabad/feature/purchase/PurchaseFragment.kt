@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
@@ -121,6 +122,19 @@ class PurchaseFragment : CartoonAbadFragment() {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showError(cartoonAbadEvent: CartoonAbadEvent) {
+        when (cartoonAbadEvent.type) {
+            CartoonAbadEvent.Type.SIMPLE -> {
+                val connectionView = showConnectionLost(true)
+                connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
+                    showConnectionLost(false)
+                    viewModel.showSubscriptionPrices()
+                }
+            }
+        }
+    }
+
     private fun startPaymentConnection() {
         paymentConnection = payment.connect {
             connectionSucceed {
@@ -192,10 +206,16 @@ class PurchaseFragment : CartoonAbadFragment() {
         _binding = null
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
     override fun onStop() {
         super.onStop()
         (activity as DrawerLocker).setDrawerLocked(false)
         paymentConnection.disconnect()
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onResume() {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/controllerCustomLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/controllerCustomLayout"
     android:layoutDirection="ltr"
     android:orientation="vertical"
     tools:targetApi="28">
@@ -19,7 +19,7 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical|start"
             android:layout_margin="12dp"
-            android:background="?selectableItemBackgroundBorderless"
+            android:background="@drawable/shape_ripple"
             android:scaleType="centerInside"
             android:src="@drawable/ic_baseline_arrow_back_24" />
 

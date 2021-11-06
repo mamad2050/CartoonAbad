@@ -14,6 +14,10 @@ class PurchaseViewModel(private val subscriptionRepository: SubscriptionReposito
 
 
     init {
+        showSubscriptionPrices()
+    }
+
+    fun showSubscriptionPrices() {
 
         progressBarLiveData.value = true
 
