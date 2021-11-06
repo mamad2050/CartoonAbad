@@ -8,6 +8,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\mohammad\\project\\Android apps\\signature.jks')
+            storePassword KEY_PASSWORD
+            keyAlias 'mwdch'
+            keyPassword KEY_PASSWORD
+        }
+    }
     compileSdk 30
 
     defaultConfig {
@@ -30,6 +38,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
