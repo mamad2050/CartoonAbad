@@ -8,6 +8,11 @@ plugins {
 }
 
 android {
+
+    dexOptions {
+        javaMaxHeapSize "4G"
+    }
+
     signingConfigs {
         release {
             storeFile file('D:\\mohammad\\project\\Android apps\\signature.jks')
@@ -35,8 +40,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
