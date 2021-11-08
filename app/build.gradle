@@ -38,8 +38,9 @@ android {
         jvmTarget = '1.8'
     }
     buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
