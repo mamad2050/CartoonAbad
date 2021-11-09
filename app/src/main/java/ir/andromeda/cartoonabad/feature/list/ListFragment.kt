@@ -106,8 +106,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as DrawerLocker).setDrawerLocked(true)
-
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
@@ -334,6 +332,8 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onResume() {
         super.onResume()
+
+        (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

@@ -110,7 +110,6 @@ class ContactsFragment : CartoonAbadFragment() {
             }
 
         }
-        (activity as DrawerLocker).setDrawerLocked(true)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -169,6 +168,8 @@ class ContactsFragment : CartoonAbadFragment() {
 
     override fun onResume() {
         super.onResume()
+
+        (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

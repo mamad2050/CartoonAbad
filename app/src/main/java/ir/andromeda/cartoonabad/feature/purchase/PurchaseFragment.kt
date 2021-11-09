@@ -88,7 +88,6 @@ class PurchaseFragment : CartoonAbadFragment() {
             }
         }
 
-        (activity as DrawerLocker).setDrawerLocked(true)
     }
 
     private fun customButtons() {
@@ -220,6 +219,8 @@ class PurchaseFragment : CartoonAbadFragment() {
 
     override fun onResume() {
         super.onResume()
+
+        (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

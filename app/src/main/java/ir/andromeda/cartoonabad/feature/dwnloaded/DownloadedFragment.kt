@@ -40,9 +40,6 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (activity is DrawerLocker)
-            (activity as DrawerLocker).setDrawerLocked(true)
-
         viewModel.downloadedEpisodeLiveData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 it.forEach { downloaded ->
@@ -102,6 +99,9 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
 
     override fun onResume() {
         super.onResume()
+
+        if (activity is DrawerLocker)
+            (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
