@@ -46,6 +46,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }

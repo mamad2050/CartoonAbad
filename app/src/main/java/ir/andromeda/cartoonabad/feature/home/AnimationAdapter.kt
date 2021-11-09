@@ -55,7 +55,8 @@ class AnimationAdapter(
 
             val deviceWidth =
                 displayMetrics.widthPixels / 3 - convertDpToPixel(6.toFloat(), ivAnimation.context)
-            val deviceHeight = displayMetrics.heightPixels / 4
+            val deviceHeight = deviceWidth * 1.5
+
             ivAnimation.layoutParams.width = deviceWidth.toInt()
             ivAnimation.layoutParams.height = deviceHeight.toInt()
 
