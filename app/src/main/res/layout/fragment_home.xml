@@ -6,6 +6,7 @@
     tools:context=".feature.home.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/item_animation"
         android:id="@+id/rv_animations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

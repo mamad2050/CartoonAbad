@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.home
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
@@ -58,10 +60,12 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
         viewModel.animationsLiveData.observe(viewLifecycleOwner) {
 
-            binding.rvAnimations.layoutManager = GridLayoutManager(requireContext(), 2)
+            binding.rvAnimations.layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = AnimationAdapter(it, imageLoadingService, this)
             binding.rvAnimations.adapter = adapter
         }
+
+
 
         showUpdateDialog()
 
@@ -165,6 +169,11 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
                 putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
             })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
     }
 
 }
