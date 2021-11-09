@@ -52,5 +52,6 @@
     <string name="update">آپدیت برنامه</string>
     <string name="dialog_update_help_text">سلاااااام، نسخه ی جدیدی برای برنامه منتشر کردیم.\nزود آپدیت کن که از تغییرات جا نمونی</string>
     <string name="get_new_version">دریافت نسخه جدید</string>
+    <string name="online_mode_tip">برای رفتن به حالت آنلاین صفحه رو به طرف پایین بکشید</string>
 
 </resources>

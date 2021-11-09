@@ -37,12 +37,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/isOfflineLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/shape_download_in_splash"
+            android:orientation="vertical"
             android:visibility="gone"
             app:layout_anchor="@+id/isOfflineLayout"
             app:layout_anchorGravity="center"
@@ -62,6 +64,7 @@
                 android:text="@string/splash_help"
                 android:textAppearance="?textAppearanceHeadline6" />
 
+
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
@@ -75,9 +78,7 @@
                 android:name="ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp" />
-
+                android:layout_marginTop="4dp" />
 
         </LinearLayout>
 
@@ -89,6 +90,18 @@
             android:layout_marginBottom="64dp"
             app:SpinKit_Color="@color/white"
             app:SpinKit_Style="FadingCircle" />
+
+        <TextView
+
+            android:id="@+id/tv_goToOnlineMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/online_mode_tip"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="11dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

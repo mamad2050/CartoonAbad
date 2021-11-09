@@ -74,6 +74,7 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
         binding.pbSplash.visibility = View.GONE
         binding.isOfflineLayout.visibility = View.VISIBLE
         binding.swipeRefreshLayout.isRefreshing = false
+        binding.tvGoToOnlineMode.visibility = View.VISIBLE
         Toast.makeText(this, "اینترنت وصل نیست :)", Toast.LENGTH_SHORT).show()
     }
 
