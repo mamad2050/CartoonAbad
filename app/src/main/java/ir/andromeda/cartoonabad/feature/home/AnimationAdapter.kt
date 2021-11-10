@@ -15,7 +15,6 @@ import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import android.app.Activity
 import ir.andromeda.cartoonabad.common.convertDpToPixel
 
-
 class AnimationAdapter(
     private val animations: List<Animation> = ArrayList(),
     val imageLoadingService: ImageLoadingService,
@@ -23,8 +22,6 @@ class AnimationAdapter(
 ) : RecyclerView.Adapter<AnimationAdapter.MyViewHolder>() {
     private val displayMetrics = DisplayMetrics()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
-
 
         (parent.context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
         return MyViewHolder(
@@ -35,7 +32,6 @@ class AnimationAdapter(
     override fun onBindViewHolder(myViewHolder: MyViewHolder, position: Int) {
         myViewHolder.bindAnimation(animations[position])
 
-
     }
 
     override fun getItemCount(): Int = animations.size
@@ -45,10 +41,16 @@ class AnimationAdapter(
         private val ivAnimation = itemView.findViewById<CartoonAbadImageView>(R.id.iv_animation)
         private val tvAnimation = itemView.findViewById<TextView>(R.id.tv_animation_name)
 
-
         fun bindAnimation(animation: Animation) {
+
             imageLoadingService.load(ivAnimation as CartoonAbadImageView, animation.image)
             tvAnimation.text = animation.name
+
+            if (animation.no_episodes.toInt() == 0){
+
+                ivAnimation.alpha = 0.8f
+
+            }
 
             val deviceWidth =
                 displayMetrics.widthPixels / 3 - convertDpToPixel(8.toFloat(), ivAnimation.context)

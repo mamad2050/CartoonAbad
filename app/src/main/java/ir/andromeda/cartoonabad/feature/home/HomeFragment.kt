@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -109,11 +110,19 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 putString(FirebaseAnalytics.Param.ITEM_ID, item.name)
             })
 
-        if (PurchaseContainer.purchaseInfo == null) {
-            requestAd()
+
+        if (item.no_episodes.toInt() > 0) {
+
+            if (PurchaseContainer.purchaseInfo == null) {
+                requestAd()
+            }
+            val action = HomeFragmentDirections.navigateToListFragment(item)
+            Navigation.findNavController(requireView()).navigate(action)
+        } else {
+            Toast.makeText(requireContext(), "بزودی ...", Toast.LENGTH_SHORT).show()
         }
-        val action = HomeFragmentDirections.navigateToListFragment(item)
-        Navigation.findNavController(requireView()).navigate(action)
+
+
     }
 
     private fun requestAd() {
@@ -169,7 +178,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
             })
     }
-
 
 
 }
