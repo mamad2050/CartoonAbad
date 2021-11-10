@@ -53,7 +53,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
@@ -65,8 +64,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             adapter = AnimationAdapter(it, imageLoadingService, this)
             binding.rvAnimations.adapter = adapter
         }
-
-
 
         showUpdateDialog()
 
@@ -172,9 +169,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             })
     }
 
-    override fun onPause() {
-        super.onPause()
-//        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
-    }
+
 
 }
