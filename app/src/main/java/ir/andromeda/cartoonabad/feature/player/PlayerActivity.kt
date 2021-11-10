@@ -43,7 +43,7 @@ class PlayerActivity : CartoonAbadActivity() {
 
 
         //making screen landscape
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
 
     }
 

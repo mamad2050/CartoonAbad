@@ -50,11 +50,8 @@ class AnimationAdapter(
             imageLoadingService.load(ivAnimation as CartoonAbadImageView, animation.image)
             tvAnimation.text = animation.name
 
-
-
-
             val deviceWidth =
-                displayMetrics.widthPixels / 3 - convertDpToPixel(6.toFloat(), ivAnimation.context)
+                displayMetrics.widthPixels / 3 - convertDpToPixel(12.toFloat(), ivAnimation.context)
             val deviceHeight = deviceWidth * 1.5
 
             ivAnimation.layoutParams.width = deviceWidth.toInt()
