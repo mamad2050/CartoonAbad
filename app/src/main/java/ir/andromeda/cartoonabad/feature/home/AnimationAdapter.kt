@@ -48,7 +48,7 @@ class AnimationAdapter(
 
             if (animation.no_episodes.toInt() == 0){
 
-                ivAnimation.alpha = 0.8f
+                ivAnimation.alpha = 0.9f
 
             }
 
