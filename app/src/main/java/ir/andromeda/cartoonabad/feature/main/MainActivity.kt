@@ -113,7 +113,7 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         }
     }
 
-    private fun setSubscriptionDays(purchaseTime: Long, orderId: String) {
+    public fun setSubscriptionDays(purchaseTime: Long, orderId: String) {
         val day: Long = when (orderId) {
             YEARLY_PRODUCT_ID -> 365L
             THREE_MONTH_PRODUCT_ID -> 90L

@@ -15,6 +15,7 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
 import ir.andromeda.cartoonabad.feature.main.DrawerLocker
+import ir.andromeda.cartoonabad.feature.main.MainActivity
 import ir.cafebazaar.poolakey.Connection
 import ir.cafebazaar.poolakey.ConnectionState
 import ir.cafebazaar.poolakey.Payment
@@ -176,6 +177,11 @@ class PurchaseFragment : CartoonAbadFragment() {
         payment.onActivityResult(requestCode, resultCode, data) {
             purchaseSucceed {
                 PurchaseContainer.setPurchaseInfo(it)
+                //set subscription day
+                (requireActivity() as MainActivity).setSubscriptionDays(
+                    it.purchaseTime,
+                    it.productId
+                )
                 snackBar(getString(R.string.success_purchase))
 
                 val plan = when (selectedPlan) {
