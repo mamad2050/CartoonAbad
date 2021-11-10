@@ -12,6 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_splash_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/splash_bg" />
+
         <LinearLayout
             android:id="@+id/isOnlineLayout"
             android:layout_width="wrap_content"
@@ -21,10 +28,12 @@
             android:gravity="center"
             android:orientation="vertical"
             tools:visibility="gone">
+
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@drawable/cartoonabad_icon" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,13 +44,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="@drawable/shape_download_in_splash"
             android:id="@+id/isOfflineLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
+            android:background="@drawable/shape_download_in_splash"
 
             android:orientation="vertical"
             android:visibility="gone"
@@ -91,7 +100,6 @@
             app:SpinKit_Style="FadingCircle" />
 
         <TextView
-android:visibility="gone"
             android:id="@+id/tv_goToOnlineMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +108,8 @@ android:visibility="gone"
             android:gravity="center"
             android:text="@string/online_mode_tip"
             android:textColor="?android:textColorSecondary"
-            android:textSize="11dp" />
+            android:textSize="11dp"
+            android:visibility="gone" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

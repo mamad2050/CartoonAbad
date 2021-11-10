@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.splash
 
+import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -24,7 +25,7 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.hide()
+        hideStatusBar()
 
         checkNetworkCondition()
 
@@ -70,6 +71,7 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
 
     private fun noNetwork() {
 
+        binding.ivSplashBg.visibility = View.GONE
         binding.isOnlineLayout.visibility = View.GONE
         binding.pbSplash.visibility = View.GONE
         binding.isOfflineLayout.visibility = View.VISIBLE
@@ -81,5 +83,12 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
     override fun onRefresh() {
         Toast.makeText(this, "در حال انتقال به حالت آنلاین", Toast.LENGTH_SHORT).show()
         checkNetworkCondition()
+    }
+
+    private fun hideStatusBar(){
+        val decorView = window.decorView
+        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+        decorView.systemUiVisibility = uiOptions
+        supportActionBar?.hide()
     }
 }

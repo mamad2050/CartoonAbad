@@ -39,17 +39,24 @@ class AnimationAdapter(
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val ivAnimation = itemView.findViewById<CartoonAbadImageView>(R.id.iv_animation)
-        private val tvAnimation = itemView.findViewById<TextView>(R.id.tv_animation_name)
+        private val tvAnimationName = itemView.findViewById<TextView>(R.id.tv_animation_name)
+        private val tvAnimationCounts = itemView.findViewById<TextView>(R.id.tv_animation_counts)
+        private val tvAnimationRate = itemView.findViewById<TextView>(R.id.tv_animation_rate)
+        private val tvComingSoon = itemView.findViewById<TextView>(R.id.tv_coming_soon)
 
         fun bindAnimation(animation: Animation) {
 
             imageLoadingService.load(ivAnimation as CartoonAbadImageView, animation.image)
-            tvAnimation.text = animation.name
+            tvAnimationName.text = animation.name
 
-            if (animation.no_episodes.toInt() == 0){
+            tvAnimationCounts.text =
+                animation.no_seasons + " فصل" + " - " + animation.no_episodes + " قسمت"
 
-                ivAnimation.alpha = 0.9f
+            tvAnimationRate.text = "امتیاز : " + animation.rate + " از " + "10"
 
+            if (animation.no_episodes.toInt() == 0) {
+                ivAnimation.alpha = 0.4f
+                tvComingSoon.visibility = View.VISIBLE
             }
 
             val deviceWidth =
