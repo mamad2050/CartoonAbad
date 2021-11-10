@@ -12,7 +12,6 @@ import android.widget.Toast
 import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.R
 
-
 class UpdateAlertDialog : DialogFragment() {
 
     private var _binding: DialogAlertUpdateBinding? = null
@@ -23,14 +22,11 @@ class UpdateAlertDialog : DialogFragment() {
 
         val builder = AlertDialog.Builder(context)
 
-        binding.ivBack.setOnClickListener {
-            dismiss()
-        }
-
         binding.btnUpdate.setOnClickListener {
             goToBazaar()
-            dismiss()
         }
+
+        isCancelable = false
 
         builder.setView(binding.root)
         return builder.create()
@@ -50,7 +46,6 @@ class UpdateAlertDialog : DialogFragment() {
             ).show()
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

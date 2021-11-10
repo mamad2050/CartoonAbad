@@ -20,6 +20,7 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
+import ir.andromeda.cartoonabad.feature.update.UpdateAlertDialog
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
