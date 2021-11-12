@@ -1,10 +1,10 @@
-package ir.andromeda.cartoonabad.data.video
+package ir.andromeda.cartoonabad.data.animation
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Video(
+data class Animation(
     val id: String,
     val image: String,
     val name: String,

@@ -56,11 +56,11 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     private val binding get() = _binding!!
     private var adapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
-    private val viewModel: ListViewModel by viewModel { parametersOf(args.video.id) }
-    var readPermissionGranted = false
-    var writePermissionGranted = false
+    private val viewModel: ListViewModel by viewModel { parametersOf(args.animation.id) }
+    private var readPermissionGranted = false
+    private var writePermissionGranted = false
     private lateinit var downloadManager: DownloadManager
-    lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var adResponseId: String? = null
     private val args: ListFragmentArgs by navArgs()
 

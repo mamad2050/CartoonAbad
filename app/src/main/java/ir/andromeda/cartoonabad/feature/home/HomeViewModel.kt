@@ -6,13 +6,13 @@ import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.AppData
-import ir.andromeda.cartoonabad.data.video.Video
-import ir.andromeda.cartoonabad.data.video.VideoRepository
+import ir.andromeda.cartoonabad.data.animation.Animation
+import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import timber.log.Timber
 
-class HomeViewModel(private val videoRepository: VideoRepository) : CartoonAbadViewModel() {
+class HomeViewModel(private val animationRepository: AnimationRepository) : CartoonAbadViewModel() {
 
-    val animationsLiveData = MutableLiveData<List<Video>>()
+    val animationsLiveData = MutableLiveData<List<Animation>>()
 
     init {
         showAnimationList()
@@ -21,11 +21,11 @@ class HomeViewModel(private val videoRepository: VideoRepository) : CartoonAbadV
     fun showAnimationList() {
         progressBarLiveData.value = true
 
-        videoRepository.getAnimations()
+        animationRepository.getAnimations()
             .doFinally { progressBarLiveData.postValue(false) }
             .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<List<Video>>(compositeDisposable) {
-                override fun onSuccess(t: List<Video>) {
+            .subscribe(object : CartoonAbadSingleObserver<List<Animation>>(compositeDisposable) {
+                override fun onSuccess(t: List<Animation>) {
                     animationsLiveData.value = t
                     Timber.i(t.toString())
                 }
@@ -33,7 +33,7 @@ class HomeViewModel(private val videoRepository: VideoRepository) : CartoonAbadV
     }
 
     fun getVersionNumber(): Single<AppData> {
-        return videoRepository.getVersion()
+        return animationRepository.getVersion()
     }
 
 

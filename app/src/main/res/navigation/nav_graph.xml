@@ -45,11 +45,11 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="ir.andromeda.cartoonabad.feature.list.ListFragment"
-        android:label="{video}"
+        android:label="{animation}"
         tools:layout="@layout/fragment_list">
         <argument
-            android:name="video"
-            app:argType="ir.andromeda.cartoonabad.data.video.Video" />
+            android:name="animation"
+            app:argType="ir.andromeda.cartoonabad.data.animation.Animation" />
         <action
             android:id="@+id/action_listFragment_to_downloadedFragment"
             app:destination="@id/downloadedFragment" />

@@ -2,7 +2,7 @@ package ir.andromeda.cartoonabad.services.http
 
 import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.AppData
-import ir.andromeda.cartoonabad.data.video.Video
+import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.subscription.Subscription
@@ -16,10 +16,10 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("getSeries.php")
-    fun getSeries(): Single<List<Video>>
+    fun getSeries(): Single<List<Animation>>
 
     @GET("getSeasons.php")
-    fun getSeasons(@Query("video_id") videoId: Int): Single<List<Season>>
+    fun getSeasons(@Query("animation_id") videoId: Int): Single<List<Season>>
 
     @FormUrlEncoded
     @POST("sendMessage.php")

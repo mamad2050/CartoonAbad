@@ -18,7 +18,7 @@ import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
-import ir.andromeda.cartoonabad.data.video.Video
+import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Video> {
+class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -98,7 +98,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Video> {
         compositeDisposable.dispose()
     }
 
-    override fun onCLick(item: Video) {
+    override fun onCLick(item: Animation) {
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle().apply {

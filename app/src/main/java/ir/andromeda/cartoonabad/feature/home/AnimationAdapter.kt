@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
-import ir.andromeda.cartoonabad.data.video.Video
+import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import android.app.Activity
 import ir.andromeda.cartoonabad.common.convertDpToPixel
 
 class AnimationAdapter(
-    private val videos: List<Video> = ArrayList(),
+    private val Animations: List<Animation> = ArrayList(),
     val imageLoadingService: ImageLoadingService,
-    val videoEventListener: OnItemEventListener<Video>?
+    val animationEventListener: OnItemEventListener<Animation>?
 ) : RecyclerView.Adapter<AnimationAdapter.MyViewHolder>() {
     private val displayMetrics = DisplayMetrics()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -30,11 +30,11 @@ class AnimationAdapter(
     }
 
     override fun onBindViewHolder(myViewHolder: MyViewHolder, position: Int) {
-        myViewHolder.bindAnimation(videos[position])
+        myViewHolder.bindAnimation(Animations[position])
 
     }
 
-    override fun getItemCount(): Int = videos.size
+    override fun getItemCount(): Int = Animations.size
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -44,17 +44,17 @@ class AnimationAdapter(
         private val tvAnimationRate = itemView.findViewById<TextView>(R.id.tv_animation_rate)
         private val tvComingSoon = itemView.findViewById<TextView>(R.id.tv_coming_soon)
 
-        fun bindAnimation(video: Video) {
+        fun bindAnimation(Animation: Animation) {
 
-            imageLoadingService.load(ivAnimation as CartoonAbadImageView, video.image)
-            tvAnimationName.text = video.name
+            imageLoadingService.load(ivAnimation as CartoonAbadImageView, Animation.image)
+            tvAnimationName.text = Animation.name
 
             tvAnimationCounts.text =
-                video.no_seasons + " فصل" + " - " + video.no_episodes + " قسمت"
+                Animation.no_seasons + " فصل" + " - " + Animation.no_episodes + " قسمت"
 
-            tvAnimationRate.text = "امتیاز : " + video.rate + " از " + "10"
+            tvAnimationRate.text = "امتیاز : " + Animation.rate + " از " + "10"
 
-            if (video.no_episodes.toInt() == 0) {
+            if (Animation.no_episodes.toInt() == 0) {
                 ivAnimation.alpha = 0.4f
                 tvComingSoon.visibility = View.VISIBLE
             }
@@ -68,7 +68,7 @@ class AnimationAdapter(
 
             itemView.implementSpringAnimationTrait()
             itemView.setOnClickListener {
-                videoEventListener?.onCLick(video)
+                animationEventListener?.onCLick(Animation)
             }
 
         }
