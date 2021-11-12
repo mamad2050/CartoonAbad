@@ -7,8 +7,8 @@ data class Season(
     val id: String,
     val image: String,
     val name: String,
-    val animation_id: String,
-    @SerializedName("episodes")
+    val video_id: String,
+    @SerializedName("series_episode")
     val episodeList: List<Episode>
 ) {
     //for expand

@@ -10,9 +10,9 @@ import com.downloader.PRDownloaderConfig
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_NAME
-import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
-import ir.andromeda.cartoonabad.data.animation.AnimationRepository
-import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
+import ir.andromeda.cartoonabad.data.video.VideoRemoteDataSource
+import ir.andromeda.cartoonabad.data.video.VideoRepository
+import ir.andromeda.cartoonabad.data.video.VideoRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
 import ir.andromeda.cartoonabad.data.downloaded.DownloadedRepository
 import ir.andromeda.cartoonabad.data.downloaded.DownloadedRepositoryImpl
@@ -24,7 +24,6 @@ import ir.andromeda.cartoonabad.data.message.MessageRepositoryImpl
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
-import ir.andromeda.cartoonabad.data.subscription.SubscriptionDataSource
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRemoteDataSource
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepository
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepositoryImpl
@@ -102,7 +101,7 @@ class App : Application() {
 
             single { Room.databaseBuilder(this@App, AppDataBase::class.java, "db_app").build() }
 
-            factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
+            factory<VideoRepository> { VideoRepositoryImpl(VideoRemoteDataSource(get())) }
             factory<SeasonRepository> {
                 SeasonRepositoryImpl(
                     SeasonRemoteDataSource(get()),

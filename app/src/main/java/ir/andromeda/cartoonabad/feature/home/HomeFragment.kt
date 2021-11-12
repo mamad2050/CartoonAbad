@@ -1,6 +1,5 @@
 package ir.andromeda.cartoonabad.feature.home
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,9 +18,8 @@ import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
-import ir.andromeda.cartoonabad.data.animation.Animation
+import ir.andromeda.cartoonabad.data.video.Video
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
-import ir.andromeda.cartoonabad.feature.update.UpdateAlertDialog
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
@@ -34,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
+class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Video> {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -66,9 +64,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             adapter = AnimationAdapter(it, imageLoadingService, this)
             binding.rvAnimations.adapter = adapter
         }
-
         showUpdateDialog()
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -102,7 +98,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         compositeDisposable.dispose()
     }
 
-    override fun onCLick(item: Animation) {
+    override fun onCLick(item: Video) {
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle().apply {
@@ -110,19 +106,16 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 putString(FirebaseAnalytics.Param.ITEM_ID, item.name)
             })
 
-
         if (item.no_episodes.toInt() > 0) {
-
             if (PurchaseContainer.purchaseInfo == null) {
                 requestAd()
             }
             val action = HomeFragmentDirections.navigateToListFragment(item)
             Navigation.findNavController(requireView()).navigate(action)
+
         } else {
             Toast.makeText(requireContext(), "بزودی ...", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     private fun requestAd() {
@@ -158,11 +151,9 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onOpened(tapsellPlusAdModel)
                 }
-
                 override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onClosed(tapsellPlusAdModel)
                 }
-
                 override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
                     super.onError(tapsellPlusErrorModel)
                 }
@@ -178,6 +169,4 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
             })
     }
-
-
 }
