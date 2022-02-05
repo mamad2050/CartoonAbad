@@ -107,31 +107,14 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             })
 
         if (item.no_episodes.toInt() > 0) {
-            if (PurchaseContainer.purchaseInfo == null) {
-                requestAd()
-            }
             val action = HomeFragmentDirections.navigateToListFragment(item)
             Navigation.findNavController(requireView()).navigate(action)
 
         } else {
-            Toast.makeText(requireContext(), "بزودی ...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "به زودی ...", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun requestAd() {
-        TapsellPlus.requestInterstitialAd(
-            activity,
-            ZONE_ID_INTERSTITIAL_BANNER_AD,
-            object : AdRequestCallback() {
-                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.response(tapsellPlusAdModel)
-                    adResponseId = tapsellPlusAdModel.responseId
-                    showAd()
-                }
-
-                override fun error(message: String?) {}
-            })
-    }
 
     private fun showUpdateDialog() {
         viewModel.getVersionNumber()
@@ -144,21 +127,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             })
     }
 
-    private fun showAd() {
-
-        TapsellPlus.showInterstitialAd(activity, adResponseId,
-            object : AdShowListener() {
-                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onOpened(tapsellPlusAdModel)
-                }
-                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onClosed(tapsellPlusAdModel)
-                }
-                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
-                    super.onError(tapsellPlusErrorModel)
-                }
-            })
-    }
 
     override fun onResume() {
         super.onResume()

@@ -10,6 +10,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -23,6 +24,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
 import ir.andromeda.cartoonabad.common.ZONE_ID_REWARD_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
@@ -147,12 +149,12 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onEpisodeClick(episode: Episode) {
 
-        startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
-            putExtra(EXTRA_KEY_DATA, episode)
-
-        })
         if (PurchaseContainer.purchaseInfo == null) {
-            requestAd()
+            requestVideoAd(episode)
+        } else {
+            startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
+                putExtra(EXTRA_KEY_DATA, episode)
+            })
         }
     }
 
@@ -273,7 +275,7 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     }
 
-    private fun requestAd() {
+    private fun requestVideoAd(episode: Episode) {
 
         TapsellPlus.requestRewardedVideoAd(
             requireActivity(),
@@ -282,20 +284,19 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.response(tapsellPlusAdModel)
                     adResponseId = tapsellPlusAdModel.responseId
-                    showAd()
+                    showVideoAd(episode)
                 }
 
                 override fun error(message: String?) {}
             })
     }
 
-    private fun showAd() {
+    private fun showVideoAd(episode: Episode) {
 
         TapsellPlus.showRewardedVideoAd(requireActivity(), adResponseId,
             object : AdShowListener() {
                 override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onOpened(tapsellPlusAdModel)
-
                 }
 
                 override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
@@ -305,6 +306,9 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 override fun onRewarded(tapsellPlusAdModel: TapsellPlusAdModel) {
                     super.onRewarded(tapsellPlusAdModel)
 
+                    startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
+                        putExtra(EXTRA_KEY_DATA, episode)
+                    })
                 }
 
                 override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
@@ -341,6 +345,55 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
                 putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
             })
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (PurchaseContainer.purchaseInfo == null) {
+                    requestBannerAd()
+                    isEnabled = false
+                } else {
+                    isEnabled = false
+                    findNavController().popBackStack()
+                }
+            }
+        })
+    }
+
+    private fun requestBannerAd() {
+        TapsellPlus.requestInterstitialAd(
+            activity,
+            ZONE_ID_INTERSTITIAL_BANNER_AD,
+            object : AdRequestCallback() {
+                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.response(tapsellPlusAdModel)
+                    adResponseId = tapsellPlusAdModel.responseId
+                    showBannerAd()
+                }
+
+                override fun error(message: String?) {}
+            })
+    }
+
+    private fun showBannerAd() {
+
+        TapsellPlus.showInterstitialAd(activity, adResponseId,
+            object : AdShowListener() {
+                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onOpened(tapsellPlusAdModel)
+                }
+
+                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onClosed(tapsellPlusAdModel)
+                }
+
+                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
+                    super.onError(tapsellPlusErrorModel)
+                }
+            })
+    }
+
 
 }
 

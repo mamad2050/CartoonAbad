@@ -55,14 +55,14 @@
             app:layout_constraintVertical_bias="0.47" />
 
         <com.github.ybq.android.spinkit.SpinKitView
-            android:visibility="gone"
             android:id="@+id/spinKit_download"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="8dp"
-            android:padding="4dp"
-            app:SpinKit_Style="Circle"
             android:background="@drawable/shape_circle"
+            android:padding="4dp"
+            android:visibility="gone"
+            app:SpinKit_Style="Circle"
             app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
@@ -103,19 +103,6 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_episode_image"
             app:layout_constraintStart_toStartOf="@+id/iv_episode_image"
             app:layout_constraintTop_toTopOf="@+id/iv_episode_image" />
-
-        <ImageView
-            android:id="@+id/iv_episode_lock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/shape_circle"
-            android:padding="4dp"
-            android:src="@drawable/ic_round_lock_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_episode_duration"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

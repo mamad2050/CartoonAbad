@@ -39,7 +39,6 @@ class EpisodeAdapter(
         private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
         private val ivFavorite = itemView.findViewById<ImageView>(R.id.iv_episode_favorite)
         private val ivDownload = itemView.findViewById<ImageView>(R.id.iv_episode_download)
-        private val ivLock = itemView.findViewById<ImageView>(R.id.iv_episode_lock)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
         private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
 
@@ -60,28 +59,13 @@ class EpisodeAdapter(
             else
                 ivDownload.setImageResource(R.drawable.ic_file_download_white_24dp)
 
-
-            if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 4) {
-                ivFavorite.visibility = View.INVISIBLE
-                ivDownload.visibility = View.INVISIBLE
-                ivLock.visibility = View.VISIBLE
-            } else {
-                ivFavorite.visibility = View.VISIBLE
-                ivDownload.visibility = View.VISIBLE
-                ivLock.visibility = View.INVISIBLE
-            }
-
             ivFavorite.setOnClickListener {
                 listener.onFavoriteClick(episode)
                 episode.isFavorite = !episode.isFavorite
                 notifyItemChanged(absoluteAdapterPosition)
             }
             itemView.setOnClickListener {
-                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition > 4) {
-                    EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
-                } else {
-                    listener.onEpisodeClick(episode)
-                }
+                listener.onEpisodeClick(episode)
             }
             ivDownload.setOnClickListener {
                 if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition <= 4) {
@@ -93,7 +77,7 @@ class EpisodeAdapter(
         }
     }
 
-    fun updateEpisode(episode: Episode){
+    fun updateEpisode(episode: Episode) {
         episode.isDownloaded = true
         notifyDataSetChanged()
     }
