@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.data.downloaded
+package ir.andromeda.cartoonabad.data.download
 
 import androidx.room.*
 import io.reactivex.Completable

@@ -18,7 +18,6 @@ import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
-import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -157,7 +156,6 @@ class ContactsFragment : CartoonAbadFragment() {
 
     override fun onStop() {
         super.onStop()
-        (activity as DrawerLocker).setDrawerLocked(false)
         EventBus.getDefault().unregister(this)
     }
 
@@ -169,7 +167,6 @@ class ContactsFragment : CartoonAbadFragment() {
     override fun onResume() {
         super.onResume()
 
-        (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

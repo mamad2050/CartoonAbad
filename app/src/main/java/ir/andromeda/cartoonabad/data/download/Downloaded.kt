@@ -1,9 +1,7 @@
-package ir.andromeda.cartoonabad.data.downloaded
+package ir.andromeda.cartoonabad.data.download
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 

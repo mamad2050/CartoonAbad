@@ -39,7 +39,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutYearly"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_selected_plan"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutThreeMonth"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_default_plan"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +104,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutMonthly"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_default_plan"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="?colorSurface"
+                android:backgroundTint="@color/navy_blue"
                 android:gravity="center"
                 android:minHeight="55dp"
                 android:text="@string/buy"

@@ -15,7 +15,6 @@ import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
-import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.greenrobot.eventbus.EventBus
@@ -65,7 +64,6 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        (activity as DrawerLocker).setDrawerLocked(false)
     }
 
     override fun onRemoveClick(episode: Episode) {
@@ -81,7 +79,7 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
     override fun onResume() {
         super.onResume()
 
-        (activity as DrawerLocker).setDrawerLocked(true)
+
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

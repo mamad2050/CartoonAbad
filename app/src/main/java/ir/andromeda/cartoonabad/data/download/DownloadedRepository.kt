@@ -1,9 +1,9 @@
-package ir.andromeda.cartoonabad.data.downloaded
+package ir.andromeda.cartoonabad.data.download
 
 import io.reactivex.Completable
 import io.reactivex.Single
 
-interface DownloadedDataSource {
+interface DownloadedRepository {
 
     fun getDownloadedEpisodes(): Single<List<Downloaded>>
 

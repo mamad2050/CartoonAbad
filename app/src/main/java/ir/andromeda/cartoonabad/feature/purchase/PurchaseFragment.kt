@@ -14,7 +14,6 @@ import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
-import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.main.MainActivity
 import ir.cafebazaar.poolakey.Connection
 import ir.cafebazaar.poolakey.ConnectionState
@@ -218,7 +217,6 @@ class PurchaseFragment : CartoonAbadFragment() {
 
     override fun onStop() {
         super.onStop()
-        (activity as DrawerLocker).setDrawerLocked(false)
         paymentConnection.disconnect()
         EventBus.getDefault().unregister(this)
     }
@@ -226,7 +224,6 @@ class PurchaseFragment : CartoonAbadFragment() {
     override fun onResume() {
         super.onResume()
 
-        (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

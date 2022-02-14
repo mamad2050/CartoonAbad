@@ -22,7 +22,7 @@ abstract class CartoonAbadFragment() : Fragment(), CartoonAbadView {
         get() = context
 }
 
-abstract class CartoonAbadActivity() : AppCompatActivity(), CartoonAbadView {
+abstract class CartoonAbadActivity : AppCompatActivity(), CartoonAbadView {
     override val rootView: CoordinatorLayout?
         get() {
             val viewGroup = window.decorView.findViewById(android.R.id.content) as ViewGroup

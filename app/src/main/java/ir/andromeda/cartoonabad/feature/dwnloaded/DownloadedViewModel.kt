@@ -6,8 +6,8 @@ import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.EmptyState
-import ir.andromeda.cartoonabad.data.downloaded.Downloaded
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedRepository
+import ir.andromeda.cartoonabad.data.download.Downloaded
+import ir.andromeda.cartoonabad.data.download.DownloadedRepository
 import timber.log.Timber
 
 class DownloadedViewModel(private val repository: DownloadedRepository) :

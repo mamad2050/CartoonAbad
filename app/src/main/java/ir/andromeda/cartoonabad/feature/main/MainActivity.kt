@@ -17,7 +17,9 @@ import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.common.*
@@ -28,16 +30,15 @@ import org.koin.android.ext.android.inject
 import java.lang.Exception
 import java.util.*
 
-class MainActivity : CartoonAbadActivity(), DrawerLocker {
-
-    private lateinit var navController: NavController
-    private lateinit var navHostFragment: NavHostFragment
-    private lateinit var appBarConfiguration: AppBarConfiguration
+class MainActivity : CartoonAbadActivity(){
 
     private lateinit var binding: ActivityMainBinding
-
     private val payment: Payment by inject()
     private lateinit var paymentConnection: Connection
+    private var currentNavController: LiveData<NavController>? = null
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,44 +49,47 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         checkSubscription()
         setSupportActionBar(binding.toolbar)
 
-
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
-        navController = navHostFragment.navController
-        binding.navigationView.setupWithNavController(navController)
-
-        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.navigationView.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.rateMenuItem -> {
-                    rateApp()
-                }
-                R.id.shareMenuItem -> {
-                    shareApp()
-                }
-                R.id.contactsFragment -> {
-                    navController.navigate(R.id.navigateToContactsFragment)
-                }
-                R.id.downloadedFragment -> {
-                    if (PurchaseContainer.purchaseInfo == null) {
-                        navController.navigate(R.id.navigateToPurchaseAlertDialog)
-                    } else {
-                        navController.navigate(R.id.navigateToDownloadedFragment)
-                    }
-                }
-                R.id.purchaseFragment -> {
-                    navController.navigate(R.id.navigateToPurchaseFragment)
-                }
-                R.id.favoriteFragment -> {
-                    navController.navigate(R.id.navigateToFavoriteFragment)
-                }
-            }
-            binding.drawerLayout.close()
-            true
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
         }
+
     }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Now that BottomNavigationBar has restored its instance state
+        // and its selectedItemId, we can proceed with setting up the
+        // BottomNavigationBar with Navigation
+        setupBottomNavigationBar()
+    }
+
+
+    private fun setupBottomNavigationBar() {
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationMain)
+
+        val navGraphIds = listOf(
+            R.navigation.home,
+            R.navigation.download,
+            R.navigation.favorite,
+            R.navigation.purchase
+        )
+
+        // Setup the bottom navigation view with a list of navigation graphs
+        val controller = bottomNavigationView.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.nav_host_container,
+            intent = intent
+        )
+        currentNavController = controller
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return currentNavController?.value?.navigateUp() ?: false
+    }
+
+
 
     private fun checkSubscription() {
         paymentConnection = payment.connect {
@@ -126,10 +130,6 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         endCalendar.timeInMillis = endTime
         val subscriptionDays =
             ((endCalendar.timeInMillis - startCalendar.timeInMillis) / 86400000L).toString()
-        binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays).text =
-            getString(R.string.you) + " " + subscriptionDays + " " + getString(R.string.day_have_subscription)
-        binding.navigationView.findViewById<TextView>(R.id.tvDrawerDays)
-            .setTextColor(ContextCompat.getColor(this, R.color.green))
 
     }
 
@@ -174,21 +174,5 @@ class MainActivity : CartoonAbadActivity(), DrawerLocker {
         paymentConnection.disconnect()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = navHostFragment.navController
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
 
-    override fun setDrawerLocked(shouldLock: Boolean) {
-        if (shouldLock) {
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        } else {
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        }
-    }
-
-}
-
-interface DrawerLocker {
-    fun setDrawerLocked(shouldLock: Boolean)
 }

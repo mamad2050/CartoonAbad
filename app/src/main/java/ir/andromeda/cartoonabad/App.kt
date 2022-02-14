@@ -14,8 +14,8 @@ import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
 import ir.andromeda.cartoonabad.data.animation.AnimationRepository
 import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedRepository
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedRepositoryImpl
+import ir.andromeda.cartoonabad.data.download.DownloadedRepository
+import ir.andromeda.cartoonabad.data.download.DownloadedRepositoryImpl
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource

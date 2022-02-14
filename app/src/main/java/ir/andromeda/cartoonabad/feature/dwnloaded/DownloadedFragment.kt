@@ -10,10 +10,9 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.data.downloaded.Downloaded
+import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentDownloadedBinding
-import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
@@ -66,11 +65,6 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (activity is DrawerLocker)
-            (activity as DrawerLocker).setDrawerLocked(false)
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -100,8 +94,6 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
     override fun onResume() {
         super.onResume()
 
-        if (activity is DrawerLocker)
-            (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

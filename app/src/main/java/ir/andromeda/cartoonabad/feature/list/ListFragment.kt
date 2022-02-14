@@ -28,10 +28,9 @@ import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
 import ir.andromeda.cartoonabad.common.ZONE_ID_REWARD_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
-import ir.andromeda.cartoonabad.data.downloaded.Downloaded
+import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentListBinding
-import ir.andromeda.cartoonabad.feature.main.DrawerLocker
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
@@ -143,7 +142,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
     override fun onStop() {
         super.onStop()
         _binding = null
-        (activity as DrawerLocker).setDrawerLocked(false)
         EventBus.getDefault().unregister(this)
     }
 
@@ -336,8 +334,6 @@ class ListFragment : CartoonAbadFragment(), EpisodeEventListener {
 
     override fun onResume() {
         super.onResume()
-
-        (activity as DrawerLocker).setDrawerLocked(true)
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

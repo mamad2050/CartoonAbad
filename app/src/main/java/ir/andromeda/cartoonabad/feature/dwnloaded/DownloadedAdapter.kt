@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.data.downloaded.Downloaded
+import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 

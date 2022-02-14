@@ -2,8 +2,8 @@ package ir.andromeda.cartoonabad.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ir.andromeda.cartoonabad.data.downloaded.Downloaded
-import ir.andromeda.cartoonabad.data.downloaded.DownloadedLocalDataSource
+import ir.andromeda.cartoonabad.data.download.Downloaded
+import ir.andromeda.cartoonabad.data.download.DownloadedLocalDataSource
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.episode.EpisodeLocalDataSource
 
