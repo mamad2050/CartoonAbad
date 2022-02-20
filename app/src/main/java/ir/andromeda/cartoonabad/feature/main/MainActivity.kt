@@ -2,23 +2,13 @@ package ir.andromeda.cartoonabad.feature.main
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.databinding.ActivityMainBinding
 import timber.log.Timber
 import android.content.Intent
 import android.net.Uri
-import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.BuildConfig
@@ -79,7 +69,7 @@ class MainActivity : CartoonAbadActivity(){
         val controller = bottomNavigationView.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
-            containerId = R.id.nav_host_container,
+            containerId = R.id.fragment_container,
             intent = intent
         )
         currentNavController = controller

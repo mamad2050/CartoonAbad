@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import android.os.Bundle
 import androidx.room.Room
 import com.downloader.PRDownloader
 import com.downloader.PRDownloaderConfig
@@ -31,7 +32,7 @@ import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
 import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
-import ir.andromeda.cartoonabad.feature.list.ListViewModel
+import ir.andromeda.cartoonabad.feature.list.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
@@ -134,18 +135,12 @@ class App : Application() {
             }
 
 
-
-
-
-
-
-
             viewModel { HomeViewModel(get()) }
-            viewModel { (animationId: String) -> ListViewModel(animationId, get(), get(), get()) }
             viewModel { FavoriteViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
             viewModel { PurchaseViewModel(get()) }
+            viewModel {(bundle:Bundle)-> DetailSeriesViewModel(bundle,get(),get(),get())}
         }
 
         startKoin {

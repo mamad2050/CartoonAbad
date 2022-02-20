@@ -2,8 +2,8 @@
     <string name="app_name">کارتون آباد</string>
     <string name="home">خانه</string>
     <string name="favorite">علاقه مندی ها</string>
-    <string name="downloaded">دانلود شده ها</string>
-    <string name="purchase">خرید اشتراک</string>
+    <string name="downloaded">دانلود ها</string>
+    <string name="purchase">اشتراک</string>
     <string name="rate">رای به برنامه</string>
     <string name="share">معرفی برنامه به دوستان</string>
     <string name="contacts">ارتباط با ما</string>

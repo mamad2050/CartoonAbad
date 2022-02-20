@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,8 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
+import ir.andromeda.cartoonabad.feature.list.DetailSeriesActivity
+import ir.andromeda.cartoonabad.feature.list.ListFragment
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
@@ -77,6 +80,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                     viewModel.showAnimationList()
                 }
             }
+            else -> {}
         }
     }
 
@@ -107,14 +111,15 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             })
 
         if (item.no_episodes.toInt() > 0) {
-            val action = HomeFragmentDirections.navigateToListFragment(item)
-            Navigation.findNavController(requireView()).navigate(action)
+
+         startActivity(Intent(requireActivity(),DetailSeriesActivity::class.java).apply {
+             putExtra(EXTRA_KEY_SERIES,item)
+         })
 
         } else {
             Toast.makeText(requireContext(), "به زودی ...", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     private fun showUpdateDialog() {
         viewModel.getVersionNumber()
