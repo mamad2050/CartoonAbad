@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 import ir.andromeda.cartoonabad.databinding.ActivitySplashBinding
 import ir.andromeda.cartoonabad.feature.main.MainActivity
+import timber.log.Timber
 
 class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -90,5 +91,10 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
         val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
         decorView.systemUiVisibility = uiOptions
         supportActionBar?.hide()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i("destroyedddddddddd")
     }
 }
