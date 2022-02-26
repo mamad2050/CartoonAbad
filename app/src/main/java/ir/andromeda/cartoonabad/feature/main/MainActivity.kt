@@ -20,15 +20,12 @@ import org.koin.android.ext.android.inject
 import java.lang.Exception
 import java.util.*
 
-class MainActivity : CartoonAbadActivity(){
+class MainActivity : CartoonAbadActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val payment: Payment by inject()
     private lateinit var paymentConnection: Connection
     private var currentNavController: LiveData<NavController>? = null
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +50,13 @@ class MainActivity : CartoonAbadActivity(){
         setupBottomNavigationBar()
     }
 
-
     private fun setupBottomNavigationBar() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationMain)
 
         val navGraphIds = listOf(
             R.navigation.home,
+            R.navigation.search,
             R.navigation.download,
             R.navigation.favorite,
             R.navigation.purchase
@@ -78,8 +75,6 @@ class MainActivity : CartoonAbadActivity(){
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
     }
-
-
 
     private fun checkSubscription() {
         paymentConnection = payment.connect {
@@ -107,7 +102,7 @@ class MainActivity : CartoonAbadActivity(){
         }
     }
 
-    public fun setSubscriptionDays(purchaseTime: Long, orderId: String) {
+    fun setSubscriptionDays(purchaseTime: Long, orderId: String) {
         val day: Long = when (orderId) {
             YEARLY_PRODUCT_ID -> 365L
             THREE_MONTH_PRODUCT_ID -> 90L

@@ -51,6 +51,8 @@
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_poll_white_24dp.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_round_home_24.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_round_lock_24.xml" value="0.18703703703703703" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_round_replay_24.xml" value="0.1" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_round_search_24.xml" value="0.1" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_share_white_24dp.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_shop_white_24dp.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/selector_etl.xml" value="0.175" />
@@ -71,6 +73,7 @@
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_list.xml" value="0.13518518518518519" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_purchase.xml" value="0.2370486656200942" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/item_episode.xml" value="0.2689655172413793" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/item_list.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/item_season.xml" value="0.13518518518518519" />
@@ -80,6 +83,7 @@
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/view_default_empty_state.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/view_loading.xml" value="0.1" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/menu/drawer_menu.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/menu/navigation_menu.xml" value="0.1361111111111111" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1824074074074074" />
       </map>

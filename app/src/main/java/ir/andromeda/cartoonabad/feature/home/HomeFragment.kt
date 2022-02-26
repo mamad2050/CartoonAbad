@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButton
@@ -18,17 +17,10 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
-import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.feature.list.DetailSeriesActivity
-import ir.andromeda.cartoonabad.feature.list.ListFragment
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
-import ir.tapsell.plus.AdRequestCallback
-import ir.tapsell.plus.AdShowListener
-import ir.tapsell.plus.TapsellPlus
-import ir.tapsell.plus.model.TapsellPlusAdModel
-import ir.tapsell.plus.model.TapsellPlusErrorModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -40,7 +32,6 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var adapter: AnimationAdapter? = null
-    private var adResponseId: String? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
