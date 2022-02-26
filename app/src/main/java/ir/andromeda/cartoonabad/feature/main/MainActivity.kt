@@ -34,7 +34,7 @@ class MainActivity : CartoonAbadActivity() {
         setContentView(view)
 
         checkSubscription()
-        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar)
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
