@@ -77,6 +77,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="12dp"
+        android:layoutAnimation="@anim/layout_animation"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
