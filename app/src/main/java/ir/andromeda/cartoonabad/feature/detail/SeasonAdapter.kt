@@ -37,7 +37,6 @@ class SeasonAdapter(
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_season_image)
         private val tvName = itemView.findViewById<TextView>(R.id.tv_season_name)
         private val rvEpisodes = itemView.findViewById<RecyclerView>(R.id.rv_season_episodes)
         private val tvEpisodeSize =
@@ -45,7 +44,6 @@ class SeasonAdapter(
         private val ivArrow = itemView.findViewById<ImageView>(R.id.iv_season_arrow)
 
         fun bindSeason(season: Season) {
-            imageLoadingService.load(ivImage as CartoonAbadImageView, season.image)
             tvName.text = season.name
             tvEpisodeSize.text = season.episodeList.size.toString()
 
