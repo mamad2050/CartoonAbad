@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.list
+package ir.andromeda.cartoonabad.feature.detail
 
 import android.view.LayoutInflater
 import android.view.View

@@ -12,7 +12,6 @@
 
     <ir.andromeda.cartoonabad.view.CartoonAbadImageView
         android:id="@+id/iv_animation"
-       app:roundedCornerRadius="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -20,6 +19,7 @@
         app:actualImageScaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:roundedCornerRadius="8dp"
         tools:layout_height="180dp"
         tools:layout_width="120dp" />
 
@@ -48,7 +48,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="4dp"
-
         android:textColor="?android:textColorSecondary"
         android:textSize="11sp"
         android:textStyle="bold"
@@ -57,10 +56,10 @@
         tools:text="8 فصل - 101 قسمت" />
 
     <TextView
-        android:layout_marginTop="4dp"
         android:id="@+id/tv_animation_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         android:textColor="?android:textColorSecondary"
@@ -71,14 +70,14 @@
         tools:text="امتیاز : 8.1/10" />
 
     <TextView
-        android:visibility="gone"
-        android:textSize="14sp"
-        android:textColor="?android:textColorSecondary"
-        android:textStyle="bold"
-        android:text="به زودی ..."
         android:id="@+id/tv_coming_soon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="به زودی ..."
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iv_animation"
         app:layout_constraintEnd_toEndOf="@+id/iv_animation"
         app:layout_constraintStart_toStartOf="parent"

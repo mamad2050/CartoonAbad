@@ -57,5 +57,6 @@
     <string name="search_hint">کارتون مورد نظرت رو جستجو کن</string>
     <string name="cartoons">کارتون ها</string>
     <string name="series">سریال ها</string>
+    <string name="summary">خلاصه داستان</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.list
+package ir.andromeda.cartoonabad.feature.detail
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -30,14 +30,13 @@ class DetailSeriesViewModel(
     fun showSeasons() {
         progressBarLiveData.value = true
 
-        animationLiveData.value = bundle.getParcelable(EXTRA_KEY_SERIES)
+        animationLiveData.value = bundle.getParcelable(EXTRA_KEY_DATA)
 
         seasonRepository.getSeasons(animationLiveData.value!!.id.toInt())
             .doFinally { progressBarLiveData.postValue(false) }
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
                 override fun onSuccess(t: List<Season>) {
-
                     seasonsLiveData.value = t
                 }
             })

@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.list
+package ir.andromeda.cartoonabad.feature.detail
 
 import android.app.DownloadManager
 import android.content.Context
@@ -6,16 +6,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.util.AttributeSet
-import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -31,9 +26,9 @@ import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityDetailSeriesBinding
-import ir.andromeda.cartoonabad.databinding.FragmentListBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
 import ir.tapsell.plus.TapsellPlus
@@ -50,38 +45,36 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.io.File
 
+var isDownload = false
+
 class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
     private lateinit var binding: ActivityDetailSeriesBinding
-    private var adapter: SeasonAdapter? = null
+    private var seasonAdapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: DetailSeriesViewModel by viewModel { parametersOf(intent.extras) }
+
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private lateinit var downloadManager: DownloadManager
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var adResponseId: String? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailSeriesBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (PurchaseContainer.purchaseInfo == null) {
-                    requestBannerAd()
-                    isEnabled = false
-                } else {
-                    isEnabled = false
-                    onBackPressed()
-                }
-            }
-        })
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
 
-
+        viewModel.animationLiveData.observe(this) {
+            binding.tvSeriesName.text = it.name
+            binding.tvSeasonSize.text = "${it.no_seasons} فصل"
+            binding.tvRate.text = "امتیاز ${it.rate} / 10"
+            imageLoadingService.load(binding.ivSeriesImage as CartoonAbadImageView, it.image)
+        }
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
@@ -98,12 +91,14 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                     }
                 }
             }
+
+            //setup adapter
             binding.rvSeasons.layoutManager =
                 LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            adapter = SeasonAdapter(it, imageLoadingService, this, this)
-            binding.rvSeasons.adapter = adapter
-
+            seasonAdapter = SeasonAdapter(it, imageLoadingService, this, this)
+            binding.rvSeasons.adapter = seasonAdapter
         }
+
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
                 readPermissionGranted =
@@ -113,43 +108,34 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                     permission[android.Manifest.permission.WRITE_EXTERNAL_STORAGE]
                         ?: writePermissionGranted
             }
-    }
 
+    }
 
     override fun onStart() {
         super.onStart()
-        downloadManager =
-            getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
         EventBus.getDefault().register(this)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun showError(cartoonAbadEvent: CartoonAbadEvent) {
-        when (cartoonAbadEvent.type) {
-//            CartoonAbadEvent.Type.SIMPLE -> {
-//                val connectionView = showConnectionLost(true)
-//                connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
-//                    showConnectionLost(false)
-//                    viewModel.showSeasons()
-//                }
-//            }
+    override fun onStop() {
+        super.onStop()
 
-//            CartoonAbadEvent.Type.PURCHASE -> {
-//                findNavController().navigate(R.id.navigateToPurchaseAlertDialog)
-//            }
-        }
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(this)
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "ListFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
     }
 
     private fun snackBar(message: String) {
-        Snackbar.make(
-            findViewById(R.id.contentRootView), message, Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
+        Snackbar.make(binding.rootLayout, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onEpisodeClick(episode: Episode) {
@@ -161,6 +147,50 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                 putExtra(EXTRA_KEY_DATA, episode)
             })
         }
+    }
+
+    private fun requestVideoAd(episode: Episode) {
+        TapsellPlus.requestRewardedVideoAd(
+            this,
+            ZONE_ID_REWARD_AD,
+            object : AdRequestCallback() {
+                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.response(tapsellPlusAdModel)
+                    adResponseId = tapsellPlusAdModel.responseId
+                    showVideoAd(episode)
+                }
+
+                override fun error(message: String?) {}
+            })
+    }
+
+    private fun showVideoAd(episode: Episode) {
+        TapsellPlus.showRewardedVideoAd(this, adResponseId,
+            object : AdShowListener() {
+                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onOpened(tapsellPlusAdModel)
+                }
+
+                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onClosed(tapsellPlusAdModel)
+                }
+
+                override fun onRewarded(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onRewarded(tapsellPlusAdModel)
+
+                    startActivity(
+                        Intent(
+                            this@DetailSeriesActivity,
+                            PlayerActivity::class.java
+                        ).apply {
+                            putExtra(EXTRA_KEY_DATA, episode)
+                        })
+                }
+
+                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
+                    super.onError(tapsellPlusErrorModel)
+                }
+            })
     }
 
     override fun onFavoriteClick(episode: Episode) {
@@ -239,7 +269,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             DownloadManager.STATUS_SUCCESSFUL -> {
                 isDownload = false
                 runOnUiThread {
-                    adapter?.updateEpisode(episode)
+                    seasonAdapter?.updateEpisode(episode)
                 }
             }
 
@@ -280,52 +310,6 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
     }
 
-    private fun requestVideoAd(episode: Episode) {
-
-        TapsellPlus.requestRewardedVideoAd(
-            this,
-            ZONE_ID_REWARD_AD,
-            object : AdRequestCallback() {
-                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.response(tapsellPlusAdModel)
-                    adResponseId = tapsellPlusAdModel.responseId
-                    showVideoAd(episode)
-                }
-
-                override fun error(message: String?) {}
-            })
-    }
-
-    private fun showVideoAd(episode: Episode) {
-
-        TapsellPlus.showRewardedVideoAd(this, adResponseId,
-            object : AdShowListener() {
-                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onOpened(tapsellPlusAdModel)
-                }
-
-                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onClosed(tapsellPlusAdModel)
-                }
-
-                override fun onRewarded(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onRewarded(tapsellPlusAdModel)
-
-                    startActivity(
-                        Intent(
-                            this@DetailSeriesActivity,
-                            PlayerActivity::class.java
-                        ).apply {
-                            putExtra(EXTRA_KEY_DATA, episode)
-                        })
-                }
-
-                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
-                    super.onError(tapsellPlusErrorModel)
-                }
-            })
-    }
-
     private fun addToDownloadDB(episode: Episode) {
         val path =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
@@ -343,16 +327,18 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        FirebaseAnalytics.getInstance(this)
-            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
-                putString(FirebaseAnalytics.Param.SCREEN_NAME, "ListFragment")
-                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
-            })
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun showError(cartoonAbadEvent: CartoonAbadEvent) {
+        when (cartoonAbadEvent.type) {
+            CartoonAbadEvent.Type.SIMPLE -> {
+                val connectionView = showConnectionLost(true)
+                connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
+                    showConnectionLost(false)
+                    viewModel.showSeasons()
+                }
+            }
+        }
     }
-
 
     private fun requestBannerAd() {
         TapsellPlus.requestInterstitialAd(
@@ -386,6 +372,5 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                 }
             })
     }
-
 
 }

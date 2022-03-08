@@ -44,7 +44,7 @@
         tools:layout="@layout/fragment_downloaded" />
     <fragment
         android:id="@+id/listFragment"
-        android:name="ir.andromeda.cartoonabad.feature.list.ListFragment"
+        android:name="ir.andromeda.cartoonabad.feature.detail.ListFragment"
         android:label="{animation}"
         tools:layout="@layout/fragment_list">
         <argument

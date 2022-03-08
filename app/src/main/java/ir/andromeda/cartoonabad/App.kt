@@ -32,7 +32,7 @@ import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
 import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
-import ir.andromeda.cartoonabad.feature.list.DetailSeriesViewModel
+import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService

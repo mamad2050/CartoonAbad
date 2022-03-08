@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.list
+package ir.andromeda.cartoonabad.feature.detail
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.season.Season
-import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
-import timber.log.Timber
 
 class SeasonAdapter(
     private val seasons: List<Season> = ArrayList(),

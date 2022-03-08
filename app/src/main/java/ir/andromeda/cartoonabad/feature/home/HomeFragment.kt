@@ -19,7 +19,7 @@ import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
-import ir.andromeda.cartoonabad.feature.list.DetailSeriesActivity
+import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -103,9 +103,9 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
         if (item.no_episodes.toInt() > 0) {
 
-         startActivity(Intent(requireActivity(),DetailSeriesActivity::class.java).apply {
-             putExtra(EXTRA_KEY_SERIES,item)
-         })
+            startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
+                putExtra(EXTRA_KEY_DATA, item)
+            })
 
         } else {
             Toast.makeText(requireContext(), "به زودی ...", Toast.LENGTH_SHORT).show()
