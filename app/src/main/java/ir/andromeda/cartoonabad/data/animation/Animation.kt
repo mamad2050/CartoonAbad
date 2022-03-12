@@ -11,8 +11,4 @@ data class Animation(
     val no_episodes: String,
     val no_seasons: String,
     val rate: String
-) : Parcelable {
-    override fun toString(): String {
-        return name
-    }
-}
+) : Parcelable

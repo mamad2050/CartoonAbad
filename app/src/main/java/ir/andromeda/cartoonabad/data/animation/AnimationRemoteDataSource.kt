@@ -6,7 +6,7 @@ import ir.andromeda.cartoonabad.services.http.ApiService
 
 class AnimationRemoteDataSource(private val apiService: ApiService) : AnimationDataSource {
 
-    override fun getAnimations(): Single<List<Animation>> = apiService.getSeries()
+    override fun getAnimations(): Single<List<Animation>> = apiService.getSeries1()
     override fun getVersion(): Single<AppData> = apiService.getAppVersion()
 
 

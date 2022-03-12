@@ -64,11 +64,10 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             onBackPressed()
         }
 
-        viewModel.animationLiveData.observe(this) {
+        viewModel.seriesLiveData.observe(this) {
             binding.tvName.text = it.name
-            binding.tvSeasonSize.text = "${it.no_seasons} فصل"
             binding.tvRate.text = "امتیاز ${it.rate} / 10"
-//            binding.tvDescription.text = it.description
+            binding.tvDescription.text = it.description
             imageLoadingService.load(binding.ivImage as CartoonAbadImageView, it.image)
         }
 
@@ -87,6 +86,8 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                     }
                 }
             }
+
+            binding.tvSeasonSize.text = "${it.size} فصل"
 
             //setup adapter
             binding.rvSeasons.layoutManager =
@@ -118,16 +119,6 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         super.onStop()
 
         EventBus.getDefault().unregister(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        FirebaseAnalytics.getInstance(this)
-            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
-                putString(FirebaseAnalytics.Param.SCREEN_NAME, "ListFragment")
-                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
-            })
     }
 
     private fun snackBar(message: String) {

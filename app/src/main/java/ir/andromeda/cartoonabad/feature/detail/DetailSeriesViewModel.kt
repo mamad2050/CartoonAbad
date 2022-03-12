@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.common.*
-import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.data.download.DownloadedRepository
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
+import ir.andromeda.cartoonabad.data.series.Series
 
 class DetailSeriesViewModel(
     private val bundle: Bundle,
@@ -21,7 +21,7 @@ class DetailSeriesViewModel(
     CartoonAbadViewModel() {
 
     val seasonsLiveData = MutableLiveData<List<Season>>()
-    val animationLiveData = MutableLiveData<Animation>()
+    val seriesLiveData = MutableLiveData<Series>()
 
     init {
         showSeasons()
@@ -30,9 +30,9 @@ class DetailSeriesViewModel(
     fun showSeasons() {
         progressBarLiveData.value = true
 
-        animationLiveData.value = bundle.getParcelable(EXTRA_KEY_DATA)
+        seriesLiveData.value = bundle.getParcelable(EXTRA_KEY_DATA)
 
-        seasonRepository.getSeasons(animationLiveData.value!!.id.toInt())
+        seasonRepository.getSeasons(seriesLiveData.value!!.id.toInt())
             .doFinally { progressBarLiveData.postValue(false) }
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
