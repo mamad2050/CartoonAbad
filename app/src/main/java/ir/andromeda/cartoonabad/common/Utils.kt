@@ -118,3 +118,5 @@ const val MONTHLY = 3
 const val YEARLY_PRODUCT_ID = "rearkneth645thewth56t"
 const val THREE_MONTH_PRODUCT_ID = "erigneotrht6h465ryjry"
 const val MONTHLY_PRODUCT_ID = "fdgnsgmsrymsryr6t516rt"
+
+var isDownload = false

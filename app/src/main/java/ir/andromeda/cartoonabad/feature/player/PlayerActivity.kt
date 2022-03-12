@@ -11,7 +11,8 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadActivity
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_NAME
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_URL
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityPlayerBinding
 import java.io.File
@@ -27,7 +28,8 @@ class PlayerActivity : CartoonAbadActivity() {
     private var currentWindow = 0
     private var playbackPosition = 0L
     private lateinit var mediaItem: MediaItem
-    private lateinit var episode: Episode
+    private var name: String? = null
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +38,11 @@ class PlayerActivity : CartoonAbadActivity() {
         setContentView(view)
 
 
-        episode = intent.getParcelableExtra<Episode>(EXTRA_KEY_DATA) as Episode
+        name = intent.getStringExtra(EXTRA_KEY_NAME)
+        url = intent.getStringExtra(EXTRA_KEY_URL)
 
         binding.playerView.findViewById<View>(R.id.ivBack).setOnClickListener { onBackPressed() }
-        binding.playerView.findViewById<TextView>(R.id.tvEpisodeName).text = episode.name
+        binding.playerView.findViewById<TextView>(R.id.tvEpisodeName).text = name
 
 
         //making screen landscape
@@ -56,12 +59,12 @@ class PlayerActivity : CartoonAbadActivity() {
 
                 val filePath =
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
+                        .toString() + "/CartoonAbad/" + url!!.substringAfterLast('/')
 
                 mediaItem = if (File(filePath).exists())
                     MediaItem.fromUri(filePath)
                 else
-                    MediaItem.fromUri(episode.url)
+                    MediaItem.fromUri(url!!)
 
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.playWhenReady = playWhenReady

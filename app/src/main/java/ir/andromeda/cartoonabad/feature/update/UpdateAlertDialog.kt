@@ -26,8 +26,6 @@ class UpdateAlertDialog : DialogFragment() {
             goToBazaar()
         }
 
-        isCancelable = false
-
         builder.setView(binding.root)
         return builder.create()
     }

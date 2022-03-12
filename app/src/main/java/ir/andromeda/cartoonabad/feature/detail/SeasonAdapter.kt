@@ -12,7 +12,6 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
-import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
 class SeasonAdapter(
     private val seasons: List<Season> = ArrayList(),

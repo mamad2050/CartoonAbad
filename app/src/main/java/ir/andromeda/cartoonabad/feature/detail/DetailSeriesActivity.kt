@@ -17,10 +17,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadActivity
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
-import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
-import ir.andromeda.cartoonabad.common.ZONE_ID_REWARD_AD
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.download.Downloaded
@@ -45,8 +42,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.io.File
 
-var isDownload = false
-
 class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
     private lateinit var binding: ActivityDetailSeriesBinding
@@ -70,10 +65,11 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         }
 
         viewModel.animationLiveData.observe(this) {
-            binding.tvSeriesName.text = it.name
+            binding.tvName.text = it.name
             binding.tvSeasonSize.text = "${it.no_seasons} فصل"
             binding.tvRate.text = "امتیاز ${it.rate} / 10"
-            imageLoadingService.load(binding.ivSeriesImage as CartoonAbadImageView, it.image)
+//            binding.tvDescription.text = it.description
+            imageLoadingService.load(binding.ivImage as CartoonAbadImageView, it.image)
         }
 
         viewModel.progressBarLiveData.observe(this) {
@@ -144,7 +140,8 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             requestVideoAd(episode)
         } else {
             startActivity(Intent(this, PlayerActivity::class.java).apply {
-                putExtra(EXTRA_KEY_DATA, episode)
+                putExtra(EXTRA_KEY_NAME, episode.name)
+                putExtra(EXTRA_KEY_URL, episode.url)
             })
         }
     }
@@ -183,7 +180,8 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                             this@DetailSeriesActivity,
                             PlayerActivity::class.java
                         ).apply {
-                            putExtra(EXTRA_KEY_DATA, episode)
+                            putExtra(EXTRA_KEY_NAME, episode.name)
+                            putExtra(EXTRA_KEY_URL, episode.url)
                         })
                 }
 

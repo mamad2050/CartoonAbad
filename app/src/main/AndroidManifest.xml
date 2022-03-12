@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CartoonAbad">
         <activity
+            android:name=".feature.detail.DetailCartoonActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.detail.DetailSeriesActivity"
             android:exported="false" />
         <activity
