@@ -115,7 +115,6 @@ class MainActivity : CartoonAbadActivity() {
         endCalendar.timeInMillis = endTime
         val subscriptionDays =
             ((endCalendar.timeInMillis - startCalendar.timeInMillis) / 86400000L).toString()
-
     }
 
     private fun snackBar(message: String) {

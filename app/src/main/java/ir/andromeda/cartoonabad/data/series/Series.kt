@@ -13,3 +13,7 @@ data class Series(
     val rate: String,
     val views: Int
 ) : Parcelable
+
+const val SORT_BY_ID = "id"
+const val SORT_BY_LATEST = "latest"
+const val SORT_BY_VIEW = "view"

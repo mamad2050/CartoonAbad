@@ -114,4 +114,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    //circular imageview
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 }

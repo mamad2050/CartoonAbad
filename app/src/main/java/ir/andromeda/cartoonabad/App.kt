@@ -19,6 +19,9 @@ import ir.andromeda.cartoonabad.data.download.DownloadedRepository
 import ir.andromeda.cartoonabad.data.download.DownloadedRepositoryImpl
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
+import ir.andromeda.cartoonabad.data.genre.GenreRemoteDataSource
+import ir.andromeda.cartoonabad.data.genre.GenreRepository
+import ir.andromeda.cartoonabad.data.genre.GenreRepositoryImpl
 import ir.andromeda.cartoonabad.data.message.MessageRemoteDataSource
 import ir.andromeda.cartoonabad.data.message.MessageRepository
 import ir.andromeda.cartoonabad.data.message.MessageRepositoryImpl
@@ -115,6 +118,8 @@ class App : Application() {
 
             factory<DownloadedRepository> { DownloadedRepositoryImpl(get<AppDataBase>().downloadDao()) }
 
+            factory<GenreRepository> { GenreRepositoryImpl(GenreRemoteDataSource(get())) }
+
             factory<SubscriptionRepository> {
                 SubscriptionRepositoryImpl(
                     SubscriptionRemoteDataSource(get())
@@ -140,7 +145,7 @@ class App : Application() {
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
             viewModel { PurchaseViewModel(get()) }
-            viewModel {(bundle:Bundle)-> DetailSeriesViewModel(bundle,get(),get(),get())}
+            viewModel { (bundle: Bundle) -> DetailSeriesViewModel(bundle, get(), get(), get()) }
         }
 
         startKoin {

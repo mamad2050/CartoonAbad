@@ -4,6 +4,7 @@ import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.series.Series
@@ -43,6 +44,10 @@ interface ApiService {
     @GET("getAppVersion.php")
     fun getAppVersion(): Single<AppData>
 
+
+    @GET("genres/list")
+    fun getGenres():Single<List<Genre>>
+
 }
 
 fun createApiServiceInstance(): ApiService {
@@ -54,7 +59,7 @@ fun createApiServiceInstance(): ApiService {
         .build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://cartoon-abad.ir/")
+        .baseUrl("http://192.168.1.165:5000/api/v1/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)
