@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -18,6 +20,7 @@ import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.animation.Animation
+import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -31,7 +34,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var adapter: AnimationAdapter? = null
+    private var genreAdapter: GenreAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
@@ -52,13 +55,20 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             setProgressIndicator(it)
         }
 
-        viewModel.animationsLiveData.observe(viewLifecycleOwner) {
+//        viewModel.animationsLiveData.observe(viewLifecycleOwner) {
+//
+//            binding.rvAnimations.layoutManager = GridLayoutManager(requireContext(), 3)
+//            adapter = AnimationAdapter(it, imageLoadingService, this)
+//            binding.rvAnimations.adapter = adapter
+//        }
+//        showUpdateDialog()
 
-            binding.rvAnimations.layoutManager = GridLayoutManager(requireContext(), 3)
-            adapter = AnimationAdapter(it, imageLoadingService, this)
-            binding.rvAnimations.adapter = adapter
+
+        viewModel.genresLiveData.observe(viewLifecycleOwner){
+            binding.rvGenres.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            genreAdapter = GenreAdapter(it as ArrayList<Genre>,imageLoadingService)
+            binding.rvGenres.adapter = genreAdapter
         }
-        showUpdateDialog()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -68,7 +78,7 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
                 val connectionView = showConnectionLost(true)
                 connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
                     showConnectionLost(false)
-                    viewModel.showAnimationList()
+//                    viewModel.showAnimationList()
                 }
             }
             else -> {}
@@ -112,16 +122,16 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         }
     }
 
-    private fun showUpdateDialog() {
-        viewModel.getVersionNumber()
-            .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<AppData>(compositeDisposable) {
-                override fun onSuccess(t: AppData) {
-                    if (t.version.toInt() > BuildConfig.VERSION_CODE)
-                        findNavController().navigate(R.id.navigateToUpdateAlertDialog)
-                }
-            })
-    }
+//    private fun showUpdateDialog() {
+//        viewModel.getVersionNumber()
+//            .asyncNetworkRequest()
+//            .subscribe(object : CartoonAbadSingleObserver<AppData>(compositeDisposable) {
+//                override fun onSuccess(t: AppData) {
+//                    if (t.version.toInt() > BuildConfig.VERSION_CODE)
+//                        findNavController().navigate(R.id.navigateToUpdateAlertDialog)
+//                }
+//            })
+//    }
 
 
     override fun onResume() {

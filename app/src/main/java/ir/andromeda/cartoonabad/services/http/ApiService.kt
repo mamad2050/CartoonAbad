@@ -21,8 +21,8 @@ interface ApiService {
     @GET("getSeries.php")
     fun getSeries1(): Single<List<Animation>>
 
-    @GET("series/{path}")
-    fun getSeries(@Path("path") path: String): Single<List<Series>>
+    @GET("series/list")
+    fun getSeries(@Query("sort") sort: String): Single<List<Series>>
 
     @GET("cartoons/{path}")
     fun getCartoons(@Path("path") path: String): Single<List<Cartoon>>

@@ -28,6 +28,9 @@ import ir.andromeda.cartoonabad.data.message.MessageRepositoryImpl
 import ir.andromeda.cartoonabad.data.season.SeasonRemoteDataSource
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.season.SeasonRepositoryImpl
+import ir.andromeda.cartoonabad.data.series.SeriesRemoteDataSource
+import ir.andromeda.cartoonabad.data.series.SeriesRepository
+import ir.andromeda.cartoonabad.data.series.SeriesRepositoryImpl
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRemoteDataSource
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepository
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepositoryImpl
@@ -112,6 +115,9 @@ class App : Application() {
                     get<AppDataBase>().episodeDao()
                 )
             }
+
+            factory<SeriesRepository>{ SeriesRepositoryImpl(SeriesRemoteDataSource(get())) }
+
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
 
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
@@ -119,6 +125,8 @@ class App : Application() {
             factory<DownloadedRepository> { DownloadedRepositoryImpl(get<AppDataBase>().downloadDao()) }
 
             factory<GenreRepository> { GenreRepositoryImpl(GenreRemoteDataSource(get())) }
+
+
 
             factory<SubscriptionRepository> {
                 SubscriptionRepositoryImpl(
@@ -140,7 +148,7 @@ class App : Application() {
             }
 
 
-            viewModel { HomeViewModel(get()) }
+            viewModel { HomeViewModel(get(),get()) }
             viewModel { FavoriteViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
