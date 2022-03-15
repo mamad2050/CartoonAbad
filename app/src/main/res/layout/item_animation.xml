@@ -23,7 +23,6 @@
         tools:layout_height="180dp"
         tools:layout_width="120dp" />
 
-
     <TextView
         android:id="@+id/tv_animation_name"
         android:layout_width="0dp"
@@ -41,33 +40,9 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_animation"
         tools:text="اتک به تایتان" />
 
-    <TextView
-        android:id="@+id/tv_animation_counts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="4dp"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="11sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_animation_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_animation_name"
-        tools:text="8 فصل - 101 قسمت" />
 
-    <TextView
-        android:id="@+id/tv_animation_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/iv_animation"
-        app:layout_constraintTop_toBottomOf="@id/tv_animation_counts"
-        tools:text="امتیاز : 8.1/10" />
+
+
 
     <TextView
         android:id="@+id/tv_coming_soon"

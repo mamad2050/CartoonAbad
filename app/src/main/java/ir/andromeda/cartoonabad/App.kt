@@ -11,9 +11,6 @@ import com.downloader.PRDownloaderConfig
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_NAME
-import ir.andromeda.cartoonabad.data.animation.AnimationRemoteDataSource
-import ir.andromeda.cartoonabad.data.animation.AnimationRepository
-import ir.andromeda.cartoonabad.data.animation.AnimationRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
 import ir.andromeda.cartoonabad.data.download.DownloadedRepository
 import ir.andromeda.cartoonabad.data.download.DownloadedRepositoryImpl
@@ -108,7 +105,6 @@ class App : Application() {
 
             single { Room.databaseBuilder(this@App, AppDataBase::class.java, "db_app").build() }
 
-            factory<AnimationRepository> { AnimationRepositoryImpl(AnimationRemoteDataSource(get())) }
             factory<SeasonRepository> {
                 SeasonRepositoryImpl(
                     SeasonRemoteDataSource(get()),
@@ -125,8 +121,6 @@ class App : Application() {
             factory<DownloadedRepository> { DownloadedRepositoryImpl(get<AppDataBase>().downloadDao()) }
 
             factory<GenreRepository> { GenreRepositoryImpl(GenreRemoteDataSource(get())) }
-
-
 
             factory<SubscriptionRepository> {
                 SubscriptionRepositoryImpl(

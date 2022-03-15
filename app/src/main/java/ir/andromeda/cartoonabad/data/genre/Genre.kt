@@ -2,6 +2,6 @@ package ir.andromeda.cartoonabad.data.genre
 
 data class Genre(
     val id:Int,
-    val name:String,
+    val title:String,
     val image:String
 )

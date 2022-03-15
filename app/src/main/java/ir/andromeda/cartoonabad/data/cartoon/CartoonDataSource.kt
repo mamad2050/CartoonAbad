@@ -3,5 +3,5 @@ package ir.andromeda.cartoonabad.data.cartoon
 import io.reactivex.Single
 
 interface CartoonDataSource {
-    fun getCartoons(path: String): Single<List<Cartoon>>
+    fun getCartoons(sort: String): Single<List<Cartoon>>
 }

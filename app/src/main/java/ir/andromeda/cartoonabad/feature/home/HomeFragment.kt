@@ -1,28 +1,20 @@
 package ir.andromeda.cartoonabad.feature.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
-import ir.andromeda.cartoonabad.BuildConfig
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.*
-import ir.andromeda.cartoonabad.data.AppData
+import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
-import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.genre.Genre
+import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
-import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -30,11 +22,12 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
+class HomeFragment : CartoonAbadFragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private var genreAdapter: GenreAdapter? = null
+    private lateinit var genreAdapter: GenreAdapter
+    private lateinit var latestSeriesAdapter: SeriesAdapter
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
@@ -55,20 +48,24 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
             setProgressIndicator(it)
         }
 
-//        viewModel.animationsLiveData.observe(viewLifecycleOwner) {
-//
-//            binding.rvAnimations.layoutManager = GridLayoutManager(requireContext(), 3)
-//            adapter = AnimationAdapter(it, imageLoadingService, this)
-//            binding.rvAnimations.adapter = adapter
-//        }
 //        showUpdateDialog()
 
 
-        viewModel.genresLiveData.observe(viewLifecycleOwner){
-            binding.rvGenres.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-            genreAdapter = GenreAdapter(it as ArrayList<Genre>,imageLoadingService)
+        viewModel.genresLiveData.observe(viewLifecycleOwner) {
+            binding.rvGenres.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            genreAdapter = GenreAdapter(it as ArrayList<Genre>, imageLoadingService)
             binding.rvGenres.adapter = genreAdapter
         }
+
+        viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
+            binding.rvLatestSeries.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            latestSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
+            binding.rvLatestSeries.adapter = latestSeriesAdapter
+        }
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -103,24 +100,24 @@ class HomeFragment : CartoonAbadFragment(), OnItemEventListener<Animation> {
         compositeDisposable.dispose()
     }
 
-    override fun onCLick(item: Animation) {
-
-        FirebaseAnalytics.getInstance(requireContext())
-            .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle().apply {
-                putString(FirebaseAnalytics.Param.CONTENT_TYPE, item.name)
-                putString(FirebaseAnalytics.Param.ITEM_ID, item.name)
-            })
-
-        if (item.no_episodes.toInt() > 0) {
-
-            startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
-                putExtra(EXTRA_KEY_DATA, item)
-            })
-
-        } else {
-            Toast.makeText(requireContext(), "به زودی ...", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    override fun onCLick(item: Animation) {
+//
+//        FirebaseAnalytics.getInstance(requireContext())
+//            .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle().apply {
+//                putString(FirebaseAnalytics.Param.CONTENT_TYPE, item.name)
+//                putString(FirebaseAnalytics.Param.ITEM_ID, item.name)
+//            })
+//
+////        if (item.no_episodes.toInt() > 0) {
+////
+////            startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
+////                putExtra(EXTRA_KEY_DATA, item)
+////            })
+////
+////        } else {
+////            Toast.makeText(requireContext(), "به زودی ...", Toast.LENGTH_SHORT).show()
+////        }
+//    }
 
 //    private fun showUpdateDialog() {
 //        viewModel.getVersionNumber()

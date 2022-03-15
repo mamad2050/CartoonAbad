@@ -27,7 +27,7 @@ class GenreAdapter(
         fun bindGenre(genre: Genre) {
 
             imageLoadingService.load(binding.ivGenre, genre.image)
-            binding.tvGenreName.text = genre.name
+            binding.tvGenreTitle.text = genre.title
         }
     }
 

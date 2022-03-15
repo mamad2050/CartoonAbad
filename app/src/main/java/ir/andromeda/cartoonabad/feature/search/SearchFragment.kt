@@ -6,12 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.analytics.FirebaseAnalytics
-import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.databinding.FragmentDownloadedBinding
 import ir.andromeda.cartoonabad.databinding.FragmentSearchBinding
-import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedAdapter
-import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
-import ir.andromeda.cartoonabad.feature.home.AnimationAdapter
+import ir.andromeda.cartoonabad.feature.home.SeriesAdapter
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +16,7 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private var adapter: AnimationAdapter? = null
+    private var adapter: SeriesAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: SearchViewModel by viewModel()
 

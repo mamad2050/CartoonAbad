@@ -24,7 +24,7 @@ class PurchaseAlertDialog : DialogFragment() {
         }
 
         binding.btnPurchase.setOnClickListener {
-            findNavController().navigate(R.id.action_purchaseAlertDialog_to_purchaseFragment)
+//            findNavController().navigate(R.id.action_purchaseAlertDialog_to_purchaseFragment)
             dismiss()
         }
 

@@ -2,7 +2,6 @@ package ir.andromeda.cartoonabad.services.http
 
 import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.AppData
-import ir.andromeda.cartoonabad.data.animation.Animation
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.message.MessageResponse
@@ -18,14 +17,11 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @GET("getSeries.php")
-    fun getSeries1(): Single<List<Animation>>
-
     @GET("series/list")
     fun getSeries(@Query("sort") sort: String): Single<List<Series>>
 
-    @GET("cartoons/{path}")
-    fun getCartoons(@Path("path") path: String): Single<List<Cartoon>>
+    @GET("cartoons/list")
+    fun getCartoons(@Query("sort") sort: String): Single<List<Cartoon>>
 
     @GET("getSeasons.php")
     fun getSeasons(@Query("animation_id") videoId: Int): Single<List<Season>>
@@ -59,7 +55,7 @@ fun createApiServiceInstance(): ApiService {
         .build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://172.16.30.228:5000/api/v1/")
+        .baseUrl("http://192.168.1.165:5000/api/v1/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)

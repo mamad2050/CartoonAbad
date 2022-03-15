@@ -5,12 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Series(
-    val description: String,
-    val genre_id: Int,
     val id: Int,
-    val image: String,
     val name: String,
+    val image: String,
+    val description: String,
     val rate: String,
+    val genre_id: Int,
     val views: Int
 ) : Parcelable
 
