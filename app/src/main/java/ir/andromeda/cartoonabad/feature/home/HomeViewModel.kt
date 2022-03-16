@@ -9,7 +9,6 @@ import ir.andromeda.cartoonabad.data.genre.GenreRepository
 import ir.andromeda.cartoonabad.data.series.SORT_BY_LATEST
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.data.series.SeriesRepository
-import timber.log.Timber
 
 class HomeViewModel(
     genreRepository: GenreRepository,
@@ -26,7 +25,6 @@ class HomeViewModel(
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Genre>>(compositeDisposable) {
                 override fun onSuccess(t: List<Genre>) {
-
                     genresLiveData.value = t
                 }
             })
@@ -36,7 +34,6 @@ class HomeViewModel(
             .doFinally { progressBarLiveData.postValue(false) }
             .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
                 override fun onSuccess(t: List<Series>) {
-                    Timber.i(t.toString())
                     latestSeriesLiveData.value = t
                 }
             })
