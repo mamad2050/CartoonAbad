@@ -99,6 +99,7 @@ class App : Application() {
         val myModules = module {
 
             single { createApiServiceInstance() }
+
             single<ImageLoadingService> { FrescoImageLoadingService() }
 
             single { getSharedPreferences("sharedPref", MODE_PRIVATE) }
