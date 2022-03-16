@@ -9,6 +9,7 @@ import ir.andromeda.cartoonabad.data.genre.GenreRepository
 import ir.andromeda.cartoonabad.data.series.SORT_BY_LATEST
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.data.series.SeriesRepository
+import timber.log.Timber
 
 class HomeViewModel(
     genreRepository: GenreRepository,
@@ -20,24 +21,25 @@ class HomeViewModel(
 
     init {
         progressBarLiveData.value = true
-//
+
         genreRepository.getGenres()
             .asyncNetworkRequest()
-            .doFinally { progressBarLiveData.postValue(false) }
             .subscribe(object : CartoonAbadSingleObserver<List<Genre>>(compositeDisposable) {
                 override fun onSuccess(t: List<Genre>) {
+
                     genresLiveData.value = t
                 }
             })
 
-//        seriesRepository.getSeries(SORT_BY_LATEST)
-//            .asyncNetworkRequest()
-////            .doFinally { progressBarLiveData.postValue(false) }
-//            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
-//                override fun onSuccess(t: List<Series>) {
-//                    latestSeriesLiveData.value = t
-//                }
-//            })
+        seriesRepository.getSeries(SORT_BY_LATEST)
+            .asyncNetworkRequest()
+            .doFinally { progressBarLiveData.postValue(false) }
+            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
+                override fun onSuccess(t: List<Series>) {
+                    Timber.i(t.toString())
+                    latestSeriesLiveData.value = t
+                }
+            })
     }
 
 //    fun showAnimationList() {

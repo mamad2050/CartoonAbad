@@ -56,12 +56,12 @@ class HomeFragment : CartoonAbadFragment() {
             binding.rvGenres.adapter = genreAdapter
         }
 
-//        viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
-//            binding.rvLatestSeries.layoutManager =
-//                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//            latestSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
-//            binding.rvLatestSeries.adapter = latestSeriesAdapter
-//        }
+        viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
+            binding.rvLatestSeries.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            latestSeriesAdapter = SeriesAdapter(it, imageLoadingService)
+            binding.rvLatestSeries.adapter = latestSeriesAdapter
+        }
 
 
     }
