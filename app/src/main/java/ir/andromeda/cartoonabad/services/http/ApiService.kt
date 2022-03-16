@@ -34,7 +34,7 @@ interface ApiService {
         @Field("email") email: String
     ): Single<MessageResponse>
 
-    @GET("getSubscriptions.php")
+    @GET("subscriptions")
     fun getSubscriptions(): Single<List<Subscription>>
 
     @GET("getAppVersion.php")

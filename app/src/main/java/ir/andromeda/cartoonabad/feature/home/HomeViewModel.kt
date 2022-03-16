@@ -20,23 +20,24 @@ class HomeViewModel(
 
     init {
         progressBarLiveData.value = true
-
+//
         genreRepository.getGenres()
             .asyncNetworkRequest()
+            .doFinally { progressBarLiveData.postValue(false) }
             .subscribe(object : CartoonAbadSingleObserver<List<Genre>>(compositeDisposable) {
                 override fun onSuccess(t: List<Genre>) {
                     genresLiveData.value = t
                 }
             })
 
-        seriesRepository.getSeries(SORT_BY_LATEST)
-            .asyncNetworkRequest()
-            .doFinally { progressBarLiveData.postValue(false) }
-            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
-                override fun onSuccess(t: List<Series>) {
-                    latestSeriesLiveData.value = t
-                }
-            })
+//        seriesRepository.getSeries(SORT_BY_LATEST)
+//            .asyncNetworkRequest()
+////            .doFinally { progressBarLiveData.postValue(false) }
+//            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
+//                override fun onSuccess(t: List<Series>) {
+//                    latestSeriesLiveData.value = t
+//                }
+//            })
     }
 
 //    fun showAnimationList() {
