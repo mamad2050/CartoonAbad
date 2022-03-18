@@ -48,9 +48,6 @@ class HomeFragment : CartoonAbadFragment() {
             setProgressIndicator(it)
         }
 
-//        showUpdateDialog()
-
-
         viewModel.genresLiveData.observe(viewLifecycleOwner) {
             binding.rvGenres.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -60,7 +57,7 @@ class HomeFragment : CartoonAbadFragment() {
 
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext())
             latestSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
         }

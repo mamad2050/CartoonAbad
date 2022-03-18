@@ -23,8 +23,8 @@ interface ApiService {
     @GET("cartoons/list")
     fun getCartoons(@Query("sort") sort: String): Single<List<Cartoon>>
 
-    @GET("getSeasons.php")
-    fun getSeasons(@Query("animation_id") videoId: Int): Single<List<Season>>
+    @GET("series/seasons/{id}")
+    fun getSeasons(@Path("id") series_id: Int): Single<List<Season>>
 
     @FormUrlEncoded
     @POST("sendMessage.php")

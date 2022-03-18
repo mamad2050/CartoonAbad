@@ -8,7 +8,7 @@ import ir.andromeda.cartoonabad.databinding.ItemGenreBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 
 class GenreAdapter(
-    private val genres: ArrayList<Genre>,
+    private val genresList: ArrayList<Genre>,
     private val imageLoadingService: ImageLoadingService
 ) : RecyclerView.Adapter<GenreAdapter.Holder>() {
 
@@ -18,9 +18,9 @@ class GenreAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
-        holder.bindGenre(genres[position])
+        holder.bindGenre(genresList[position])
 
-    override fun getItemCount(): Int = genres.size
+    override fun getItemCount(): Int = genresList.size
 
     inner class Holder(private val binding: ItemGenreBinding) :
         RecyclerView.ViewHolder(binding.root) {

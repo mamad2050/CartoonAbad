@@ -5,6 +5,6 @@ import ir.andromeda.cartoonabad.services.http.ApiService
 
 class SeasonRemoteDataSource(private val apiService: ApiService) : SeasonDataSource {
 
-    override fun getSeasons(animationId: Int): Single<List<Season>> =
-        apiService.getSeasons(animationId)
+    override fun getSeasons(series_id: Int): Single<List<Season>> =
+        apiService.getSeasons(series_id)
 }
