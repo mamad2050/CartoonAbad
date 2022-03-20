@@ -6,4 +6,6 @@ class SeriesRepositoryImpl(
     private val remoteDataSource: SeriesRemoteDataSource
 ) : SeriesRepository {
     override fun getSeries(sort: String): Single<List<Series>> = remoteDataSource.getSeries(sort)
-}
+
+    override fun getSeriesByGenre(genre_id: String): Single<List<Series>> = remoteDataSource.getSeriesByGenre(genre_id)
+    }

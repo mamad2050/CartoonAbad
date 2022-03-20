@@ -4,4 +4,7 @@ import io.reactivex.Single
 
 interface SeriesRepository {
     fun getSeries(sort: String): Single<List<Series>>
+
+    fun getSeriesByGenre(genre_id:String):Single<List<Series>>
+
 }
