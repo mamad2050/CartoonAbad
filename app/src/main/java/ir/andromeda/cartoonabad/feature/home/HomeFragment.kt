@@ -57,7 +57,7 @@ class HomeFragment : CartoonAbadFragment() {
 
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
-                LinearLayoutManager(requireContext())
+                LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
             latestSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
         }

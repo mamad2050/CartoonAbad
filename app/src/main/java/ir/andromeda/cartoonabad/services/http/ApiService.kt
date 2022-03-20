@@ -26,10 +26,8 @@ interface ApiService {
     @GET("series/seasons/{id}")
     fun getSeasons(@Path("id") series_id: Int): Single<List<Season>>
 
-
     @GET("series/list")
     fun getSeriesByGenre(@Query("genre_id") genre_id: String) :Single<List<Series>>
-
 
     @FormUrlEncoded
     @POST("sendMessage.php")
