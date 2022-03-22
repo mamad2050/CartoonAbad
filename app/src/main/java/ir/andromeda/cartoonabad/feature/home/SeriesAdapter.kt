@@ -35,6 +35,9 @@ class SeriesAdapter(
 
             imageLoadingService.load(binding.ivImage, series.image)
             binding.tvName.text = series.name
+            binding.root.implementSpringAnimationTrait()
+            binding.root.setOnClickListener {  }
+
         }
     }
 

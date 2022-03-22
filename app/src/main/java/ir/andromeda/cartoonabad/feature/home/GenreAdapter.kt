@@ -3,6 +3,7 @@ package ir.andromeda.cartoonabad.feature.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.databinding.ItemGenreBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -28,6 +29,9 @@ class GenreAdapter(
 
             imageLoadingService.load(binding.ivGenre, genre.image)
             binding.tvGenreTitle.text = genre.title
+            binding.root.implementSpringAnimationTrait()
+            binding.root.setOnClickListener {  }
+
         }
     }
 

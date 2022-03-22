@@ -36,6 +36,9 @@ class CartoonAdapter(
 
             imageLoadingService.load(binding.ivImage, cartoon.image)
             binding.tvName.text = cartoon.name
+            binding.root.implementSpringAnimationTrait()
+            binding.root.setOnClickListener {  }
+
         }
     }
 
