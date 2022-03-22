@@ -62,14 +62,14 @@ class HomeFragment : CartoonAbadFragment() {
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
+            latestSeriesAdapter = SeriesAdapter(requireContext(),it as ArrayList<Series>, imageLoadingService)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
         }
 
         viewModel.latestCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestCartoonsAdapter = CartoonAdapter(it as ArrayList<Cartoon>, imageLoadingService)
+            latestCartoonsAdapter = CartoonAdapter(requireContext(),it as ArrayList<Cartoon>, imageLoadingService)
             binding.rvLatestCartoons.adapter = latestCartoonsAdapter
 
         }
@@ -77,14 +77,14 @@ class HomeFragment : CartoonAbadFragment() {
         viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
+            popularSeriesAdapter = SeriesAdapter(requireContext(),it as ArrayList<Series>, imageLoadingService)
             binding.rvPopularSeries.adapter = popularSeriesAdapter
         }
 
         viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularCartoonsAdapter = CartoonAdapter(it as ArrayList<Cartoon>, imageLoadingService)
+            popularCartoonsAdapter = CartoonAdapter(requireContext(),it as ArrayList<Cartoon>, imageLoadingService)
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
         }
 
