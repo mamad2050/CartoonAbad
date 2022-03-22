@@ -12,6 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
+import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
@@ -26,8 +27,9 @@ class HomeFragment : CartoonAbadFragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var genreAdapter: GenreAdapter
+    private lateinit var genresAdapter: GenreAdapter
     private lateinit var latestSeriesAdapter: SeriesAdapter
+    private lateinit var latestCartoonsAdapter: CartoonAdapter
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
@@ -51,15 +53,23 @@ class HomeFragment : CartoonAbadFragment() {
         viewModel.genresLiveData.observe(viewLifecycleOwner) {
             binding.rvGenres.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            genreAdapter = GenreAdapter(it as ArrayList<Genre>, imageLoadingService)
-            binding.rvGenres.adapter = genreAdapter
+            genresAdapter = GenreAdapter(it as ArrayList<Genre>, imageLoadingService)
+            binding.rvGenres.adapter = genresAdapter
         }
 
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
-                LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             latestSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
+        }
+
+        viewModel.latestCartoonsLiveData.observe(viewLifecycleOwner) {
+            binding.rvLatestCartoons.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            latestCartoonsAdapter = CartoonAdapter(it as ArrayList<Cartoon>,imageLoadingService)
+            binding.rvLatestCartoons.adapter = latestCartoonsAdapter
+
         }
 
 
