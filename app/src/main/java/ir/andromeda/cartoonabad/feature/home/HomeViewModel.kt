@@ -1,10 +1,7 @@
 package ir.andromeda.cartoonabad.feature.home
 
 import androidx.lifecycle.MutableLiveData
-import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
-import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
-import ir.andromeda.cartoonabad.common.SORT_BY_LATEST
-import ir.andromeda.cartoonabad.common.asyncNetworkRequest
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRepository
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -21,6 +18,8 @@ class HomeViewModel(
     val genresLiveData = MutableLiveData<List<Genre>>()
     val latestSeriesLiveData = MutableLiveData<List<Series>>()
     val latestCartoonsLiveData = MutableLiveData<List<Cartoon>>()
+    val popularSeriesLiveData = MutableLiveData<List<Series>>()
+    val popularCartoonsLiveData = MutableLiveData<List<Cartoon>>()
 
     init {
         progressBarLiveData.value = true
@@ -50,6 +49,21 @@ class HomeViewModel(
                 }
             })
 
+        seriesRepository.getSeries(SORT_BY_VIEW)
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable){
+                override fun onSuccess(t: List<Series>) {
+                 popularSeriesLiveData.value = t
+                }
+            })
+
+        cartoonRepository.getCartoons(SORT_BY_VIEW)
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable){
+                override fun onSuccess(t: List<Cartoon>) {
+                    popularCartoonsLiveData.value = t
+                }
+            })
     }
 
 //    fun showAnimationList() {

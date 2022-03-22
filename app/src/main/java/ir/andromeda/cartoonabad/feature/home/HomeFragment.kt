@@ -30,6 +30,8 @@ class HomeFragment : CartoonAbadFragment() {
     private lateinit var genresAdapter: GenreAdapter
     private lateinit var latestSeriesAdapter: SeriesAdapter
     private lateinit var latestCartoonsAdapter: CartoonAdapter
+    private lateinit var popularSeriesAdapter: SeriesAdapter
+    private lateinit var popularCartoonsAdapter: CartoonAdapter
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
@@ -67,11 +69,24 @@ class HomeFragment : CartoonAbadFragment() {
         viewModel.latestCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestCartoonsAdapter = CartoonAdapter(it as ArrayList<Cartoon>,imageLoadingService)
+            latestCartoonsAdapter = CartoonAdapter(it as ArrayList<Cartoon>, imageLoadingService)
             binding.rvLatestCartoons.adapter = latestCartoonsAdapter
 
         }
 
+        viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
+            binding.rvPopularSeries.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            popularSeriesAdapter = SeriesAdapter(it as ArrayList<Series>, imageLoadingService)
+            binding.rvPopularSeries.adapter = popularSeriesAdapter
+        }
+
+        viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {
+            binding.rvPopularCartoons.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            popularCartoonsAdapter = CartoonAdapter(it as ArrayList<Cartoon>, imageLoadingService)
+            binding.rvPopularCartoons.adapter = popularCartoonsAdapter
+        }
 
     }
 
