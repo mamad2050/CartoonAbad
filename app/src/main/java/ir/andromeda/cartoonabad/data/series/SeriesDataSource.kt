@@ -7,5 +7,5 @@ interface SeriesDataSource {
 
     fun getSeriesByGenre(genre_id:String):Single<List<Series>>
 
-
+   fun getSeriesDetail(series_id:String):Single<Series>
 }

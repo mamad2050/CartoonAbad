@@ -154,7 +154,7 @@ class App : Application() {
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
             viewModel { PurchaseViewModel(get()) }
-            viewModel { (bundle: Bundle) -> DetailSeriesViewModel(bundle, get(), get(), get()) }
+            viewModel { (bundle: Bundle) -> DetailSeriesViewModel(bundle, get(), get(), get(),get()) }
             viewModel { (bundle: Bundle) -> DetailCartoonViewModel(bundle, get(), get()) }
         }
 

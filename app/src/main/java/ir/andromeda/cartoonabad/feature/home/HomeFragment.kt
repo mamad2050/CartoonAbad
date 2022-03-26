@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,14 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
+import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
+import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -23,7 +27,8 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : CartoonAbadFragment() {
+class HomeFragment : CartoonAbadFragment(),
+    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -62,14 +67,15 @@ class HomeFragment : CartoonAbadFragment() {
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestSeriesAdapter = SeriesAdapter(requireContext(),it as ArrayList<Series>, imageLoadingService)
+            latestSeriesAdapter = SeriesAdapter(it, this, imageLoadingService)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
         }
 
         viewModel.latestCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestCartoonsAdapter = CartoonAdapter(requireContext(),it as ArrayList<Cartoon>, imageLoadingService)
+            latestCartoonsAdapter =
+                CartoonAdapter(it as ArrayList<Cartoon>, this, imageLoadingService)
             binding.rvLatestCartoons.adapter = latestCartoonsAdapter
 
         }
@@ -77,14 +83,14 @@ class HomeFragment : CartoonAbadFragment() {
         viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularSeriesAdapter = SeriesAdapter(requireContext(),it as ArrayList<Series>, imageLoadingService)
+            popularSeriesAdapter = SeriesAdapter(it, this, imageLoadingService)
             binding.rvPopularSeries.adapter = popularSeriesAdapter
         }
 
         viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularCartoonsAdapter = CartoonAdapter(requireContext(),it as ArrayList<Cartoon>, imageLoadingService)
+            popularCartoonsAdapter = CartoonAdapter(it, this, imageLoadingService)
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
         }
 
@@ -152,7 +158,6 @@ class HomeFragment : CartoonAbadFragment() {
 //            })
 //    }
 
-
     override fun onResume() {
         super.onResume()
 
@@ -162,4 +167,18 @@ class HomeFragment : CartoonAbadFragment() {
                 putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
             })
     }
+
+
+    override fun clickOnSeries(series: Series) {
+        startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
+            putExtra(EXTRA_KEY_ID, series.id)
+        })
+    }
+
+    override fun clickOnCartoon(cartoon: Cartoon) {
+        startActivity(Intent(requireActivity(), DetailCartoonActivity::class.java).apply {
+            putExtra(EXTRA_KEY_ID, cartoon.id)
+        })
+    }
+
 }

@@ -26,9 +26,11 @@ interface ApiService {
     @GET("series/{id}/seasons")
     fun getSeasons(@Path("id") series_id: Int): Single<List<Season>>
 
-
     @GET("cartoons/{id}")
-    fun getCartoonDetail(@Path("id")cartoon_id :Int):Single<Cartoon>
+    fun getCartoonDetail(@Path("id")cartoon_id :String):Single<Cartoon>
+
+    @GET("series/{id}")
+    fun getSeriesDetail(@Path("id")series_id :String):Single<Series>
 
     @GET("series/list")
     fun getSeriesByGenre(@Query("genre_id") genre_id: String) :Single<List<Series>>

@@ -1,25 +1,23 @@
 package ir.andromeda.cartoonabad.feature.home
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
+import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
-import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 
 class CartoonAdapter(
-    private val context:Context,
-    private val cartoonsList: ArrayList<Cartoon>,
+    private val cartoonsList: List<Cartoon>,
+    private val onCartoonItemEventListener: OnCartoonItemEventListener,
     private val imageLoadingService: ImageLoadingService
 ) : RecyclerView.Adapter<CartoonAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemCartoonSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemCartoonSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 
@@ -38,12 +36,13 @@ class CartoonAdapter(
             binding.root.implementSpringAnimationTrait()
 
             binding.root.setOnClickListener {
-               context.startActivity(Intent(context,DetailCartoonActivity::class.java).apply {
-                   putExtra(EXTRA_KEY_ID,cartoon.id)
-               })
+                onCartoonItemEventListener.clickOnCartoon(cartoon)
             }
 
         }
     }
-
+interface OnCartoonItemEventListener{
+    fun clickOnCartoon(cartoon: Cartoon)
 }
+}
+

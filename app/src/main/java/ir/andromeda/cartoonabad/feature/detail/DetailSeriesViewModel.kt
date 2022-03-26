@@ -11,9 +11,11 @@ import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.series.Series
+import ir.andromeda.cartoonabad.data.series.SeriesRepository
 
 class DetailSeriesViewModel(
     private val bundle: Bundle,
+    private val seriesRepository: SeriesRepository,
     private val seasonRepository: SeasonRepository,
     private val episodeRepository: EpisodeRepository,
     private val downloadRepository: DownloadedRepository
@@ -30,14 +32,22 @@ class DetailSeriesViewModel(
     fun showSeasons() {
         progressBarLiveData.value = true
 
-        seriesLiveData.value = bundle.getParcelable(EXTRA_KEY_ID)
+       val seriesId = bundle.getInt(EXTRA_KEY_ID).toString()
 
-        seasonRepository.getSeasons(seriesLiveData.value!!.id.toInt())
+        seriesRepository.getSeriesDetail(seriesId)
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<Series>(compositeDisposable){
+                override fun onSuccess(t: Series) {
+                 seriesLiveData.value = t
+                }
+            })
+
+        seasonRepository.getSeasons(seriesId.toInt())
             .doFinally { progressBarLiveData.postValue(false) }
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
                 override fun onSuccess(t: List<Season>) {
-                    seasonsLiveData.value = t
+                        seasonsLiveData.value = t
                 }
             })
     }

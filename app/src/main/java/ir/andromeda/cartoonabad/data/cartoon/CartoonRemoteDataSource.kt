@@ -7,6 +7,6 @@ class CartoonRemoteDataSource(private val apiService: ApiService) : CartoonDataS
 
     override fun getCartoons(sort: String): Single<List<Cartoon>> = apiService.getCartoons(sort)
 
-    override fun getCartoonDetail(cartoon_id: Int): Single<Cartoon> =
+    override fun getCartoonDetail(cartoon_id: String): Single<Cartoon> =
         apiService.getCartoonDetail(cartoon_id)
 }

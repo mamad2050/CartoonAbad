@@ -107,5 +107,5 @@ abstract class CartoonAbadViewModel : ViewModel() {
 }
 
 interface OnItemEventListener<in V> {
-    fun onCLick(item: V)
+    fun clickOnItem(item: V)
 }
