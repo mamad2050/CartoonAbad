@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.FragmentDownloadedBinding
@@ -87,7 +87,7 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
             downloaded.path
         )
         startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
-            putExtra(EXTRA_KEY_DATA, episode)
+            putExtra(EXTRA_KEY_ID, episode)
         })
     }
 

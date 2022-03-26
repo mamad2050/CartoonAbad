@@ -1,6 +1,5 @@
 package ir.andromeda.cartoonabad.common
 
-const val EXTRA_KEY_DATA = "data"
 const val EXTRA_KEY_NAME = "name"
 const val EXTRA_KEY_URL = "url"
 const val EXTRA_KEY_ID = "id"

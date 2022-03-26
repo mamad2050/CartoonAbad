@@ -7,4 +7,7 @@ class CartoonsRepositoryImpl(
 ) : CartoonRepository {
     override fun getCartoons(sort: String): Single<List<Cartoon>> =
         remoteDataSource.getCartoons(sort)
+
+    override fun getCartoonDetail(cartoon_id: Int): Single<Cartoon> =
+        remoteDataSource.getCartoonDetail(cartoon_id)
 }

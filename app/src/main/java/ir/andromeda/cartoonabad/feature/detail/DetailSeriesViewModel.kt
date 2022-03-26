@@ -30,7 +30,7 @@ class DetailSeriesViewModel(
     fun showSeasons() {
         progressBarLiveData.value = true
 
-        seriesLiveData.value = bundle.getParcelable(EXTRA_KEY_DATA)
+        seriesLiveData.value = bundle.getParcelable(EXTRA_KEY_ID)
 
         seasonRepository.getSeasons(seriesLiveData.value!!.id.toInt())
             .doFinally { progressBarLiveData.postValue(false) }

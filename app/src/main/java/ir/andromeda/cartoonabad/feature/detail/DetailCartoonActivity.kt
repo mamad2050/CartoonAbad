@@ -46,6 +46,11 @@ class DetailCartoonActivity : CartoonAbadActivity() {
         binding = ActivityDetailCartoonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        viewModel.progressBarLiveData.observe(this) {
+            setProgressIndicator(it)
+        }
+
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
@@ -54,7 +59,7 @@ class DetailCartoonActivity : CartoonAbadActivity() {
             binding.tvName.text = cartoon.name
             binding.tvRate.text = "امتیاز ${cartoon.rate} / 10"
             binding.tvDescription.text = cartoon.description
-            imageLoadingService.load(binding.ivImage as CartoonAbadImageView, cartoon.image)
+            imageLoadingService.load(binding.ivImage, cartoon.image)
 
             binding.btnPlayCartoon.setOnClickListener {
                 if (PurchaseContainer.purchaseInfo == null) {
@@ -68,9 +73,7 @@ class DetailCartoonActivity : CartoonAbadActivity() {
             }
         }
 
-        viewModel.progressBarLiveData.observe(this) {
-            setProgressIndicator(it)
-        }
+
 
 //        viewModel.seasonsLiveData.observe(this) {
 //            it.forEach { seasons ->

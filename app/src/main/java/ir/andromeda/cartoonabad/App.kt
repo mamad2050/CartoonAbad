@@ -35,6 +35,7 @@ import ir.andromeda.cartoonabad.data.subscription.SubscriptionRemoteDataSource
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepository
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepositoryImpl
 import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
+import ir.andromeda.cartoonabad.feature.detail.DetailCartoonViewModel
 import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
@@ -154,6 +155,7 @@ class App : Application() {
             viewModel { DownloadedViewModel(get()) }
             viewModel { PurchaseViewModel(get()) }
             viewModel { (bundle: Bundle) -> DetailSeriesViewModel(bundle, get(), get(), get()) }
+            viewModel { (bundle: Bundle) -> DetailCartoonViewModel(bundle, get(), get()) }
         }
 
         startKoin {

@@ -4,4 +4,6 @@ import io.reactivex.Single
 
 interface CartoonDataSource {
     fun getCartoons(sort: String): Single<List<Cartoon>>
+
+    fun getCartoonDetail(cartoon_id:Int):Single<Cartoon>
 }

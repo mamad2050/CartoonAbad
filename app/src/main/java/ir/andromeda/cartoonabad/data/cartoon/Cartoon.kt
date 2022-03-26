@@ -1,14 +1,15 @@
 package ir.andromeda.cartoonabad.data.cartoon
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Cartoon(
+    val id: Int,
     val description: String,
     val duration: String,
     val genre_id: Int,
-    val id: Int,
     val image: String,
     val name: String,
     val rate: Double,

@@ -23,8 +23,12 @@ interface ApiService {
     @GET("cartoons/list")
     fun getCartoons(@Query("sort") sort: String): Single<List<Cartoon>>
 
-    @GET("series/seasons/{id}")
+    @GET("series/{id}/seasons")
     fun getSeasons(@Path("id") series_id: Int): Single<List<Season>>
+
+
+    @GET("cartoons/{id}")
+    fun getCartoonDetail(@Path("id")cartoon_id :Int):Single<Cartoon>
 
     @GET("series/list")
     fun getSeriesByGenre(@Query("genre_id") genre_id: String) :Single<List<Series>>
