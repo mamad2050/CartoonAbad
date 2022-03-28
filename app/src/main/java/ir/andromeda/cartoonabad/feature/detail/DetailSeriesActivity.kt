@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
@@ -327,39 +326,6 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                 }
             }
         }
-    }
-
-    private fun requestBannerAd() {
-        TapsellPlus.requestInterstitialAd(
-            this,
-            ZONE_ID_INTERSTITIAL_BANNER_AD,
-            object : AdRequestCallback() {
-                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.response(tapsellPlusAdModel)
-                    adResponseId = tapsellPlusAdModel.responseId
-                    showBannerAd()
-                }
-
-                override fun error(message: String?) {}
-            })
-    }
-
-    private fun showBannerAd() {
-
-        TapsellPlus.showInterstitialAd(this, adResponseId,
-            object : AdShowListener() {
-                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onOpened(tapsellPlusAdModel)
-                }
-
-                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onClosed(tapsellPlusAdModel)
-                }
-
-                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
-                    super.onError(tapsellPlusErrorModel)
-                }
-            })
     }
 
 }

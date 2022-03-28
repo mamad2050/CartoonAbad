@@ -13,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
+import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -21,6 +22,11 @@ import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
+import ir.tapsell.plus.AdRequestCallback
+import ir.tapsell.plus.AdShowListener
+import ir.tapsell.plus.TapsellPlus
+import ir.tapsell.plus.model.TapsellPlusAdModel
+import ir.tapsell.plus.model.TapsellPlusErrorModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -40,6 +46,7 @@ class HomeFragment : CartoonAbadFragment(),
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
+    private var adResponseId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,6 +135,39 @@ class HomeFragment : CartoonAbadFragment(),
         compositeDisposable.dispose()
     }
 
+    private fun requestBannerAd() {
+        TapsellPlus.requestInterstitialAd(
+            requireActivity(),
+            ZONE_ID_INTERSTITIAL_BANNER_AD,
+            object : AdRequestCallback() {
+                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.response(tapsellPlusAdModel)
+                    adResponseId = tapsellPlusAdModel.responseId
+                    showBannerAd()
+                }
+
+                override fun error(message: String?) {}
+            })
+    }
+
+    private fun showBannerAd() {
+
+        TapsellPlus.showInterstitialAd(requireActivity(), adResponseId,
+            object : AdShowListener() {
+                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onOpened(tapsellPlusAdModel)
+                }
+
+                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
+                    super.onClosed(tapsellPlusAdModel)
+                }
+
+                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
+                    super.onError(tapsellPlusErrorModel)
+                }
+            })
+    }
+
 //    override fun onCLick(item: Animation) {
 //
 //        FirebaseAnalytics.getInstance(requireContext())
@@ -173,12 +213,14 @@ class HomeFragment : CartoonAbadFragment(),
         startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, series.id)
         })
+        requestBannerAd()
     }
 
     override fun clickOnCartoon(cartoon: Cartoon) {
         startActivity(Intent(requireActivity(), DetailCartoonActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, cartoon.id)
         })
+        requestBannerAd()
     }
 
 }

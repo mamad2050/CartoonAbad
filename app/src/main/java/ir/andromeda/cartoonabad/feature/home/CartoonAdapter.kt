@@ -41,8 +41,9 @@ class CartoonAdapter(
 
         }
     }
-interface OnCartoonItemEventListener{
-    fun clickOnCartoon(cartoon: Cartoon)
-}
+
+    interface OnCartoonItemEventListener {
+        fun clickOnCartoon(cartoon: Cartoon)
+    }
 }
 

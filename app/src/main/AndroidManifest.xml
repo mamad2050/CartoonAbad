@@ -16,11 +16,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CartoonAbad">
+        android:theme="@style/Theme.CartoonAbad"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".feature.detail.DetailCartoonActivity"
             android:exported="false" />

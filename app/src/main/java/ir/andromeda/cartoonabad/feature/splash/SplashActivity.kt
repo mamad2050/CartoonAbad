@@ -1,6 +1,5 @@
 package ir.andromeda.cartoonabad.feature.splash
 
-import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -87,10 +86,8 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
     }
 
     private fun hideStatusBar(){
-        val decorView = window.decorView
-        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
-        decorView.systemUiVisibility = uiOptions
-        supportActionBar?.hide()
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
     }
 
     override fun onDestroy() {

@@ -8,14 +8,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.*
+import ir.andromeda.cartoonabad.common.CartoonAbadActivity
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_NAME
+import ir.andromeda.cartoonabad.common.EXTRA_KEY_URL
+import ir.andromeda.cartoonabad.common.ZONE_ID_REWARD_AD
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.databinding.ActivityDetailCartoonBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
-import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
 import ir.tapsell.plus.TapsellPlus
@@ -27,7 +29,6 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-
 
 class DetailCartoonActivity : CartoonAbadActivity() {
 
@@ -72,7 +73,6 @@ class DetailCartoonActivity : CartoonAbadActivity() {
                 }
             }
         }
-
 
 
 //        viewModel.seasonsLiveData.observe(this) {
@@ -303,43 +303,11 @@ class DetailCartoonActivity : CartoonAbadActivity() {
                 val connectionView = showConnectionLost(true)
                 connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
                     showConnectionLost(false)
-//                    viewModel.showSeasons()
+                    //we must refresh activity
+                    //viewModel.showSeasons()
                 }
             }
         }
-    }
-
-    private fun requestBannerAd() {
-        TapsellPlus.requestInterstitialAd(
-            this,
-            ZONE_ID_INTERSTITIAL_BANNER_AD,
-            object : AdRequestCallback() {
-                override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.response(tapsellPlusAdModel)
-                    adResponseId = tapsellPlusAdModel.responseId
-                    showBannerAd()
-                }
-
-                override fun error(message: String?) {}
-            })
-    }
-
-    private fun showBannerAd() {
-
-        TapsellPlus.showInterstitialAd(this, adResponseId,
-            object : AdShowListener() {
-                override fun onOpened(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onOpened(tapsellPlusAdModel)
-                }
-
-                override fun onClosed(tapsellPlusAdModel: TapsellPlusAdModel) {
-                    super.onClosed(tapsellPlusAdModel)
-                }
-
-                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
-                    super.onError(tapsellPlusErrorModel)
-                }
-            })
     }
 
 }
