@@ -9,7 +9,7 @@ class SeasonRepositoryImpl(
 
 ) : SeasonRepository {
 
-    override fun getSeasons(series_id: Int): Single<List<Season>> =
+    override fun getSeasons(series_id: String): Single<List<Season>> =
         localDataSource.getFavoriteEpisodes()
             .flatMap { favoriteEpisodes ->
                 val favoriteEpisodeId = favoriteEpisodes.map { it.id }

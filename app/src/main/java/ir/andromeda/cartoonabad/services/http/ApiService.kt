@@ -24,16 +24,16 @@ interface ApiService {
     fun getCartoons(@Query("sort") sort: String): Single<List<Cartoon>>
 
     @GET("series/{id}/seasons")
-    fun getSeasons(@Path("id") series_id: Int): Single<List<Season>>
+    fun getSeasons(@Path("id") series_id: String): Single<List<Season>>
 
     @GET("cartoons/{id}")
-    fun getCartoonDetail(@Path("id")cartoon_id :String):Single<Cartoon>
+    fun getCartoonDetail(@Path("id") cartoon_id: String): Single<Cartoon>
 
     @GET("series/{id}")
-    fun getSeriesDetail(@Path("id")series_id :String):Single<Series>
+    fun getSeriesDetail(@Path("id") series_id: String): Single<Series>
 
     @GET("series/list")
-    fun getSeriesByGenre(@Query("genre_id") genre_id: String) :Single<List<Series>>
+    fun getSeriesByGenre(@Query("genre_id") genre_id: String): Single<List<Series>>
 
     @FormUrlEncoded
     @POST("sendMessage.php")
@@ -48,7 +48,6 @@ interface ApiService {
 
     @GET("getAppVersion.php")
     fun getAppVersion(): Single<AppData>
-
 
     @GET("genres/list")
     fun getGenres(): Single<List<Genre>>

@@ -32,22 +32,22 @@ class DetailSeriesViewModel(
     fun showSeasons() {
         progressBarLiveData.value = true
 
-       val seriesId = bundle.getInt(EXTRA_KEY_ID).toString()
+        val seriesId = bundle.getString(EXTRA_KEY_ID) ?: ""
 
         seriesRepository.getSeriesDetail(seriesId)
             .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<Series>(compositeDisposable){
+            .subscribe(object : CartoonAbadSingleObserver<Series>(compositeDisposable) {
                 override fun onSuccess(t: Series) {
-                 seriesLiveData.value = t
+                    seriesLiveData.value = t
                 }
             })
 
-        seasonRepository.getSeasons(seriesId.toInt())
+        seasonRepository.getSeasons(seriesId)
             .doFinally { progressBarLiveData.postValue(false) }
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
                 override fun onSuccess(t: List<Season>) {
-                        seasonsLiveData.value = t
+                    seasonsLiveData.value = t
                 }
             })
     }

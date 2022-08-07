@@ -19,11 +19,11 @@ class DetailCartoonViewModel(
     init {
         progressBarLiveData.value = true
 
-        val cartoonId = bundle.getInt(EXTRA_KEY_ID).toString()
+        val cartoonId = bundle.getString(EXTRA_KEY_ID) ?: ""
         cartoonRepository.getCartoonDetail(cartoonId)
             .asyncNetworkRequest()
             .doFinally { progressBarLiveData.postValue(false) }
-            .subscribe(object : CartoonAbadSingleObserver<Cartoon>(compositeDisposable){
+            .subscribe(object : CartoonAbadSingleObserver<Cartoon>(compositeDisposable) {
                 override fun onSuccess(t: Cartoon) {
                     cartoonLiveData.value = t
                 }
