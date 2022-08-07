@@ -56,7 +56,6 @@ class MainActivity : CartoonAbadActivity() {
 
         val navGraphIds = listOf(
             R.navigation.home,
-            R.navigation.search,
             R.navigation.download,
             R.navigation.favorite,
             R.navigation.purchase
