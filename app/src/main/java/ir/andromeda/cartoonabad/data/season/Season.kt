@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName
 import ir.andromeda.cartoonabad.data.episode.Episode
 
 data class Season(
+    @SerializedName("_id")
     val id: String,
     val image: String,
     val name: String,
-    val animation_id: String,
+    val series_id: String,
     @SerializedName("episodes")
     val episodeList: List<Episode>
 ) {

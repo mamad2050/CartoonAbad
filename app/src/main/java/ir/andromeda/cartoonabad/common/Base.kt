@@ -44,6 +44,7 @@ interface CartoonAbadView {
 
     val rootView: CoordinatorLayout?
     val viewContext: Context?
+
     fun setProgressIndicator(mustShow: Boolean) {
 
         rootView?.let {

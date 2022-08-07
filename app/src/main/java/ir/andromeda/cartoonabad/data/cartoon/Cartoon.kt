@@ -6,10 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Cartoon(
-    val id: Int,
+    @SerializedName("_id")
+    val id: String,
     val description: String,
     val duration: String,
-    val genre_id: Int,
+    val genre_id: String,
     val image: String,
     val name: String,
     val rate: Double,

@@ -1,8 +1,11 @@
 package ir.andromeda.cartoonabad.data.genre
 
+import com.google.gson.annotations.SerializedName
+
 
 data class Genre(
-    val id:Int,
+    @SerializedName("_id")
+    val id: String,
     val title:String,
     val image:String
 )

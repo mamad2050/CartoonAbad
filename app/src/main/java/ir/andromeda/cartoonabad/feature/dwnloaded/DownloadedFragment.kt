@@ -78,17 +78,17 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
     }
 
     override fun onEpisodeClick(downloaded: Downloaded) {
-        val episode = Episode(
-            downloaded.duration,
-            downloaded.id,
-            downloaded.image,
-            downloaded.name,
-            downloaded.season_id,
-            downloaded.path
-        )
-        startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
-            putExtra(EXTRA_KEY_ID, episode)
-        })
+//        val episode = Episode(
+//            downloaded.duration,
+//            downloaded.id,
+//            downloaded.image,
+//            downloaded.name,
+//            downloaded.season_id,
+//            downloaded.path
+//        )
+//        startActivity(Intent(requireContext(), PlayerActivity::class.java).apply {
+//            putExtra(EXTRA_KEY_ID, episode)
+//        })
     }
 
     override fun onResume() {

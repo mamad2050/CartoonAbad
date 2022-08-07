@@ -10,8 +10,9 @@ import kotlinx.parcelize.IgnoredOnParcel
 @Parcelize
 data class Episode(
     val duration: String,
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey (autoGenerate = true)
     val id: Int,
+    val _id: String,
     val image: String,
     val name: String,
     val season_id: String,
