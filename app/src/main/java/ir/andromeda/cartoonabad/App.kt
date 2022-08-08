@@ -40,6 +40,7 @@ import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
 import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
+import ir.andromeda.cartoonabad.feature.genre.GenreViewModel
 import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
@@ -117,9 +118,9 @@ class App : Application() {
                 )
             }
 
-            factory<SeriesRepository>{ SeriesRepositoryImpl(SeriesRemoteDataSource(get())) }
+            factory<SeriesRepository> { SeriesRepositoryImpl(SeriesRemoteDataSource(get())) }
 
-            factory<CartoonRepository> {CartoonsRepositoryImpl(CartoonRemoteDataSource(get()))  }
+            factory<CartoonRepository> { CartoonsRepositoryImpl(CartoonRemoteDataSource(get())) }
 
             factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
 
@@ -149,12 +150,21 @@ class App : Application() {
             }
 
 
-            viewModel { HomeViewModel(get(),get(),get())}
+            viewModel { HomeViewModel(get(), get(), get()) }
             viewModel { FavoriteViewModel(get()) }
+            viewModel { GenreViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
             viewModel { PurchaseViewModel(get()) }
-            viewModel { (bundle: Bundle) -> DetailSeriesViewModel(bundle, get(), get(), get(),get()) }
+            viewModel { (bundle: Bundle) ->
+                DetailSeriesViewModel(
+                    bundle,
+                    get(),
+                    get(),
+                    get(),
+                    get()
+                )
+            }
             viewModel { (bundle: Bundle) -> DetailCartoonViewModel(bundle, get(), get()) }
         }
 

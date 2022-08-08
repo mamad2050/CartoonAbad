@@ -8,16 +8,16 @@
         android:title="@string/home" />
 
     <item
+        android:id="@+id/genre"
+        android:enabled="true"
+        android:icon="@drawable/ic_genre"
+        android:title="@string/genres" />
+
+    <item
         android:id="@+id/download"
         android:enabled="true"
         android:icon="@drawable/ic_file_download_white_24dp"
         android:title="@string/downloaded" />
-
-    <item
-        android:id="@+id/favorite"
-        android:enabled="true"
-        android:icon="@drawable/ic_favorite_white_24dp"
-        android:title="@string/favorite" />
 
     <item
         android:id="@+id/purchase"

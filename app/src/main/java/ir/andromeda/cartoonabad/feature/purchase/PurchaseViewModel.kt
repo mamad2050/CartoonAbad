@@ -12,7 +12,6 @@ class PurchaseViewModel(private val subscriptionRepository: SubscriptionReposito
 
     val subscriptionsLiveData = MutableLiveData<List<Subscription>>()
 
-
     init {
         showSubscriptionPrices()
     }

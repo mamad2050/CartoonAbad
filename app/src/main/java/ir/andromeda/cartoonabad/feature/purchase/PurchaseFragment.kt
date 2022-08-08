@@ -148,7 +148,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
     private fun snackBar(message: String) {
         Snackbar.make(
-            activity?.findViewById(R.id.contentRootView) as View, message, Snackbar.LENGTH_SHORT
+            binding.root, message, Snackbar.LENGTH_SHORT
         ).show()
     }
 
