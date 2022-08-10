@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="2dp"
+    android:layout_width="100dp"
+    android:layout_height="150dp"
+    android:layout_marginHorizontal="4dp"
     android:orientation="vertical">
 
     <ir.andromeda.cartoonabad.view.CartoonAbadImageView
         android:id="@+id/iv_image"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        app:roundedCornerRadius="8dp" />
+        android:foreground="@drawable/foreground_series_and_cartoon_image"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:roundedCornerRadius="4dp" />
+
+
+    <FrameLayout
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:alpha="0.8"
+        android:background="@drawable/shape_rate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/tv_rate"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="8.6" />
+
 
     <TextView
         android:id="@+id/tv_name"
@@ -19,12 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginVertical="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:minLines="2"
-        android:textAppearance="?textAppearanceBody1"
+        android:minLines="1"
+        android:gravity="center"
+        android:textAppearance="?textAppearanceBody2"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="اتک به تایتان" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
