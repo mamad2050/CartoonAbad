@@ -9,9 +9,4 @@ data class Season(
     val image: String,
     val name: String,
     val series_id: String,
-    @SerializedName("episodes")
-    val episodeList: List<Episode>
-) {
-    //for expand
-    var visibility: Boolean = false
-}
+)

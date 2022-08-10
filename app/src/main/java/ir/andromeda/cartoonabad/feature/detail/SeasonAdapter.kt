@@ -43,25 +43,25 @@ class SeasonAdapter(
         private val ivArrow = itemView.findViewById<ImageView>(R.id.iv_season_arrow)
 
         fun bindSeason(season: Season) {
-            tvName.text = season.name
-            tvEpisodeSize.text = season.episodeList.size.toString()
-
-            rvEpisodes.visibility = if (season.visibility) View.VISIBLE else View.GONE
-            ivArrow.setImageResource(
-                if (season.visibility) R.drawable.ic_baseline_arrow_drop_up_24
-                else R.drawable.ic_baseline_arrow_drop_down_24
-            )
-
-            itemView.setOnClickListener {
-                season.visibility = !season.visibility
-                notifyItemChanged(absoluteAdapterPosition)
-            }
-
-            rvEpisodes.layoutManager =
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            episodeAdapter =
-                EpisodeAdapter(season.episodeList, imageLoadingService, episodeListener)
-            rvEpisodes.adapter = episodeAdapter
+//            tvName.text = season.name
+//            tvEpisodeSize.text = season.episodeList.size.toString()
+//
+//            rvEpisodes.visibility = if (season.visibility) View.VISIBLE else View.GONE
+//            ivArrow.setImageResource(
+//                if (season.visibility) R.drawable.ic_baseline_arrow_drop_up_24
+//                else R.drawable.ic_baseline_arrow_drop_down_24
+//            )
+//
+//            itemView.setOnClickListener {
+//                season.visibility = !season.visibility
+//                notifyItemChanged(absoluteAdapterPosition)
+//            }
+//
+//            rvEpisodes.layoutManager =
+//                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+//            episodeAdapter =
+//                EpisodeAdapter(season.episodeList, imageLoadingService, episodeListener)
+//            rvEpisodes.adapter = episodeAdapter
 
         }
 

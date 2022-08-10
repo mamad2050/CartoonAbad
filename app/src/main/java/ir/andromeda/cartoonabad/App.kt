@@ -113,8 +113,7 @@ class App : Application() {
 
             factory<SeasonRepository> {
                 SeasonRepositoryImpl(
-                    SeasonRemoteDataSource(get()),
-                    get<AppDataBase>().episodeDao()
+                    SeasonRemoteDataSource(get())
                 )
             }
 

@@ -20,6 +20,7 @@ class DetailCartoonViewModel(
         progressBarLiveData.value = true
 
         val cartoonId = bundle.getString(EXTRA_KEY_ID) ?: ""
+
         cartoonRepository.getCartoonDetail(cartoonId)
             .asyncNetworkRequest()
             .doFinally { progressBarLiveData.postValue(false) }

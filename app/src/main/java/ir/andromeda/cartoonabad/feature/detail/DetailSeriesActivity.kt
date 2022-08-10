@@ -24,7 +24,6 @@ import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ActivityDetailSeriesBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
-import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
 import ir.tapsell.plus.TapsellPlus
@@ -67,7 +66,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             binding.tvName.text = it.name
             binding.tvRate.text = "امتیاز ${it.rate} / 10"
             binding.tvDescription.text = it.description
-            imageLoadingService.load(binding.ivImage as CartoonAbadImageView, it.image)
+            imageLoadingService.load(binding.ivImage, it.image)
         }
 
         viewModel.progressBarLiveData.observe(this) {
@@ -75,25 +74,14 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         }
 
         viewModel.seasonsLiveData.observe(this) {
-            it.forEach { seasons ->
-                seasons.episodeList.forEach { episode ->
-                    val filePath =
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                            .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
-                    if (File(filePath).exists()) {
-                        episode.isDownloaded = true
-                    }
-                }
-            }
-
             binding.tvSeasonSize.text = "${it.size} فصل"
-
-            //setup adapter
-            binding.rvSeasons.layoutManager =
-                LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             seasonAdapter = SeasonAdapter(it, imageLoadingService, this, this)
-            binding.rvSeasons.adapter = seasonAdapter
         }
+
+        //setup adapter
+        binding.rvSeasons.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.rvSeasons.adapter = seasonAdapter
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->

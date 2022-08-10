@@ -42,11 +42,12 @@ class DetailCartoonActivity : CartoonAbadActivity() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var adResponseId: String? = null
 
+    private lateinit var cartoon: Cartoon
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailCartoonBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
@@ -61,32 +62,19 @@ class DetailCartoonActivity : CartoonAbadActivity() {
             binding.tvRate.text = "امتیاز ${cartoon.rate} / 10"
             binding.tvDescription.text = cartoon.description
             imageLoadingService.load(binding.ivImage, cartoon.image)
-
-            binding.btnPlayCartoon.setOnClickListener {
-                if (PurchaseContainer.purchaseInfo == null) {
-                    requestVideoAd(cartoon)
-                } else {
-                    startActivity(Intent(this, PlayerActivity::class.java).apply {
-                        putExtra(EXTRA_KEY_NAME, cartoon.name)
-                        putExtra(EXTRA_KEY_URL, cartoon.url)
-                    })
-                }
-            }
+            this.cartoon = cartoon
         }
 
-
-//        viewModel.seasonsLiveData.observe(this) {
-//            it.forEach { seasons ->
-//                seasons.episodeList.forEach { episode ->
-//                    val filePath =
-//                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-//                            .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
-//                    if (File(filePath).exists()) {
-//                        episode.isDownloaded = true
-//                    }
-//                }
-//            }
-//        }
+        binding.btnPlayCartoon.setOnClickListener {
+            if (PurchaseContainer.purchaseInfo == null) {
+                requestVideoAd(cartoon)
+            } else {
+                startActivity(Intent(this, PlayerActivity::class.java).apply {
+                    putExtra(EXTRA_KEY_NAME, cartoon.name)
+                    putExtra(EXTRA_KEY_URL, cartoon.url)
+                })
+            }
+        }
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
@@ -114,7 +102,7 @@ class DetailCartoonActivity : CartoonAbadActivity() {
     }
 
     private fun snackBar(message: String) {
-        Snackbar.make(binding.rootLayout, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun requestVideoAd(cartoon: Cartoon) {
@@ -304,7 +292,6 @@ class DetailCartoonActivity : CartoonAbadActivity() {
                 connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
                     showConnectionLost(false)
                     //we must refresh activity
-                    //viewModel.showSeasons()
                 }
             }
         }
