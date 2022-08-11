@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.CartoonAbad" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/dark_purple</item>
+        <item name="colorPrimary">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSurface">@color/navy_blue</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:colorBackground">@color/dark_purple</item>
+        <item name="android:colorBackground">@color/black</item>
         <item name="divider">@color/silver</item>
 
         <!--        <item name="colorSecondary">@color/teal_200</item>-->
@@ -41,7 +41,7 @@
         <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
 
-        <item name="android:navigationBarColor">@color/dark_purple</item>
+        <item name="android:navigationBarColor">@color/black</item>
 
     </style>
 
