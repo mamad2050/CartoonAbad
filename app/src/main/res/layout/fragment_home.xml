@@ -31,14 +31,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-
-                android:text="سلام آرش !"
+                android:text="سلام Matin !"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/circleImageView"
                 app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
             <TextView
+                android:id="@+id/textView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5 روز از اشتراکت باقی مونده !"
@@ -57,17 +57,46 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_marginTop="16dp"
+                android:id="@+id/bannerSliderViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/textView13"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/sliderIndicator"
+                android:layout_marginBottom="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                app:dotsColor="#E0DCDC"
+                app:layout_constraintTop_toBottomOf="@id/bannerSliderViewPager"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="5dp"
+                app:dotsSpacing="3dp"
+                app:dotsWidthFactor="4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:progressMode="false"
+                app:selectedDotColor="#8C75DA" />
+
+
             <TextView
+                app:layout_constraintTop_toBottomOf="@id/sliderIndicator"
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
                 android:text="@string/genres"
                 android:textAppearance="?textAppearanceHeadline6"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                tools:layout_editor_absoluteY="80dp" />
 
 
             <androidx.recyclerview.widget.RecyclerView

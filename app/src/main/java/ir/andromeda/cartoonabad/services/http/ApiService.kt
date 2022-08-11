@@ -2,6 +2,7 @@ package ir.andromeda.cartoonabad.services.http
 
 import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.AppData
+import ir.andromeda.cartoonabad.data.banner.Banner
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.message.MessageResponse
@@ -34,6 +35,9 @@ interface ApiService {
 
     @GET("series/list")
     fun getSeriesByGenre(@Query("genre_id") genre_id: String) :Single<List<Series>>
+
+    @GET("banners/")
+    fun getBanners() :Single<List<Banner>>
 
     @FormUrlEncoded
     @POST("sendMessage.php")

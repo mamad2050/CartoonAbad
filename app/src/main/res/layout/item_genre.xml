@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="100dp"
+    android:layout_width="72dp"
+    app:cardCornerRadius="72dp"
     app:cardBackgroundColor="@color/dark_purple"
-    android:layout_height="100dp"
+    android:layout_height="72dp"
     android:layout_marginHorizontal="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,13 +17,13 @@
 
         <ir.andromeda.cartoonabad.view.CartoonAbadImageView
             android:id="@+id/iv_genre"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:foreground="@drawable/foreground_genre_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:roundedCornerRadius="4dp" />
+            app:roundedCornerRadius="72dp" />
 
         <TextView
             android:layout_marginBottom="4dp"
