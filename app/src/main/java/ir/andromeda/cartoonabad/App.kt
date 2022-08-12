@@ -154,7 +154,7 @@ class App : Application() {
             }
 
 
-            viewModel { HomeViewModel(get(),get(),get(),get())}
+            viewModel { HomeViewModel(get(), get(), get(), get()) }
             viewModel { FavoriteViewModel(get()) }
             viewModel { GenreViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
