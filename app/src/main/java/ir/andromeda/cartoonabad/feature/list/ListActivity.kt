@@ -1,10 +1,10 @@
 package ir.andromeda.cartoonabad.feature.list
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.CartoonAbadActivity
 
-class ListActivity : AppCompatActivity() {
+class ListActivity : CartoonAbadActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)

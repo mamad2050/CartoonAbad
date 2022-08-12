@@ -1,4 +1,6 @@
 package ir.andromeda.cartoonabad.feature.list
 
-class ListViewModel {
+import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
+
+class ListViewModel : CartoonAbadViewModel() {
 }
