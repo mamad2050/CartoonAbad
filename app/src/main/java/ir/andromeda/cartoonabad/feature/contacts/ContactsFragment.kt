@@ -119,6 +119,7 @@ class ContactsFragment : CartoonAbadFragment() {
                     ?: getString(cartoonAbadEvent.resMessage)
             )
 
+            else -> {}
         }
 
     }

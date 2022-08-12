@@ -294,6 +294,7 @@ class DetailCartoonActivity : CartoonAbadActivity() {
                     //we must refresh activity
                 }
             }
+            else -> {}
         }
     }
 

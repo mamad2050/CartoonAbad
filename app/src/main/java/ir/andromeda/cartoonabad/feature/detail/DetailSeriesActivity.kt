@@ -332,6 +332,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
                     viewModel.showSeasons()
                 }
             }
+            else -> {}
         }
     }
 

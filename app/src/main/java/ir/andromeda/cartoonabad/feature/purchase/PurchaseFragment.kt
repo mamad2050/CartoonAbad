@@ -131,6 +131,7 @@ class PurchaseFragment : CartoonAbadFragment() {
                     viewModel.showSubscriptionPrices()
                 }
             }
+            else -> {}
         }
     }
 

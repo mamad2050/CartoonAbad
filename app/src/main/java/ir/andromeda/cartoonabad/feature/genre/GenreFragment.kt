@@ -57,6 +57,7 @@ class GenreFragment : CartoonAbadFragment() {
                     viewModel.showGenres()
                 }
             }
+            else -> {}
         }
     }
 
