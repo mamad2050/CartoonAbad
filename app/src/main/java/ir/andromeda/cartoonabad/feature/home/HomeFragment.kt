@@ -2,10 +2,17 @@ package ir.andromeda.cartoonabad.feature.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -14,7 +21,6 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
-import ir.andromeda.cartoonabad.common.convertDpToPixel
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -49,6 +55,8 @@ class HomeFragment : CartoonAbadFragment(),
     private val viewModel: HomeViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
     private var adResponseId: String? = null
+    private lateinit var handler: Handler
+    var currentIndex = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,16 +79,30 @@ class HomeFragment : CartoonAbadFragment(),
             Timber.i(it.toString())
             val bannerSlideAdapter = BannerSliderAdapter(this, it)
             binding.bannerSliderViewPager.adapter = bannerSlideAdapter
-
-
-            val viewPagerHeight = (((binding.bannerSliderViewPager.measuredWidth - convertDpToPixel
-                (32f, requireContext())) * 173) / 328).toInt()
-
-            val layoutParams = binding.bannerSliderViewPager.layoutParams
-            layoutParams.height = viewPagerHeight
-            binding.bannerSliderViewPager.layoutParams = layoutParams
             binding.sliderIndicator.setViewPager2(binding.bannerSliderViewPager)
 
+            handler = Handler(Looper.getMainLooper()!!)
+
+            setUpTransformer()
+//
+//            binding.bannerSliderViewPager.clipToPadding = false
+//            binding.bannerSliderViewPager.clipChildren = false
+//            binding.bannerSliderViewPager.offscreenPageLimit = 3
+//            binding.bannerSliderViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
+//
+//
+
+            binding.bannerSliderViewPager.registerOnPageChangeCallback(object :
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+
+                    handler.postDelayed(runnable, 5000)
+                    handler.removeCallbacks(runnable)
+
+                }
+
+            })
         }
 
         viewModel.genresLiveData.observe(viewLifecycleOwner) {
@@ -120,6 +142,17 @@ class HomeFragment : CartoonAbadFragment(),
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
         }
 
+    }
+
+    private val runnable = Runnable {
+        binding.bannerSliderViewPager.currentItem = binding.bannerSliderViewPager.currentItem + 1
+    }
+
+    private fun setUpTransformer() {
+
+        val transformer = CompositePageTransformer()
+        transformer.addTransformer(MarginPageTransformer(40))
+        binding.bannerSliderViewPager.setPageTransformer(transformer)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -220,6 +253,7 @@ class HomeFragment : CartoonAbadFragment(),
     override fun onResume() {
         super.onResume()
 
+
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
                 putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
@@ -242,4 +276,33 @@ class HomeFragment : CartoonAbadFragment(),
 //        requestBannerAd()
     }
 
+
+//    private fun setAnimationForSlider() {
+//        val paddingPx = 180
+//        val MIN_SCALE = 0.8f
+//        val MAX_SCALE = 1f
+//        binding.bannerSliderViewPager.setClipToPadding(false)
+//        binding.bannerSliderViewPager.setPadding(paddingPx, 0, paddingPx, 0)
+//        val transformer = ViewPager2.PageTransformer { page: View, position: Float ->
+//            val pagerWidthPx = (page.parent as ViewPager).width.toFloat()
+//            val pageWidthPx = pagerWidthPx - 2 * paddingPx
+//            val maxVisiblePages = pagerWidthPx / pageWidthPx
+//            val center = maxVisiblePages / 2f
+//            val scale: Float
+//            if (position + 0.5f < center - 0.5f || position > center) {
+//                scale = MIN_SCALE
+//            } else {
+//                val coef: Float
+//                coef = if (position + 0.5f < center) {
+//                    (position + 1 - center) / 0.5f
+//                } else {
+//                    (center - position) / 0.5f
+//                }
+//                scale = coef * (MAX_SCALE - MIN_SCALE) + MIN_SCALE
+//            }
+//            page.scaleX = scale
+//            page.scaleY = scale
+//        }
+//        binding.bannerSliderViewPager.setPageTransformer( transformer)
+//    }
 }
