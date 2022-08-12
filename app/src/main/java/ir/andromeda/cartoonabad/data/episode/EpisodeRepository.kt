@@ -10,4 +10,7 @@ interface EpisodeRepository {
     fun addToFavorite(episode: Episode): Completable
 
     fun deleteFromFavorite(episode: Episode): Completable
+
+    fun getAllEpisodes(seriesId: String): Single<List<Episode>>
+
 }

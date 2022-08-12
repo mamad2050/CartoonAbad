@@ -11,77 +11,73 @@ import ir.andromeda.cartoonabad.common.CartoonAbadExceptionMapper
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.PurchaseException
 import ir.andromeda.cartoonabad.data.episode.Episode
+import ir.andromeda.cartoonabad.databinding.ItemEpisodeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 import org.greenrobot.eventbus.EventBus
 
 class EpisodeAdapter(
-    private val episodes: List<Episode> = ArrayList(),
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener,
+) : RecyclerView.Adapter<EpisodeAdapter.Holder>() {
 
-    ) : RecyclerView.Adapter<EpisodeAdapter.MyViewHolder>() {
+    var episodes = ArrayList<Episode>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_episode, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val binding =
+            ItemEpisodeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return Holder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bindEpisode(episodes[position])
     }
 
     override fun getItemCount(): Int = episodes.size
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val ivImage = itemView.findViewById<CartoonAbadImageView>(R.id.iv_episode_image)
-        private val ivFavorite = itemView.findViewById<ImageView>(R.id.iv_episode_favorite)
-        private val ivDownload = itemView.findViewById<ImageView>(R.id.iv_episode_download)
-        private val tvName = itemView.findViewById<TextView>(R.id.tv_episode_name)
-        private val tvDuration = itemView.findViewById<TextView>(R.id.tv_episode_duration)
+    inner class Holder(private val binding: ItemEpisodeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bindEpisode(episode: Episode) {
 
-            imageLoadingService.load(ivImage as CartoonAbadImageView, episode.image)
-            tvName.text = episode.name
-            tvDuration.text = episode.duration
+            imageLoadingService.load(binding.ivImage, episode.image)
+            binding.tvName.text = episode.name
+            binding.tvDuration.text = episode.duration
 
-            if (episode.isFavorite)
-                ivFavorite.setImageResource(R.drawable.ic_baseline_star_24)
-            else
-                ivFavorite.setImageResource(R.drawable.ic_baseline_star_border_24)
+//            if (episode.isFavorite)
+//                binding.ivFavorite.setImageResource(R.drawable.ic_baseline_star_24)
+//            else
+//                binding.ivFavorite.setImageResource(R.drawable.ic_baseline_star_border_24)
+//
+//
+//            if (episode.isDownloaded)
+//                binding.ivDownload.setImageResource(R.drawable.ic_check)
+//            else
+//                binding.ivDownload.setImageResource(R.drawable.ic_file_download_white_24dp)
 
+//            binding.ivFavorite.setOnClickListener {
+//                listener.onFavoriteClick(episode)
+//                episode.isFavorite = !episode.isFavorite
+//                notifyItemChanged(absoluteAdapterPosition)
+//            }
 
-            if (episode.isDownloaded)
-                ivDownload.setImageResource(R.drawable.ic_check)
-            else
-                ivDownload.setImageResource(R.drawable.ic_file_download_white_24dp)
-
-            ivFavorite.setOnClickListener {
-                listener.onFavoriteClick(episode)
-                episode.isFavorite = !episode.isFavorite
-                notifyItemChanged(absoluteAdapterPosition)
-            }
             itemView.setOnClickListener {
                 listener.onEpisodeClick(episode)
             }
-            ivDownload.setOnClickListener {
-                if (PurchaseContainer.purchaseInfo == null && absoluteAdapterPosition <= 4) {
-                    EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
-                } else {
-                    listener.onDownloadClick(episode)
-                }
-            }
+
+//            binding.ivDownload.setOnClickListener {
+//                if (PurchaseContainer.purchaseInfo == null) {
+//                    EventBus.getDefault().post(CartoonAbadExceptionMapper.map(PurchaseException()))
+//                } else {
+//                    listener.onDownloadClick(episode)
+//                }
+//            }
         }
     }
-
-    fun updateEpisode(episode: Episode) {
-        episode.isDownloaded = true
-        notifyDataSetChanged()
-    }
-
 
 }
 

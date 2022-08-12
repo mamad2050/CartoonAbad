@@ -9,8 +9,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Downloaded(
     val duration: String,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey()
+    val id: String,
     val image: String,
     val name: String,
     val season_id: String,

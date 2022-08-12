@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:layout_marginVertical="4dp"
     app:cardBackgroundColor="?android:colorBackground"
     app:cardCornerRadius="@dimen/radius"
@@ -11,15 +11,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ir.andromeda.cartoonabad.view.CartoonAbadImageView
-            android:id="@+id/iv_episode_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
+            android:id="@+id/ivImage"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
             app:actualImageScaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,82 +24,74 @@
             app:roundedCornerRadius="@dimen/radius" />
 
         <TextView
-            android:id="@+id/tv_episode_name"
+            android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:textAppearance="?textAppearanceBody1"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
-            app:layout_constraintEnd_toStartOf="@+id/tv_episode_duration"
-            app:layout_constraintStart_toEndOf="@+id/iv_episode_image"
-            app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
+            app:layout_constraintStart_toEndOf="@+id/ivImage"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="قسمت اول" />
 
         <ImageView
-            android:id="@+id/iv_episode_download"
+            android:id="@+id/ivDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/shape_circle"
-            android:padding="2dp"
+            android:layout_marginEnd="16dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_file_download_white_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
-            app:layout_constraintVertical_bias="0.47" />
+            app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
+            app:layout_constraintTop_toTopOf="@+id/ivFavorite" />
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/spinKit_download"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/shape_circle"
             android:padding="4dp"
             android:visibility="gone"
             app:SpinKit_Style="Circle"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
-            app:layout_constraintVertical_bias="0.47" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivDownload"
+            app:layout_constraintEnd_toEndOf="@+id/ivDownload"
+            app:layout_constraintStart_toStartOf="@+id/ivDownload"
+            app:layout_constraintTop_toTopOf="@+id/ivDownload" />
 
         <ImageView
-            android:id="@+id/iv_episode_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/shape_circle"
-            android:padding="4dp"
-            android:src="@drawable/ic_baseline_star_border_24"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_download"
-            app:layout_constraintEnd_toStartOf="@+id/iv_episode_download"
-            app:layout_constraintTop_toTopOf="@+id/iv_episode_download"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/tv_episode_duration"
+            android:id="@+id/ivFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_baseline_star_border_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:textAppearance="?textAppearanceBody2"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
-            app:layout_constraintEnd_toStartOf="@+id/iv_episode_favorite"
-            app:layout_constraintTop_toTopOf="@+id/iv_episode_image"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
             tools:text="20:42" />
 
         <ImageView
-            android:id="@+id/iv_episode_play"
+            android:id="@+id/ivPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.6"
             android:background="@drawable/shape_circle"
+            android:padding="2dp"
             android:src="@drawable/ic_play_arrow_white_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_episode_image"
-            app:layout_constraintEnd_toEndOf="@+id/iv_episode_image"
-            app:layout_constraintStart_toStartOf="@+id/iv_episode_image"
-            app:layout_constraintTop_toTopOf="@+id/iv_episode_image" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivImage"
+            app:layout_constraintEnd_toEndOf="@+id/ivImage"
+            app:layout_constraintStart_toStartOf="@+id/ivImage"
+            app:layout_constraintTop_toTopOf="@+id/ivImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

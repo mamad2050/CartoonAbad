@@ -3,22 +3,20 @@ package ir.andromeda.cartoonabad.data.episode
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
-import kotlinx.parcelize.IgnoredOnParcel
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "episodes")
 @Parcelize
 data class Episode(
-    val duration: String,
-    @PrimaryKey (autoGenerate = true)
-    val id: Int,
-    val _id: String,
-    val image: String,
-    val name: String,
-    val season_id: String,
-    val url: String
+    @PrimaryKey
+    @SerializedName("_id") val id: String,
+    @SerializedName("image") val image: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("season_id") val seasonId: String,
+    @SerializedName("url") val url: String,
+    @SerializedName("duration") val duration: String,
 ) : Parcelable {
-
     var isFavorite = false
     var isDownloaded = false
 }

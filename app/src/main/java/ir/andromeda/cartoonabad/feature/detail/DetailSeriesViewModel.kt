@@ -22,17 +22,20 @@ class DetailSeriesViewModel(
 ) :
     CartoonAbadViewModel() {
 
-    val seasonsLiveData = MutableLiveData<List<Season>>()
     val seriesLiveData = MutableLiveData<Series>()
+    val seasonsLiveData = MutableLiveData<List<Season>>()
+    val episodesLiveData = MutableLiveData<List<Episode>>()
+
+    private var seriesId = ""
+
 
     init {
+        seriesId = bundle.getString(EXTRA_KEY_ID) ?: ""
         showSeasons()
     }
 
     fun showSeasons() {
         progressBarLiveData.value = true
-
-        val seriesId = bundle.getString(EXTRA_KEY_ID) ?: ""
 
         seriesRepository.getSeriesDetail(seriesId)
             .asyncNetworkRequest()
@@ -48,6 +51,16 @@ class DetailSeriesViewModel(
             .subscribe(object : CartoonAbadSingleObserver<List<Season>>(compositeDisposable) {
                 override fun onSuccess(t: List<Season>) {
                     seasonsLiveData.value = t
+                }
+            })
+    }
+
+    fun showEpisodes() {
+        episodeRepository.getAllEpisodes(seriesId)
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<List<Episode>>(compositeDisposable) {
+                override fun onSuccess(t: List<Episode>) {
+                    episodesLiveData.value = t
                 }
             })
     }

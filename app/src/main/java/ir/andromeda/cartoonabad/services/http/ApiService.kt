@@ -4,6 +4,7 @@ import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.banner.Banner
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.message.MessageResponse
 import ir.andromeda.cartoonabad.data.season.Season
@@ -25,19 +26,22 @@ interface ApiService {
     fun getCartoons(@Query("sort") sort: String): Single<List<Cartoon>>
 
     @GET("series/{id}/seasons")
-    fun getSeasons(@Path("id") series_id: String): Single<List<Season>>
+    fun getSeasons(@Path("id") seriesId: String): Single<List<Season>>
+
+    @GET("series/{id}/episodes")
+    fun getEpisodes(@Path("id") seriesId: String): Single<List<Episode>>
 
     @GET("cartoons/{id}")
-    fun getCartoonDetail(@Path("id") cartoon_id: String): Single<Cartoon>
+    fun getCartoonDetail(@Path("id") cartoonId: String): Single<Cartoon>
 
     @GET("series/{id}")
-    fun getSeriesDetail(@Path("id") series_id: String): Single<Series>
+    fun getSeriesDetail(@Path("id") seriesId: String): Single<Series>
 
     @GET("series/list")
-    fun getSeriesByGenre(@Query("genre_id") genre_id: String): Single<List<Series>>
+    fun getSeriesByGenre(@Query("genre_id") genreId: String): Single<List<Series>>
 
     @GET("banners/")
-    fun getBanners() :Single<List<Banner>>
+    fun getBanners(): Single<List<Banner>>
 
     @FormUrlEncoded
     @POST("sendMessage.php")
