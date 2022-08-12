@@ -8,8 +8,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +46,6 @@ import java.io.File
 class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
     private lateinit var binding: ActivityDetailSeriesBinding
-    private var seasonAdapter: SeasonAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: DetailSeriesViewModel by viewModel { parametersOf(intent.extras) }
 
@@ -75,13 +77,14 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
         viewModel.seasonsLiveData.observe(this) {
             binding.tvSeasonSize.text = "${it.size} فصل"
-            seasonAdapter = SeasonAdapter(it, imageLoadingService, this, this)
+            val adapter = ArrayAdapter(this, R.layout.item_topic, it)
+            binding.autoTvSeason.setAdapter(adapter)
         }
 
-        //setup adapter
-        binding.rvSeasons.layoutManager =
-            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        binding.rvSeasons.adapter = seasonAdapter
+        binding.autoTvSeason.setOnItemClickListener { parent, _, position, _ ->
+           val selectedSeason = parent.getItemAtPosition(position).toString()
+            //TODO show episodes according to season
+        }
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
@@ -245,7 +248,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             DownloadManager.STATUS_SUCCESSFUL -> {
                 isDownload = false
                 runOnUiThread {
-                    seasonAdapter?.updateEpisode(episode)
+//                    seasonAdapter?.updateEpisode(episode)
                 }
             }
 

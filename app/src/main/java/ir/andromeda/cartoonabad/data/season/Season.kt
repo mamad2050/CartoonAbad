@@ -9,4 +9,8 @@ data class Season(
     val image: String,
     val name: String,
     val series_id: String,
-)
+) {
+    override fun toString(): String {
+        return name
+    }
+}

@@ -47,26 +47,36 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
                     android:lineSpacingExtra="5dp"
-                    tools:text="شرک غولی است که در یک جنگل سرسبز در آرامش و سکوت زندگی می‌کند، تا اینکه مأموران پادشاه به منطقه‌ای نزدیک او می‌آیند و از مردم چیزهای عجیبشان را می‌خواهند، پیرزنی الاغش را می‌دهد و ادعا می‌کند که الاغش قادر به حرف زدن است.
-
-ناگهان الاغ از آنجا فرار می‌کند و به خانه شرک می‌رسد و سربازان هم از آنجا فرار می‌کنند. پادشاه هم تمام حیوانات عجیب را به خانه او می‌فرستد و تا هنگامی که شرک شاهزاده‌خانم را برای او از قصر اژدها آزاد نکند حکم خانه‌اش را نمی‌دهد."
                     android:textAppearance="?textAppearanceBody1"
                     app:layout_constraintStart_toStartOf="@+id/tvDescriptionTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDescriptionTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvDescriptionTitle"
+                    tools:text="شرک غولی است که در یک جنگل سرسبز در آرامش و سکوت زندگی می‌کند، تا اینکه مأموران پادشاه به منطقه‌ای نزدیک او می‌آیند و از مردم چیزهای عجیبشان را می‌خواهند، پیرزنی الاغش را می‌دهد و ادعا می‌کند که الاغش قادر به حرف زدن است.
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvSeasons"
+ناگهان الاغ از آنجا فرار می‌کند و به خانه شرک می‌رسد و سربازان هم از آنجا فرار می‌کنند. پادشاه هم تمام حیوانات عجیب را به خانه او می‌فرستد و تا هنگامی که شرک شاهزاده‌خانم را برای او از قصر اژدها آزاد نکند حکم خانه‌اش را نمی‌دهد." />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etlAutoCompleteSeason"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
+                    android:theme="@style/MyTextInputLayout"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                    tools:listitem="@layout/item_season" />
+                    app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoTvSeason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="@string/select_season"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
