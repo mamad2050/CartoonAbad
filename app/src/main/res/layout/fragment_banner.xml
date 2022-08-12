@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     android:foreground="@drawable/foreground_series_and_cartoon_image"
     android:paddingStart="16dp"
+    android:scaleType="center"
     android:paddingEnd="16dp"
-    app:roundedCornerRadius="12dp">
+    app:roundedCornerRadius="8dp">
 
 
 </ir.andromeda.cartoonabad.view.CartoonAbadImageView>
