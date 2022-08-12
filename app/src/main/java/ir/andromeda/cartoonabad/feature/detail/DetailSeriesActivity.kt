@@ -24,6 +24,7 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.download.Downloaded
 import ir.andromeda.cartoonabad.data.episode.Episode
+import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.databinding.ActivityDetailSeriesBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -55,6 +56,10 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var adResponseId: String? = null
 
+    private val episodeAdapter by lazy { EpisodeAdapter(imageLoadingService, this) }
+
+    private var selectedSeasonId: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailSeriesBinding.inflate(layoutInflater)
@@ -75,6 +80,14 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             setProgressIndicator(it)
         }
 
+        viewModel.episodesLiveData.observe(this) {
+            //TODO hide small progressbar
+
+            episodeAdapter.episodes = it.filter { episode ->
+                episode.seasonId == selectedSeasonId
+            } as ArrayList<Episode>
+        }
+
         viewModel.seasonsLiveData.observe(this) {
             binding.tvSeasonSize.text = "${it.size} فصل"
             val adapter = ArrayAdapter(this, R.layout.item_topic, it)
@@ -82,9 +95,12 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         }
 
         binding.autoTvSeason.setOnItemClickListener { parent, _, position, _ ->
-           val selectedSeason = parent.getItemAtPosition(position).toString()
-            //TODO show episodes according to season
+            selectedSeasonId = (parent.getItemAtPosition(position) as Season).id
+            //TODO show small progressbar
+            viewModel.showEpisodes()
         }
+
+        binding.rvEpisodes.adapter = episodeAdapter
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
@@ -299,7 +315,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             episode.id,
             episode.image,
             episode.name,
-            episode.season_id,
+            episode.seasonId,
             path
         )
         viewModel.addEpisodeToDownloads(downloaded)

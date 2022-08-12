@@ -20,6 +20,7 @@ import ir.andromeda.cartoonabad.data.cartoon.CartoonsRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
 import ir.andromeda.cartoonabad.data.download.DownloadedRepository
 import ir.andromeda.cartoonabad.data.download.DownloadedRepositoryImpl
+import ir.andromeda.cartoonabad.data.episode.EpisodeRemoteDataSource
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
 import ir.andromeda.cartoonabad.data.genre.GenreRemoteDataSource
@@ -124,7 +125,12 @@ class App : Application() {
 
             factory<CartoonRepository> { CartoonsRepositoryImpl(CartoonRemoteDataSource(get())) }
 
-            factory<EpisodeRepository> { EpisodeRepositoryImpl(get<AppDataBase>().episodeDao()) }
+            factory<EpisodeRepository> {
+                EpisodeRepositoryImpl(
+                    get<AppDataBase>().episodeDao(),
+                    EpisodeRemoteDataSource(get())
+                )
+            }
 
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
 

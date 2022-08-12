@@ -3,7 +3,6 @@ package ir.andromeda.cartoonabad.data.episode
 import androidx.room.*
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.DELETE
 
 @Dao
 interface EpisodeLocalDataSource : EpisodeDataSource {
@@ -16,5 +15,10 @@ interface EpisodeLocalDataSource : EpisodeDataSource {
 
     @Delete
     override fun deleteFromFavorites(episode: Episode): Completable
+
+    override fun getAllEpisodes(seriesId: String): Single<List<Episode>> {
+        TODO("Not yet implemented")
+    }
+
 
 }

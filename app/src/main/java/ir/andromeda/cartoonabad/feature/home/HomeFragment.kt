@@ -232,14 +232,14 @@ class HomeFragment : CartoonAbadFragment(),
         startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, series.id)
         })
-        requestBannerAd()
+//        requestBannerAd()
     }
 
     override fun clickOnCartoon(cartoon: Cartoon) {
         startActivity(Intent(requireActivity(), DetailCartoonActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, cartoon.id)
         })
-        requestBannerAd()
+//        requestBannerAd()
     }
 
 }

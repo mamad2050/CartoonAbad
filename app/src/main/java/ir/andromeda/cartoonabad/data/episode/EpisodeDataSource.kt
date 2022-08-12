@@ -10,4 +10,6 @@ interface EpisodeDataSource {
     fun addToFavorites(episode: Episode): Completable
 
     fun deleteFromFavorites(episode: Episode): Completable
+
+    fun getAllEpisodes(seriesId: String): Single<List<Episode>>
 }
