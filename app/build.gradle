@@ -11,6 +11,7 @@ android {
     compileSdk 30
 
     defaultConfig {
+
         applicationId "ir.andromeda.cartoonabad"
         minSdk 21
         targetSdk 30
@@ -111,6 +112,10 @@ dependencies {
 
     //circular imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //indicator
+    implementation 'com.tbuonomo:dotsindicator:4.2'
+
 
 
 }

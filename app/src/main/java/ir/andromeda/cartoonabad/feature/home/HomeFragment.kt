@@ -14,6 +14,7 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
+import ir.andromeda.cartoonabad.common.convertDpToPixel
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -32,6 +33,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class HomeFragment : CartoonAbadFragment(),
     SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener {
@@ -62,6 +64,23 @@ class HomeFragment : CartoonAbadFragment(),
 
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
+        }
+
+
+        viewModel.bannersLiveData.observe(viewLifecycleOwner) {
+            Timber.i(it.toString())
+            val bannerSlideAdapter = BannerSliderAdapter(this, it)
+            binding.bannerSliderViewPager.adapter = bannerSlideAdapter
+
+
+            val viewPagerHeight = (((binding.bannerSliderViewPager.measuredWidth - convertDpToPixel
+                (32f, requireContext())) * 173) / 328).toInt()
+
+            val layoutParams = binding.bannerSliderViewPager.layoutParams
+            layoutParams.height = viewPagerHeight
+            binding.bannerSliderViewPager.layoutParams = layoutParams
+            binding.sliderIndicator.setViewPager2(binding.bannerSliderViewPager)
+
         }
 
         viewModel.genresLiveData.observe(viewLifecycleOwner) {

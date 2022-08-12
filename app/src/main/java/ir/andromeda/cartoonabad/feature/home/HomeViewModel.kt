@@ -2,6 +2,8 @@ package ir.andromeda.cartoonabad.feature.home
 
 import androidx.lifecycle.MutableLiveData
 import ir.andromeda.cartoonabad.common.*
+import ir.andromeda.cartoonabad.data.banner.Banner
+import ir.andromeda.cartoonabad.data.banner.BannerRepository
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRepository
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -12,7 +14,8 @@ import ir.andromeda.cartoonabad.data.series.SeriesRepository
 class HomeViewModel(
     genreRepository: GenreRepository,
     seriesRepository: SeriesRepository,
-    cartoonRepository: CartoonRepository
+    cartoonRepository: CartoonRepository,
+    bannerRepository: BannerRepository
 ) : CartoonAbadViewModel() {
 
     val genresLiveData = MutableLiveData<List<Genre>>()
@@ -20,9 +23,20 @@ class HomeViewModel(
     val latestCartoonsLiveData = MutableLiveData<List<Cartoon>>()
     val popularSeriesLiveData = MutableLiveData<List<Series>>()
     val popularCartoonsLiveData = MutableLiveData<List<Cartoon>>()
+    val bannersLiveData = MutableLiveData<List<Banner>>()
 
     init {
         progressBarLiveData.value = true
+
+
+        bannerRepository.getBanners()
+            .asyncNetworkRequest()
+            .subscribe(object : CartoonAbadSingleObserver<List<Banner>>(compositeDisposable) {
+                override fun onSuccess(t: List<Banner>) {
+                    bannersLiveData.value = t
+                }
+
+            })
 
         genreRepository.getGenres()
             .asyncNetworkRequest()
@@ -43,23 +57,23 @@ class HomeViewModel(
 
         cartoonRepository.getCartoons(SORT_BY_LATEST)
             .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable){
+            .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
                 override fun onSuccess(t: List<Cartoon>) {
-                 latestCartoonsLiveData.value = t
+                    latestCartoonsLiveData.value = t
                 }
             })
 
         seriesRepository.getSeries(SORT_BY_VIEW)
             .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable){
+            .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
                 override fun onSuccess(t: List<Series>) {
-                 popularSeriesLiveData.value = t
+                    popularSeriesLiveData.value = t
                 }
             })
 
         cartoonRepository.getCartoons(SORT_BY_VIEW)
             .asyncNetworkRequest()
-            .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable){
+            .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
                 override fun onSuccess(t: List<Cartoon>) {
                     popularCartoonsLiveData.value = t
                 }

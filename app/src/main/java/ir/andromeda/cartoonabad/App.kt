@@ -11,6 +11,9 @@ import com.downloader.PRDownloaderConfig
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_NAME
+import ir.andromeda.cartoonabad.data.banner.BannerRemoteDataSource
+import ir.andromeda.cartoonabad.data.banner.BannerRepository
+import ir.andromeda.cartoonabad.data.banner.BannerRepositoryImpl
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRemoteDataSource
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRepository
 import ir.andromeda.cartoonabad.data.cartoon.CartoonsRepositoryImpl
@@ -129,6 +132,8 @@ class App : Application() {
 
             factory<GenreRepository> { GenreRepositoryImpl(GenreRemoteDataSource(get())) }
 
+            factory<BannerRepository> { BannerRepositoryImpl(BannerRemoteDataSource(get())) }
+
             factory<SubscriptionRepository> {
                 SubscriptionRepositoryImpl(
                     SubscriptionRemoteDataSource(get())
@@ -149,7 +154,7 @@ class App : Application() {
             }
 
 
-            viewModel { HomeViewModel(get(), get(), get()) }
+            viewModel { HomeViewModel(get(),get(),get(),get())}
             viewModel { FavoriteViewModel(get()) }
             viewModel { GenreViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
