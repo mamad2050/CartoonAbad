@@ -82,7 +82,6 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
         viewModel.episodesLiveData.observe(this) {
             //TODO hide small progressbar
-
             episodeAdapter.episodes = it.filter { episode ->
                 episode.seasonId == selectedSeasonId
             } as ArrayList<Episode>
@@ -101,6 +100,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         }
 
         binding.rvEpisodes.adapter = episodeAdapter
+        binding.rvEpisodes.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
