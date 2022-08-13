@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -56,7 +57,8 @@ class HomeFragment : CartoonAbadFragment(),
     private val compositeDisposable = CompositeDisposable()
     private var adResponseId: String? = null
     private lateinit var handler: Handler
-    var currentIndex = -1
+    private var currentIndex = -1
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,18 +92,23 @@ class HomeFragment : CartoonAbadFragment(),
 //            binding.bannerSliderViewPager.offscreenPageLimit = 3
 //            binding.bannerSliderViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
 //
-//
-
             binding.bannerSliderViewPager.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
+                    currentIndex = position
 
-                    handler.postDelayed(runnable, 5000)
+                    val runnable = Runnable {
+                        if (currentIndex < it.size-1)
+                            binding.bannerSliderViewPager.currentItem =
+                                binding.bannerSliderViewPager.currentItem + 1
+                        else
+                            binding.bannerSliderViewPager.currentItem = 0
+                    }
+
                     handler.removeCallbacks(runnable)
-
+                    handler.postDelayed(runnable, 5000)
                 }
-
             })
         }
 
@@ -142,10 +149,6 @@ class HomeFragment : CartoonAbadFragment(),
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
         }
 
-    }
-
-    private val runnable = Runnable {
-        binding.bannerSliderViewPager.currentItem = binding.bannerSliderViewPager.currentItem + 1
     }
 
     private fun setUpTransformer() {
