@@ -7,10 +7,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -57,7 +55,7 @@ class HomeFragment : CartoonAbadFragment(),
     private val compositeDisposable = CompositeDisposable()
     private var adResponseId: String? = null
     private lateinit var handler: Handler
-    private var currentIndex = -1
+    private var bannersCount: Int? = null
 
 
     override fun onCreateView(
@@ -76,35 +74,26 @@ class HomeFragment : CartoonAbadFragment(),
             setProgressIndicator(it)
         }
 
-
         viewModel.bannersLiveData.observe(viewLifecycleOwner) {
             Timber.i(it.toString())
             val bannerSlideAdapter = BannerSliderAdapter(this, it)
             binding.bannerSliderViewPager.adapter = bannerSlideAdapter
             binding.sliderIndicator.setViewPager2(binding.bannerSliderViewPager)
-
+            bannersCount = it.size
             handler = Handler(Looper.getMainLooper()!!)
 
             setUpTransformer()
-//
-//            binding.bannerSliderViewPager.clipToPadding = false
-//            binding.bannerSliderViewPager.clipChildren = false
-//            binding.bannerSliderViewPager.offscreenPageLimit = 3
-//            binding.bannerSliderViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER;
-//
+
+            binding.bannerSliderViewPager.clipToPadding = false
+            binding.bannerSliderViewPager.clipChildren = false
+            binding.bannerSliderViewPager.offscreenPageLimit = 3
+            binding.bannerSliderViewPager.getChildAt(0).overScrollMode =
+                RecyclerView.OVER_SCROLL_NEVER
+
             binding.bannerSliderViewPager.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    currentIndex = position
-
-                    val runnable = Runnable {
-                        if (currentIndex < it.size-1)
-                            binding.bannerSliderViewPager.currentItem =
-                                binding.bannerSliderViewPager.currentItem + 1
-                        else
-                            binding.bannerSliderViewPager.currentItem = 0
-                    }
 
                     handler.removeCallbacks(runnable)
                     handler.postDelayed(runnable, 5000)
@@ -151,10 +140,18 @@ class HomeFragment : CartoonAbadFragment(),
 
     }
 
+    val runnable = Runnable {
+            if (binding.bannerSliderViewPager.currentItem < bannersCount!! - 1)
+                binding.bannerSliderViewPager.currentItem =
+                    binding.bannerSliderViewPager.currentItem + 1
+            else
+                binding.bannerSliderViewPager.currentItem = 0
+    }
+
     private fun setUpTransformer() {
 
         val transformer = CompositePageTransformer()
-        transformer.addTransformer(MarginPageTransformer(40))
+        transformer.addTransformer(MarginPageTransformer(20))
         binding.bannerSliderViewPager.setPageTransformer(transformer)
     }
 
