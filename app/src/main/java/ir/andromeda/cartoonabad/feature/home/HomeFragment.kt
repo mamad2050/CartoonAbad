@@ -141,11 +141,11 @@ class HomeFragment : CartoonAbadFragment(),
     }
 
     val runnable = Runnable {
-            if (binding.bannerSliderViewPager.currentItem < bannersCount!! - 1)
-                binding.bannerSliderViewPager.currentItem =
-                    binding.bannerSliderViewPager.currentItem + 1
-            else
-                binding.bannerSliderViewPager.currentItem = 0
+        if (binding.bannerSliderViewPager.currentItem < bannersCount!! - 1)
+            binding.bannerSliderViewPager.currentItem =
+                binding.bannerSliderViewPager.currentItem + 1
+        else
+            binding.bannerSliderViewPager.currentItem = 0
     }
 
     private fun setUpTransformer() {
@@ -175,17 +175,6 @@ class HomeFragment : CartoonAbadFragment(),
         ).show()
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        _binding = null
-        EventBus.getDefault().unregister(this)
-        compositeDisposable.dispose()
-    }
 
     private fun requestBannerAd() {
         TapsellPlus.requestInterstitialAd(
@@ -250,18 +239,6 @@ class HomeFragment : CartoonAbadFragment(),
 //            })
 //    }
 
-    override fun onResume() {
-        super.onResume()
-
-
-        FirebaseAnalytics.getInstance(requireContext())
-            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
-                putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
-                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
-            })
-    }
-
-
     override fun clickOnSeries(series: Series) {
         startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, series.id)
@@ -277,32 +254,38 @@ class HomeFragment : CartoonAbadFragment(),
     }
 
 
-//    private fun setAnimationForSlider() {
-//        val paddingPx = 180
-//        val MIN_SCALE = 0.8f
-//        val MAX_SCALE = 1f
-//        binding.bannerSliderViewPager.setClipToPadding(false)
-//        binding.bannerSliderViewPager.setPadding(paddingPx, 0, paddingPx, 0)
-//        val transformer = ViewPager2.PageTransformer { page: View, position: Float ->
-//            val pagerWidthPx = (page.parent as ViewPager).width.toFloat()
-//            val pageWidthPx = pagerWidthPx - 2 * paddingPx
-//            val maxVisiblePages = pagerWidthPx / pageWidthPx
-//            val center = maxVisiblePages / 2f
-//            val scale: Float
-//            if (position + 0.5f < center - 0.5f || position > center) {
-//                scale = MIN_SCALE
-//            } else {
-//                val coef: Float
-//                coef = if (position + 0.5f < center) {
-//                    (position + 1 - center) / 0.5f
-//                } else {
-//                    (center - position) / 0.5f
-//                }
-//                scale = coef * (MAX_SCALE - MIN_SCALE) + MIN_SCALE
-//            }
-//            page.scaleX = scale
-//            page.scaleY = scale
-//        }
-//        binding.bannerSliderViewPager.setPageTransformer( transformer)
-//    }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(runnable)
+        _binding = null
+        EventBus.getDefault().unregister(this)
+        compositeDisposable.dispose()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseAnalytics.getInstance(requireContext())
+            .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.javaClass.simpleName)
+            })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
+    }
+
+
 }

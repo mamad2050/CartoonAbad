@@ -32,8 +32,8 @@ fun Completable.asyncNetworkRequest(): Completable {
 
 @SuppressLint("ClickableViewAccessibility")
 fun View.implementSpringAnimationTrait() {
-    val scaleXAnim = SpringAnimation(this, DynamicAnimation.SCALE_X, 0.90f)
-    val scaleYAnim = SpringAnimation(this, DynamicAnimation.SCALE_Y, 0.90f)
+    val scaleXAnim = SpringAnimation(this, DynamicAnimation.SCALE_X, 0.95f)
+    val scaleYAnim = SpringAnimation(this, DynamicAnimation.SCALE_Y, 0.95f)
 
     setOnTouchListener { v, event ->
         Timber.i(event.action.toString())

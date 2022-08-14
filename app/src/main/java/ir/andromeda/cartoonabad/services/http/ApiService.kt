@@ -20,10 +20,16 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("series/list")
-    fun getSeries(@Query("sort") sort: String): Single<List<Series>>
+    fun getSeries(
+        @Query("sort") sort: String,
+        @Query("page") page: Int = 1
+    ): Single<List<Series>>
 
     @GET("cartoons/list")
-    fun getCartoons(@Query("sort") sort: String): Single<List<Cartoon>>
+    fun getCartoons(
+        @Query("sort") sort: String,
+        @Query("page") page: Int = 1
+    ): Single<List<Cartoon>>
 
     @GET("series/{id}/seasons")
     fun getSeasons(@Path("id") seriesId: String): Single<List<Season>>
@@ -53,9 +59,6 @@ interface ApiService {
 
     @GET("subscriptions")
     fun getSubscriptions(): Single<List<Subscription>>
-
-    @GET("getAppVersion.php")
-    fun getAppVersion(): Single<AppData>
 
     @GET("genres/list")
     fun getGenres(): Single<List<Genre>>

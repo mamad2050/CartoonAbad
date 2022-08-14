@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_DATA
@@ -22,16 +23,21 @@ class BannerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val imageView =
-            inflater.inflate(R.layout.fragment_banner, container, false) as CartoonAbadImageView
+        val view =
+            inflater.inflate(R.layout.fragment_banner, container, false)
+
+        val title: TextView = view.findViewById(R.id.tv_banner)
+        val image: CartoonAbadImageView = view.findViewById(R.id.iv_banner)
 
         val banner =
             requireArguments().getParcelable<Banner>(EXTRA_KEY_DATA) ?: throw IllegalStateException(
                 "Banner can not be null"
             )
 
-        imageLoadingService.load(imageView,banner.image)
-        return imageView
+        title.text = banner.title
+        imageLoadingService.load(image, banner.image)
+
+        return view
     }
 
     companion object {

@@ -46,7 +46,7 @@ class HomeViewModel(
                 }
             })
 
-        seriesRepository.getSeries(SORT_BY_LATEST)
+        seriesRepository.getSeries(SORT_BY_LATEST, 1)
             .asyncNetworkRequest()
             .doFinally { progressBarLiveData.postValue(false) }
             .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
@@ -55,7 +55,7 @@ class HomeViewModel(
                 }
             })
 
-        cartoonRepository.getCartoons(SORT_BY_LATEST)
+        cartoonRepository.getCartoons(SORT_BY_LATEST, 1)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
                 override fun onSuccess(t: List<Cartoon>) {
@@ -63,7 +63,7 @@ class HomeViewModel(
                 }
             })
 
-        seriesRepository.getSeries(SORT_BY_VIEW)
+        seriesRepository.getSeries(SORT_BY_VIEW,1)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
                 override fun onSuccess(t: List<Series>) {
@@ -71,7 +71,7 @@ class HomeViewModel(
                 }
             })
 
-        cartoonRepository.getCartoons(SORT_BY_VIEW)
+        cartoonRepository.getCartoons(SORT_BY_VIEW,1)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
                 override fun onSuccess(t: List<Cartoon>) {

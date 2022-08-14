@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ir.andromeda.cartoonabad.view.CartoonAbadImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:foreground="@drawable/foreground_series_and_cartoon_image"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingStart="16dp"
-    android:scaleType="center"
-    android:paddingEnd="16dp"
-    app:roundedCornerRadius="8dp">
+    android:paddingEnd="16dp">
+
+    <ir.andromeda.cartoonabad.view.CartoonAbadImageView
+        android:id="@+id/iv_banner"
+        android:foreground="@drawable/foreground_series_and_cartoon_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        app:roundedCornerRadius="8dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/tv_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:textAppearance="?textAppearanceHeadline6"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_banner"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="اتک به تایتان" />
 
 
-</ir.andromeda.cartoonabad.view.CartoonAbadImageView>
+</androidx.constraintlayout.widget.ConstraintLayout>
