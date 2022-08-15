@@ -17,9 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadFragment
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
-import ir.andromeda.cartoonabad.common.ZONE_ID_INTERSTITIAL_BANNER_AD
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -27,6 +25,7 @@ import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
+import ir.andromeda.cartoonabad.feature.list.ListActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
@@ -75,7 +74,7 @@ class HomeFragment : CartoonAbadFragment(),
         }
 
         viewModel.bannersLiveData.observe(viewLifecycleOwner) {
-            Timber.i(it.toString())
+
             val bannerSlideAdapter = BannerSliderAdapter(this, it)
             binding.bannerSliderViewPager.adapter = bannerSlideAdapter
             binding.sliderIndicator.setViewPager2(binding.bannerSliderViewPager)
@@ -83,12 +82,6 @@ class HomeFragment : CartoonAbadFragment(),
             handler = Handler(Looper.getMainLooper()!!)
 
             setUpTransformer()
-
-            binding.bannerSliderViewPager.clipToPadding = false
-            binding.bannerSliderViewPager.clipChildren = false
-            binding.bannerSliderViewPager.offscreenPageLimit = 3
-            binding.bannerSliderViewPager.getChildAt(0).overScrollMode =
-                RecyclerView.OVER_SCROLL_NEVER
 
             binding.bannerSliderViewPager.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
@@ -138,6 +131,31 @@ class HomeFragment : CartoonAbadFragment(),
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
         }
 
+        binding.tvAllMostViewedSeries.setOnClickListener {
+            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+                putExtra(MODE, MOST_VIEWED_SERIES)
+            })
+        }
+
+        binding.tvAllMostViewedCartoons.setOnClickListener {
+            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+                putExtra(MODE, MOST_VIEWED_CARTOONS)
+            })
+        }
+
+        binding.tvAllLatestSeries.setOnClickListener {
+            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+                putExtra(MODE, LATEST_SERIES)
+            })
+        }
+
+        binding.tvAllLatestCartoons.setOnClickListener {
+            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+                putExtra(MODE, LATEST_CARTOONS)
+            })
+        }
+
+
     }
 
     val runnable = Runnable {
@@ -149,6 +167,12 @@ class HomeFragment : CartoonAbadFragment(),
     }
 
     private fun setUpTransformer() {
+
+        binding.bannerSliderViewPager.clipToPadding = false
+        binding.bannerSliderViewPager.clipChildren = false
+        binding.bannerSliderViewPager.offscreenPageLimit = 3
+        binding.bannerSliderViewPager.getChildAt(0).overScrollMode =
+            RecyclerView.OVER_SCROLL_NEVER
 
         val transformer = CompositePageTransformer()
         transformer.addTransformer(MarginPageTransformer(20))
@@ -226,17 +250,6 @@ class HomeFragment : CartoonAbadFragment(),
 ////        } else {
 ////            Toast.makeText(requireContext(), "به زودی ...", Toast.LENGTH_SHORT).show()
 ////        }
-//    }
-
-//    private fun showUpdateDialog() {
-//        viewModel.getVersionNumber()
-//            .asyncNetworkRequest()
-//            .subscribe(object : CartoonAbadSingleObserver<AppData>(compositeDisposable) {
-//                override fun onSuccess(t: AppData) {
-//                    if (t.version.toInt() > BuildConfig.VERSION_CODE)
-//                        findNavController().navigate(R.id.navigateToUpdateAlertDialog)
-//                }
-//            })
 //    }
 
     override fun clickOnSeries(series: Series) {

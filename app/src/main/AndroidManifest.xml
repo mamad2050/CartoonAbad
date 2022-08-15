@@ -22,7 +22,7 @@
         android:theme="@style/Theme.CartoonAbad"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ListActivity"
+            android:name=".feature.list.ListActivity"
             android:exported="false" />
         <activity
             android:name=".feature.detail.DetailCartoonActivity"

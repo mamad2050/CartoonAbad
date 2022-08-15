@@ -1,7 +1,9 @@
 package ir.andromeda.cartoonabad.feature.home
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +34,7 @@ class SeriesAdapter(
 
     inner class Holder(val binding: ItemCartoonSeriesBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bindSeries(series: Series) {
 
             imageLoadingService.load(binding.ivImage, series.image)

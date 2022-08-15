@@ -26,8 +26,8 @@ class HomeViewModel(
     val bannersLiveData = MutableLiveData<List<Banner>>()
 
     init {
-        progressBarLiveData.value = true
 
+        progressBarLiveData.value = true
 
         bannerRepository.getBanners()
             .asyncNetworkRequest()

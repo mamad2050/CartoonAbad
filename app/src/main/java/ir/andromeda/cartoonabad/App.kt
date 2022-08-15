@@ -11,6 +11,7 @@ import com.downloader.PRDownloaderConfig
 import com.facebook.drawee.backends.pipeline.Fresco
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_ID
 import ir.andromeda.cartoonabad.common.NOTIFICATION_CHANNEL_NAME
+import ir.andromeda.cartoonabad.common.TAPSELL_TOKEN
 import ir.andromeda.cartoonabad.data.banner.BannerRemoteDataSource
 import ir.andromeda.cartoonabad.data.banner.BannerRepository
 import ir.andromeda.cartoonabad.data.banner.BannerRepositoryImpl
@@ -45,6 +46,7 @@ import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.genre.GenreViewModel
+import ir.andromeda.cartoonabad.feature.list.ListViewModel
 import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
@@ -69,10 +71,9 @@ class App : Application() {
 
         Fresco.initialize(this)
 
-
         TapsellPlus.initialize(
             applicationContext,
-            "dalbmfhclofnmdmmootbopmasiiiptkcqrtdobqcekrsinhgrjahabkccijdifgoorskol",
+            TAPSELL_TOKEN,
             object : TapsellPlusInitListener {
                 override fun onInitializeSuccess(p0: AdNetworks?) {
                     Timber.i(p0?.name)
@@ -159,7 +160,6 @@ class App : Application() {
                 )
             }
 
-
             viewModel { HomeViewModel(get(), get(), get(), get()) }
             viewModel { FavoriteViewModel(get()) }
             viewModel { GenreViewModel(get()) }
@@ -176,6 +176,7 @@ class App : Application() {
                 )
             }
             viewModel { (bundle: Bundle) -> DetailCartoonViewModel(bundle, get(), get()) }
+            viewModel { (bundle: Bundle) -> ListViewModel(bundle, get(), get()) }
         }
 
         startKoin {

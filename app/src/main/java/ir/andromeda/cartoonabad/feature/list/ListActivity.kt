@@ -1,12 +1,76 @@
 package ir.andromeda.cartoonabad.feature.list
 
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadActivity
+import ir.andromeda.cartoonabad.common.*
+import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.series.Series
+import ir.andromeda.cartoonabad.databinding.ActivityListBinding
+import ir.andromeda.cartoonabad.feature.home.CartoonAdapter
+import ir.andromeda.cartoonabad.feature.home.SeriesAdapter
+import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class ListActivity : CartoonAbadActivity() {
+class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListener,
+    CartoonAdapter.OnCartoonItemEventListener {
+
+    private lateinit var binding: ActivityListBinding
+    private val viewModel: ListViewModel by viewModel { parametersOf(intent.extras) }
+    private lateinit var seriesAdapter: SeriesAdapter
+    private lateinit var cartoonAdapter: CartoonAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list)
+        binding = ActivityListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.rvList.layoutManager = GridLayoutManager(this, 4)
+
+        when (intent.getStringExtra(MODE)) {
+            LATEST_SERIES -> {
+                binding.tvTitleToolbar.text = getString(R.string.latest_series)
+                viewModel.seriesLiveData.observe(this) {
+                    seriesAdapter = SeriesAdapter(it, this, get())
+                    binding.rvList.adapter = seriesAdapter
+                }
+            }
+
+            LATEST_CARTOONS -> {
+                binding.tvTitleToolbar.text = getString(R.string.latest_cartoons)
+                viewModel.cartoonLiveData.observe(this) {
+                    cartoonAdapter = CartoonAdapter(it, this, get())
+                    binding.rvList.adapter = cartoonAdapter
+                }
+            }
+
+
+            MOST_VIEWED_SERIES -> {
+                binding.tvTitleToolbar.text = getString(R.string.popular_series)
+                viewModel.seriesLiveData.observe(this) {
+                    seriesAdapter = SeriesAdapter(it, this, get())
+                    binding.rvList.adapter = seriesAdapter
+                }
+            }
+
+
+            MOST_VIEWED_CARTOONS -> {
+                binding.tvTitleToolbar.text = getString(R.string.popular_cartoons)
+                viewModel.cartoonLiveData.observe(this) {
+                    cartoonAdapter = CartoonAdapter(it, this, get())
+                    binding.rvList.adapter = cartoonAdapter
+                }
+            }
+        }
+
+    }
+
+    override fun clickOnSeries(series: Series) {
+
+    }
+
+    override fun clickOnCartoon(cartoon: Cartoon) {
+
     }
 }

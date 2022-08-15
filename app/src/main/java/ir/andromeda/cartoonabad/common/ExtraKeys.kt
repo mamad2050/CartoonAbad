@@ -4,13 +4,20 @@ const val EXTRA_KEY_NAME = "name"
 const val EXTRA_KEY_URL = "url"
 const val EXTRA_KEY_DATA = "data"
 const val EXTRA_KEY_ID = "id"
-const val EXTERNAL_STORAGE_PERMISSION_KEY = 1000
-const val PENDING_INTENT_CODE = 100
 const val NOTIFICATION_CHANNEL_ID = "CHANNEL"
 const val NOTIFICATION_CHANNEL_NAME = "DOWNLOAD_CHANNEL"
-const val ZONE_ID_INTERSTITIAL_VIDEO_AD = "61830e29fc45e6003f1c815c"
 const val ZONE_ID_INTERSTITIAL_BANNER_AD = "61831d8729a2cf0d187cc70f"
 const val ZONE_ID_REWARD_AD = "61840d4d29a2cf0d187cc77c"
+const val TAPSELL_TOKEN = "dalbmfhclofnmdmmootbopmasiiiptkcqrtdobqcekrsinhgrjahabkccijdifgoorskol"
+const val EXTERNAL_STORAGE_PERMISSION_KEY = 1000
+const val PENDING_INTENT_CODE = 100
+const val ZONE_ID_INTERSTITIAL_VIDEO_AD = "61830e29fc45e6003f1c815c"
 
 const val SORT_BY_LATEST = "latest"
 const val SORT_BY_VIEW = "view"
+
+const val MOST_VIEWED_SERIES = "most_viewed_series"
+const val LATEST_SERIES = "latest_series"
+const val MOST_VIEWED_CARTOONS = "most_viewed_cartoons"
+const val LATEST_CARTOONS = "latest_cartoons"
+const val MODE = "mode"
