@@ -22,7 +22,7 @@
     <ConstraintSet android:id="@+id/expanded">
         <Constraint
             android:id="@id/ivImage"
-            android:layout_height="500dp"
+            android:layout_height="350dp"
             android:alpha="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

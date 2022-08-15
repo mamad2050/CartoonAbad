@@ -54,6 +54,7 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/menu/navigation_menu.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Mohammad/.gradle/caches/transforms-3/325d9e268711c653e06cc7b7c7234d41/transformed/appcompat-1.3.1/res/drawable/abc_btn_default_mtrl_shape.xml" value="0.175" />
         <entry key="..\:/Users/Mohammad/.gradle/caches/transforms-3/ca2877d09e4a0ddd57ac1c1e2b0c68c8/transformed/appcompat-1.3.1/res/drawable/abc_ic_ab_back_material.xml" value="0.1" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/foreground_series_and_cartoon_image.xml" value="0.191" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.18703703703703703" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/ic_baseline_arrow_drop_up_24.xml" value="0.189" />
@@ -82,11 +83,13 @@
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.21296296296296297" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_default_plan.xml" value="0.175" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_download_in_splash.xml" value="0.175" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_item_episode.xml" value="0.191" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_rate.xml" value="0.191" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_ripple.xml" value="0.17407407407407408" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_selected_plan.xml" value="0.175" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_series_and_cartoon_image.xml" value="0.189" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_cartoon.xml" value="0.25" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_series.xml" value="0.22" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_series.xml" value="0.1" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_player.xml" value="0.14907407407407408" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_splash.xml" value="0.25" />

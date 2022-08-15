@@ -14,5 +14,5 @@ data class Series(
     val description: String,
     val rate: String,
     val genre_id: String,
-    val views: Int
+    val views: Int,
 ) : Parcelable

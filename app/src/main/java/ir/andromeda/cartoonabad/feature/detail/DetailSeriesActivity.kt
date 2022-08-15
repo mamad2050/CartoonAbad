@@ -128,7 +128,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
     }
 
     private fun snackBar(message: String) {
-        Snackbar.make(binding.rootLayout, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onEpisodeClick(episode: Episode) {

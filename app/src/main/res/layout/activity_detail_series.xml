@@ -2,7 +2,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".feature.detail.DetailSeriesActivity">
@@ -94,7 +93,7 @@
         <ir.andromeda.cartoonabad.view.CartoonAbadImageView
             android:id="@+id/ivImage"
             android:layout_width="wrap_content"
-            android:layout_height="500dp"
+            android:layout_height="350dp"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:fitsSystemWindows="true"
@@ -143,6 +142,5 @@
             tools:text="امتیاز 8 / 10" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
