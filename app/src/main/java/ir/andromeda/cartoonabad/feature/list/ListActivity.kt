@@ -32,6 +32,10 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         binding.rvList.layoutManager = GridLayoutManager(this, 3)
         binding.tvTitleToolbar.text = intent.getStringExtra(TITLE)
 
+        viewModel.progressBarLiveData.observe(this){
+            setProgressIndicator(it)
+        }
+
         when (intent.getStringExtra(MODE)) {
             LATEST_SERIES, MOST_VIEWED_SERIES -> {
                 viewModel.seriesLiveData.observe(this) {

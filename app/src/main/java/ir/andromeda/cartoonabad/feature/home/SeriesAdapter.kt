@@ -30,7 +30,7 @@ class SeriesAdapter(
         if (scale == ItemScale.LARGE){
             val displayMetrics = DisplayMetrics()
             (parent.context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-            val deviceWidth = displayMetrics.widthPixels / 3
+            val deviceWidth = displayMetrics.widthPixels / 3 - 12
             val deviceHeight = displayMetrics.heightPixels / 4
             binding.parentItem.layoutParams.width = deviceWidth
             binding.parentItem.layoutParams.height = deviceHeight
