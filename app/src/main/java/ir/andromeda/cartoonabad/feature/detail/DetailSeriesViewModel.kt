@@ -32,6 +32,7 @@ class DetailSeriesViewModel(
     init {
         seriesId = bundle.getString(EXTRA_KEY_ID) ?: ""
         showSeasons()
+        showEpisodes()
     }
 
     fun showSeasons() {

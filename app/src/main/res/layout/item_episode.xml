@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:layout_marginVertical="4dp"
+    android:layout_marginVertical="8dp"
     app:cardBackgroundColor="?android:colorBackground"
     app:cardCornerRadius="@dimen/radius"
     app:cardElevation="0dp">
@@ -28,10 +28,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
             android:maxLines="2"
             android:textAppearance="?textAppearanceBody1"
+            app:layout_constraintEnd_toStartOf="@+id/ivDownload"
             app:layout_constraintStart_toEndOf="@+id/ivImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="قسمت اول" />

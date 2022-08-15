@@ -59,6 +59,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
     private val episodeAdapter by lazy { EpisodeAdapter(imageLoadingService, this) }
 
     private var selectedSeasonId: String = ""
+    private var episodeList = listOf<Episode>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,8 +82,8 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         }
 
         viewModel.episodesLiveData.observe(this) {
-            //TODO hide small progressbar
-            episodeAdapter.episodes = it.filter { episode ->
+            episodeList = it
+            episodeAdapter.episodes = episodeList.filter { episode ->
                 episode.seasonId == selectedSeasonId
             } as ArrayList<Episode>
         }
@@ -91,19 +92,28 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             binding.tvSeasonSize.text = "${it.size} فصل"
             val adapter = ArrayAdapter(this, R.layout.item_topic, it)
             binding.autoTvSeason.setAdapter(adapter)
+            binding.autoTvSeason.setText(binding.autoTvSeason.adapter.getItem(0).toString(), false)
+            selectedSeasonId = it[0].id
         }
 
         binding.autoTvSeason.setOnItemClickListener { parent, _, position, _ ->
-            selectedSeasonId = (parent.getItemAtPosition(position) as Season).id
+            val temp = (parent.getItemAtPosition(position) as Season).id
             //TODO show small progressbar
-            viewModel.showEpisodes()
+            if (selectedSeasonId != temp) {
+                selectedSeasonId = temp
+                episodeAdapter.episodes = episodeList.filter { episode ->
+                    episode.seasonId == selectedSeasonId
+                } as ArrayList<Episode>
+            }
         }
+
 
         binding.rvEpisodes.adapter = episodeAdapter
         binding.rvEpisodes.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         permissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+            { permission ->
                 readPermissionGranted =
                     permission[android.Manifest.permission.READ_EXTERNAL_STORAGE]
                         ?: readPermissionGranted
