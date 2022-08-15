@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.list
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import ir.andromeda.cartoonabad.R
@@ -7,6 +8,8 @@ import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.ActivityListBinding
+import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
+import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.feature.home.CartoonAdapter
 import ir.andromeda.cartoonabad.feature.home.SeriesAdapter
 import org.koin.android.ext.android.get
@@ -32,26 +35,29 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         when (intent.getStringExtra(MODE)) {
             LATEST_SERIES, MOST_VIEWED_SERIES -> {
                 viewModel.seriesLiveData.observe(this) {
-                    seriesAdapter = SeriesAdapter(it, this, get())
+                    seriesAdapter = SeriesAdapter(it, this, get(), ItemScale.LARGE)
                     binding.rvList.adapter = seriesAdapter
                 }
             }
 
             LATEST_CARTOONS, MOST_VIEWED_CARTOONS -> {
                 viewModel.cartoonLiveData.observe(this) {
-                    cartoonAdapter = CartoonAdapter(it, this, get())
+                    cartoonAdapter = CartoonAdapter(it, this, get(), ItemScale.LARGE)
                     binding.rvList.adapter = cartoonAdapter
                 }
             }
         }
-
     }
 
     override fun clickOnSeries(series: Series) {
-
+        startActivity(Intent(this, DetailSeriesActivity::class.java).apply {
+            putExtra(EXTRA_KEY_ID, series.id)
+        })
     }
 
     override fun clickOnCartoon(cartoon: Cartoon) {
-
+        startActivity(Intent(this, DetailCartoonActivity::class.java).apply {
+            putExtra(EXTRA_KEY_ID, cartoon.id)
+        })
     }
 }

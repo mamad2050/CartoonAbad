@@ -104,7 +104,7 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestSeriesAdapter = SeriesAdapter(it, this, imageLoadingService)
+            latestSeriesAdapter = SeriesAdapter(it, this, imageLoadingService, ItemScale.SMALL)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
         }
 
@@ -112,7 +112,7 @@ class HomeFragment : CartoonAbadFragment(),
             binding.rvLatestCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             latestCartoonsAdapter =
-                CartoonAdapter(it as ArrayList<Cartoon>, this, imageLoadingService)
+                CartoonAdapter(it as ArrayList<Cartoon>, this, imageLoadingService, ItemScale.SMALL)
             binding.rvLatestCartoons.adapter = latestCartoonsAdapter
 
         }
@@ -120,14 +120,14 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularSeriesAdapter = SeriesAdapter(it, this, imageLoadingService)
+            popularSeriesAdapter = SeriesAdapter(it, this, imageLoadingService, ItemScale.SMALL)
             binding.rvPopularSeries.adapter = popularSeriesAdapter
         }
 
         viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularCartoonsAdapter = CartoonAdapter(it, this, imageLoadingService)
+            popularCartoonsAdapter = CartoonAdapter(it, this, imageLoadingService, ItemScale.SMALL)
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
         }
 
@@ -142,7 +142,6 @@ class HomeFragment : CartoonAbadFragment(),
             startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
                 putExtra(MODE, MOST_VIEWED_CARTOONS)
                 putExtra(TITLE, getString(R.string.popular_cartoons))
-
             })
         }
 

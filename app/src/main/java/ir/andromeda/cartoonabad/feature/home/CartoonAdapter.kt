@@ -5,6 +5,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ir.andromeda.cartoonabad.common.ItemScale
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
@@ -14,19 +15,22 @@ import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
 class CartoonAdapter(
     private val cartoonsList: List<Cartoon>,
     private val onCartoonItemEventListener: OnCartoonItemEventListener,
-    private val imageLoadingService: ImageLoadingService
+    private val imageLoadingService: ImageLoadingService,
+    private val scale: ItemScale
 ) : RecyclerView.Adapter<CartoonAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
             ItemCartoonSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        val displayMetrics = DisplayMetrics()
-        (parent.context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val deviceWidth = displayMetrics.widthPixels / 3
-        val deviceHeight = displayMetrics.heightPixels / 4
-        binding.parentItem.layoutParams.width = deviceWidth
-        binding.parentItem.layoutParams.height = deviceHeight
+        if (scale == ItemScale.LARGE) {
+            val displayMetrics = DisplayMetrics()
+            (parent.context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+            val deviceWidth = displayMetrics.widthPixels / 3
+            val deviceHeight = displayMetrics.heightPixels / 4
+            binding.parentItem.layoutParams.width = deviceWidth
+            binding.parentItem.layoutParams.height = deviceHeight
+        }
 
         return Holder(binding)
     }
