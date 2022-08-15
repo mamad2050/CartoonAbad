@@ -26,7 +26,7 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvList.layoutManager = GridLayoutManager(this, 4)
+        binding.rvList.layoutManager = GridLayoutManager(this, 3)
         binding.tvTitleToolbar.text = intent.getStringExtra(TITLE)
 
         when (intent.getStringExtra(MODE)) {

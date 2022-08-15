@@ -1,5 +1,7 @@
 package ir.andromeda.cartoonabad.feature.home
 
+import android.app.Activity
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,14 @@ class CartoonAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
             ItemCartoonSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        val displayMetrics = DisplayMetrics()
+        (parent.context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val deviceWidth = displayMetrics.widthPixels / 3
+        val deviceHeight = displayMetrics.heightPixels / 4
+        binding.parentItem.layoutParams.width = deviceWidth
+        binding.parentItem.layoutParams.height = deviceHeight
+
         return Holder(binding)
     }
 
