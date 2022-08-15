@@ -69,17 +69,18 @@ class HomeFragment : CartoonAbadFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handler = Handler(Looper.getMainLooper()!!)
+
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
 
         viewModel.bannersLiveData.observe(viewLifecycleOwner) {
 
-            val bannerSlideAdapter = BannerSliderAdapter(this, it)
-            binding.bannerSliderViewPager.adapter = bannerSlideAdapter
+            val bannerSliderAdapter = BannerSliderAdapter(this, it)
+            binding.bannerSliderViewPager.adapter = bannerSliderAdapter
             binding.sliderIndicator.setViewPager2(binding.bannerSliderViewPager)
             bannersCount = it.size
-            handler = Handler(Looper.getMainLooper()!!)
 
             setUpTransformer()
 
@@ -279,7 +280,6 @@ class HomeFragment : CartoonAbadFragment(),
     override fun onStop() {
         super.onStop()
         handler.removeCallbacks(runnable)
-        _binding = null
         EventBus.getDefault().unregister(this)
         compositeDisposable.dispose()
     }
@@ -291,7 +291,7 @@ class HomeFragment : CartoonAbadFragment(),
 
     override fun onResume() {
         super.onResume()
-
+        handler.postDelayed(runnable, 5000)
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
                 putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
