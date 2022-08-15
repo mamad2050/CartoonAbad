@@ -10,6 +10,7 @@ data class Series(
     val id: String,
     val name: String,
     val image: String,
+    val banner: String,
     val description: String,
     val rate: String,
     val genre_id: String,

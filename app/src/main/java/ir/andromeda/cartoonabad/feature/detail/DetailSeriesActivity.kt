@@ -73,7 +73,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             binding.tvName.text = it.name
             binding.tvRate.text = "امتیاز ${it.rate} / 10"
             binding.tvDescription.text = it.description
-            imageLoadingService.load(binding.ivImage, it.image)
+            imageLoadingService.load(binding.ivImage, it.banner)
         }
 
         viewModel.progressBarLiveData.observe(this) {
