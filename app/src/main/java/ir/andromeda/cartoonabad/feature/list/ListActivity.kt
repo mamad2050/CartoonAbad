@@ -27,36 +27,17 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         setContentView(binding.root)
 
         binding.rvList.layoutManager = GridLayoutManager(this, 4)
+        binding.tvTitleToolbar.text = intent.getStringExtra(TITLE)
 
         when (intent.getStringExtra(MODE)) {
-            LATEST_SERIES -> {
-                binding.tvTitleToolbar.text = getString(R.string.latest_series)
+            LATEST_SERIES, MOST_VIEWED_SERIES -> {
                 viewModel.seriesLiveData.observe(this) {
                     seriesAdapter = SeriesAdapter(it, this, get())
                     binding.rvList.adapter = seriesAdapter
                 }
             }
 
-            LATEST_CARTOONS -> {
-                binding.tvTitleToolbar.text = getString(R.string.latest_cartoons)
-                viewModel.cartoonLiveData.observe(this) {
-                    cartoonAdapter = CartoonAdapter(it, this, get())
-                    binding.rvList.adapter = cartoonAdapter
-                }
-            }
-
-
-            MOST_VIEWED_SERIES -> {
-                binding.tvTitleToolbar.text = getString(R.string.popular_series)
-                viewModel.seriesLiveData.observe(this) {
-                    seriesAdapter = SeriesAdapter(it, this, get())
-                    binding.rvList.adapter = seriesAdapter
-                }
-            }
-
-
-            MOST_VIEWED_CARTOONS -> {
-                binding.tvTitleToolbar.text = getString(R.string.popular_cartoons)
+            LATEST_CARTOONS, MOST_VIEWED_CARTOONS -> {
                 viewModel.cartoonLiveData.observe(this) {
                     cartoonAdapter = CartoonAdapter(it, this, get())
                     binding.rvList.adapter = cartoonAdapter

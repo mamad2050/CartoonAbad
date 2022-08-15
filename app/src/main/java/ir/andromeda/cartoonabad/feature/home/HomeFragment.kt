@@ -134,24 +134,29 @@ class HomeFragment : CartoonAbadFragment(),
         binding.tvAllMostViewedSeries.setOnClickListener {
             startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
                 putExtra(MODE, MOST_VIEWED_SERIES)
+                putExtra(TITLE, getString(R.string.popular_series))
             })
         }
 
         binding.tvAllMostViewedCartoons.setOnClickListener {
             startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
                 putExtra(MODE, MOST_VIEWED_CARTOONS)
+                putExtra(TITLE, getString(R.string.popular_cartoons))
+
             })
         }
 
         binding.tvAllLatestSeries.setOnClickListener {
             startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
                 putExtra(MODE, LATEST_SERIES)
+                putExtra(TITLE, getString(R.string.latest_series))
             })
         }
 
         binding.tvAllLatestCartoons.setOnClickListener {
             startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
                 putExtra(MODE, LATEST_CARTOONS)
+                putExtra(TITLE, getString(R.string.latest_cartoons))
             })
         }
 
