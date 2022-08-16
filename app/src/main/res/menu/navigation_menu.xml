@@ -10,19 +10,19 @@
     <item
         android:id="@+id/genre"
         android:enabled="true"
-        android:icon="@drawable/ic_genre"
-        android:title="@string/genres" />
+        android:icon="@drawable/ic_bookmark_fill"
+        android:title="@string/bookmarks" />
 
     <item
         android:id="@+id/download"
         android:enabled="true"
-        android:icon="@drawable/ic_file_download_white_24dp"
+        android:icon="@drawable/ic_download"
         android:title="@string/downloaded" />
 
     <item
         android:id="@+id/purchase"
         android:enabled="true"
-        android:icon="@drawable/ic_shop_white_24dp"
-        android:title="@string/purchase" />
+        android:icon="@drawable/ic_account"
+        android:title="@string/profile" />
 
 </menu>

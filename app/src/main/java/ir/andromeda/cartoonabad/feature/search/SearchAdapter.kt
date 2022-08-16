@@ -5,6 +5,9 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ir.andromeda.cartoonabad.R
+import ir.andromeda.cartoonabad.common.CARTOON
+import ir.andromeda.cartoonabad.common.SERIES
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
@@ -41,6 +44,12 @@ class SearchAdapter(
             imageLoadingService.load(binding.ivImage, item.image)
             binding.tvName.text = item.name
             binding.tvRate.text = item.rate
+
+            if (item.type == SERIES)
+                binding.ivType.setImageResource(R.drawable.series)
+
+            if (item.type == CARTOON)
+                binding.ivType.setImageResource(R.drawable.cartoon)
 
             binding.ivImage.setOnClickListener {
 
