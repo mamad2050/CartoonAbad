@@ -19,6 +19,7 @@ import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
+import ir.andromeda.cartoonabad.data.banner.Banner
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.series.Series
@@ -26,6 +27,7 @@ import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.feature.list.ListActivity
+import ir.andromeda.cartoonabad.feature.search.SearchActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
@@ -37,10 +39,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class HomeFragment : CartoonAbadFragment(),
-    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener {
+    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener{
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -158,6 +159,10 @@ class HomeFragment : CartoonAbadFragment(),
                 putExtra(MODE, LATEST_CARTOONS)
                 putExtra(TITLE, getString(R.string.latest_cartoons))
             })
+        }
+
+        binding.ivSearch.setOnClickListener {
+            startActivity(Intent(requireActivity(), SearchActivity::class.java))
         }
 
 
@@ -303,6 +308,5 @@ class HomeFragment : CartoonAbadFragment(),
         super.onPause()
         handler.removeCallbacks(runnable)
     }
-
 
 }
