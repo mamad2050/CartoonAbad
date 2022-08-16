@@ -4,6 +4,7 @@ import io.reactivex.Single
 import ir.andromeda.cartoonabad.data.AppData
 import ir.andromeda.cartoonabad.data.banner.Banner
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.message.MessageResponse
@@ -62,6 +63,9 @@ interface ApiService {
 
     @GET("genres/list")
     fun getGenres(): Single<List<Genre>>
+
+    @GET("search/{query}")
+    fun getSearchResult(@Path("query") word: String): Single<List<CombinedCartoonSeries>>
 
 }
 
