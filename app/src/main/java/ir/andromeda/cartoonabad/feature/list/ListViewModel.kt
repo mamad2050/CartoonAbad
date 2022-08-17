@@ -10,8 +10,8 @@ import ir.andromeda.cartoonabad.data.series.SeriesRepository
 
 class ListViewModel(
     val bundle: Bundle,
-    val seriesRepository: SeriesRepository,
-    val cartoonRepository: CartoonRepository
+    private val seriesRepository: SeriesRepository,
+    private val cartoonRepository: CartoonRepository
 ) : CartoonAbadViewModel() {
 
     val seriesLiveData = MutableLiveData<List<Series>>()
@@ -19,59 +19,67 @@ class ListViewModel(
 
     init {
 
-        val mode = bundle.getString(MODE)
         progressBarLiveData.value = true
 
-        when (mode) {
-            LATEST_SERIES -> {
-                seriesRepository.getSeries(SORT_BY_LATEST, 1)
-                    .asyncNetworkRequest()
-                    .doFinally { progressBarLiveData.postValue(false) }
-                    .subscribe(object :
-                        CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
-                        override fun onSuccess(t: List<Series>) {
-                            seriesLiveData.value = t
-                        }
-                    })
-            }
-
-            LATEST_CARTOONS -> {
-                cartoonRepository.getCartoons(SORT_BY_LATEST, 1)
-                    .asyncNetworkRequest()
-                    .doFinally { progressBarLiveData.postValue(false) }
-                    .subscribe(object :
-                        CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
-                        override fun onSuccess(t: List<Cartoon>) {
-                            cartoonLiveData.value = t
-                        }
-                    })
-            }
-
-            MOST_VIEWED_SERIES -> {
-                seriesRepository.getSeries(SORT_BY_VIEW, 1)
-                    .asyncNetworkRequest()
-                    .doFinally { progressBarLiveData.postValue(false) }
-                    .subscribe(object :
-                        CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
-                        override fun onSuccess(t: List<Series>) {
-                            seriesLiveData.value = t
-                        }
-                    })
-            }
-
-            MOST_VIEWED_CARTOONS -> {
-                cartoonRepository.getCartoons(SORT_BY_VIEW, 1)
-                    .asyncNetworkRequest()
-                    .doFinally { progressBarLiveData.postValue(false) }
-                    .subscribe(object :
-                        CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
-                        override fun onSuccess(t: List<Cartoon>) {
-                            cartoonLiveData.value = t
-                        }
-                    })
-            }
+        when(bundle.getString(MODE)){
+            LATEST_SERIES -> getLatestSeries(1)
+            LATEST_CARTOONS -> getLatestCartoons(1)
+            MOST_VIEWED_SERIES -> getMostViewedSeries(1)
+            MOST_VIEWED_CARTOONS -> getMostViewedCartoons(1)
         }
+
     }
 
+    fun getMostViewedCartoons(page: Int) {
+
+        cartoonRepository.getCartoons(SORT_BY_VIEW, page)
+            .asyncNetworkRequest()
+            .doFinally { progressBarLiveData.postValue(false) }
+            .subscribe(object :
+                CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
+                override fun onSuccess(t: List<Cartoon>) {
+                    cartoonLiveData.value = t
+                }
+            })
+    }
+
+    fun getMostViewedSeries(page: Int) {
+
+        seriesRepository.getSeries(SORT_BY_VIEW, page)
+            .asyncNetworkRequest()
+            .doFinally { progressBarLiveData.postValue(false) }
+            .subscribe(object :
+                CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
+                override fun onSuccess(t: List<Series>) {
+                    seriesLiveData.value = t
+                }
+            })
+    }
+
+    fun getLatestCartoons(page: Int) {
+
+        cartoonRepository.getCartoons(SORT_BY_LATEST, page)
+            .asyncNetworkRequest()
+            .doFinally { progressBarLiveData.postValue(false) }
+            .subscribe(object :
+                CartoonAbadSingleObserver<List<Cartoon>>(compositeDisposable) {
+                override fun onSuccess(t: List<Cartoon>) {
+                    cartoonLiveData.value = t
+                }
+            })
+    }
+
+    fun getLatestSeries(page: Int) {
+
+        seriesRepository.getSeries(SORT_BY_LATEST, page)
+            .asyncNetworkRequest()
+            .doFinally { progressBarLiveData.postValue(false) }
+            .subscribe(object :
+                CartoonAbadSingleObserver<List<Series>>(compositeDisposable) {
+                override fun onSuccess(t: List<Series>) {
+                    seriesLiveData.value = t
+                }
+            })
+    }
 
 }

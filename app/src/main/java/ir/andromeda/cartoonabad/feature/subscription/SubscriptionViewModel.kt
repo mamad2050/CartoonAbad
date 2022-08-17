@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.purchase
+package ir.andromeda.cartoonabad.feature.subscription
 
 import androidx.lifecycle.MutableLiveData
 import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
@@ -7,7 +7,7 @@ import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.subscription.Subscription
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepository
 
-class PurchaseViewModel(private val subscriptionRepository: SubscriptionRepository) :
+class SubscriptionViewModel(private val subscriptionRepository: SubscriptionRepository) :
     CartoonAbadViewModel() {
 
     val subscriptionsLiveData = MutableLiveData<List<Subscription>>()

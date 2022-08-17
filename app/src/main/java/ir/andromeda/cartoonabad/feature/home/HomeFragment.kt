@@ -106,8 +106,9 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestSeriesAdapter = SeriesAdapter(it, this, imageLoadingService, ItemScale.SMALL)
+            latestSeriesAdapter = SeriesAdapter( this, imageLoadingService, ItemScale.SMALL)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
+            latestSeriesAdapter.addNewData(it)
         }
 
         viewModel.latestCartoonsLiveData.observe(viewLifecycleOwner) {
@@ -122,8 +123,10 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularSeriesAdapter = SeriesAdapter(it, this, imageLoadingService, ItemScale.SMALL)
+            popularSeriesAdapter = SeriesAdapter( this, imageLoadingService, ItemScale.SMALL)
             binding.rvPopularSeries.adapter = popularSeriesAdapter
+            popularSeriesAdapter.addNewData(it)
+
         }
 
         viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {

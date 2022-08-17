@@ -1,15 +1,13 @@
-package ir.andromeda.cartoonabad.feature.purchase
+package ir.andromeda.cartoonabad.feature.subscription
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
-import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.databinding.DialogAlertPurchaseBinding
 
-class PurchaseAlertDialog : DialogFragment() {
+class SubscriptionAlertDialog : DialogFragment() {
 
     private var _binding: DialogAlertPurchaseBinding? = null
     private val binding get() = _binding!!

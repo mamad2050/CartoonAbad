@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.purchase
+package ir.andromeda.cartoonabad.feature.subscription
 
 import android.content.Intent
 import android.os.Bundle
@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PurchaseFragment : CartoonAbadFragment() {
+class SubscriptionFragment : CartoonAbadFragment() {
 
     private var _binding: FragmentPurchaseBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +36,7 @@ class PurchaseFragment : CartoonAbadFragment() {
     private val payment: Payment by inject()
     private lateinit var paymentConnection: Connection
 
-    private val viewModel: PurchaseViewModel by viewModel()
+    private val viewModel: SubscriptionViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -155,7 +155,7 @@ class PurchaseFragment : CartoonAbadFragment() {
 
     private fun subscribeProduct(purchaseId: String) {
         payment.subscribeProduct(
-            this@PurchaseFragment,
+            this@SubscriptionFragment,
             request = PurchaseRequest(
                 productId = purchaseId,
                 requestCode = 1000,

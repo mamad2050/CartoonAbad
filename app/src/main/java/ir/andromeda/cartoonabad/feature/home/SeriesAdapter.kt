@@ -12,11 +12,12 @@ import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
 
 class SeriesAdapter(
-    private val seriesList: List<Series>,
     private val onSeriesItemEventListener: OnSeriesItemEventListener,
     private val imageLoadingService: ImageLoadingService,
     private val scale: ItemScale
 ) : RecyclerView.Adapter<SeriesAdapter.Holder>() {
+
+    private var seriesList = ArrayList<Series>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
@@ -54,6 +55,11 @@ class SeriesAdapter(
                 onSeriesItemEventListener.clickOnSeries(series)
             }
         }
+    }
+
+
+    fun addNewData(data : List<Series>){
+        seriesList.addAll(data)
     }
 
     interface OnSeriesItemEventListener {

@@ -51,7 +51,7 @@ import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.genre.GenreViewModel
 import ir.andromeda.cartoonabad.feature.list.ListViewModel
-import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
+import ir.andromeda.cartoonabad.feature.subscription.SubscriptionViewModel
 import ir.andromeda.cartoonabad.feature.search.SearchViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
@@ -177,7 +177,7 @@ class App : Application() {
             viewModel { GenreViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
-            viewModel { PurchaseViewModel(get()) }
+            viewModel { SubscriptionViewModel(get()) }
             viewModel { (bundle: Bundle) ->
                 DetailSeriesViewModel(
                     bundle,
