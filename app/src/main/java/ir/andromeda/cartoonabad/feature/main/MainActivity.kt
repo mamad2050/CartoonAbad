@@ -58,7 +58,7 @@ class MainActivity : CartoonAbadActivity() {
             R.navigation.home,
             R.navigation.genre,
             R.navigation.download,
-            R.navigation.purchase
+            R.navigation.account
         )
 
         // Setup the bottom navigation view with a list of navigation graphs
