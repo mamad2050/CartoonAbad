@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.room.Room
 import com.downloader.PRDownloader
 import com.downloader.PRDownloaderConfig
@@ -72,6 +73,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         Fresco.initialize(this)
 
