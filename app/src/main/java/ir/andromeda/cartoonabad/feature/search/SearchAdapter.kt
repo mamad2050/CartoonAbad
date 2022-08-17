@@ -56,7 +56,6 @@ class SearchAdapter(
             binding.ivImage.setOnClickListener {
 
             }
-
             binding.root.implementSpringAnimationTrait()
         }
     }
