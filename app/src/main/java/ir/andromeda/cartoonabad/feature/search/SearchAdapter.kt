@@ -1,5 +1,6 @@
 package ir.andromeda.cartoonabad.feature.search
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -14,9 +15,10 @@ import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 
 class SearchAdapter(
-    var list: ArrayList<CombinedCartoonSeries>,
-    private val imageLoadingService: ImageLoadingService,
+    private val imageLoadingService: ImageLoadingService
 ) : RecyclerView.Adapter<SearchAdapter.Holder>() {
+
+    var result = ArrayList<CombinedCartoonSeries>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
@@ -32,9 +34,9 @@ class SearchAdapter(
         return Holder(binding)
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) = holder.bind(list[position])
+    override fun onBindViewHolder(holder: Holder, position: Int) = holder.bind(result[position])
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = result.size
 
     inner class Holder(val binding: ItemCartoonSeriesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -59,8 +61,15 @@ class SearchAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clear() {
-        list.clear()
+        result.clear()
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(data: List<CombinedCartoonSeries>) {
+        result = data as ArrayList<CombinedCartoonSeries>
         notifyDataSetChanged()
     }
 }
