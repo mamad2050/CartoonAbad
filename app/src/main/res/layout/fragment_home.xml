@@ -49,6 +49,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
             <ImageView
+                android:id="@+id/iv_search"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="24dp"

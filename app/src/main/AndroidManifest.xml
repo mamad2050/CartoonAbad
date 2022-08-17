@@ -22,6 +22,9 @@
         android:theme="@style/Theme.CartoonAbad"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".feature.search.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.list.ListActivity"
             android:exported="false" />
         <activity

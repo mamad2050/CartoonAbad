@@ -13,7 +13,6 @@ import timber.log.Timber
 class DownloadedViewModel(private val repository: DownloadedRepository) :
     CartoonAbadViewModel() {
 
-
     val downloadedEpisodeLiveData = MutableLiveData<MutableList<Downloaded>>()
     val emptyStateLiveData = MutableLiveData<EmptyState>()
 

@@ -18,6 +18,9 @@ import ir.andromeda.cartoonabad.data.banner.BannerRepositoryImpl
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRemoteDataSource
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRepository
 import ir.andromeda.cartoonabad.data.cartoon.CartoonsRepositoryImpl
+import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeriesRemoteDataSource
+import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeriesRepository
+import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeriesRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
 import ir.andromeda.cartoonabad.data.download.DownloadedRepository
 import ir.andromeda.cartoonabad.data.download.DownloadedRepositoryImpl
@@ -48,6 +51,7 @@ import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.genre.GenreViewModel
 import ir.andromeda.cartoonabad.feature.list.ListViewModel
 import ir.andromeda.cartoonabad.feature.purchase.PurchaseViewModel
+import ir.andromeda.cartoonabad.feature.search.SearchViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
 import ir.andromeda.cartoonabad.services.imageloader.FrescoImageLoadingService
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -85,7 +89,6 @@ class App : Application() {
 
             }
         )
-
 
         val config = PRDownloaderConfig.newBuilder()
             .setDatabaseEnabled(true)
@@ -141,6 +144,12 @@ class App : Application() {
 
             factory<BannerRepository> { BannerRepositoryImpl(BannerRemoteDataSource(get())) }
 
+            factory<CombinedCartoonSeriesRepository> {
+                CombinedCartoonSeriesRepositoryImpl(
+                    CombinedCartoonSeriesRemoteDataSource(get())
+                )
+            }
+
             factory<SubscriptionRepository> {
                 SubscriptionRepositoryImpl(
                     SubscriptionRemoteDataSource(get())
@@ -177,6 +186,7 @@ class App : Application() {
             }
             viewModel { (bundle: Bundle) -> DetailCartoonViewModel(bundle, get(), get()) }
             viewModel { (bundle: Bundle) -> ListViewModel(bundle, get(), get()) }
+            viewModel { SearchViewModel(get()) }
         }
 
         startKoin {

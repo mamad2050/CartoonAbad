@@ -65,6 +65,10 @@ class EpisodeAdapter(
 //                notifyItemChanged(absoluteAdapterPosition)
 //            }
 
+            binding.ivBookmark.setOnClickListener {
+                binding.ivBookmark.setImageResource(R.drawable.ic_bookmark_fill_white)
+            }
+
             itemView.setOnClickListener {
                 listener.onEpisodeClick(episode)
             }

@@ -1,20 +1,15 @@
 package ir.andromeda.cartoonabad.feature.home
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.common.ItemScale
-import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
-import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 
 class SeriesAdapter(
     private val seriesList: List<Series>,
@@ -27,7 +22,7 @@ class SeriesAdapter(
         val binding =
             ItemCartoonSeriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        if (scale == ItemScale.LARGE){
+        if (scale == ItemScale.LARGE) {
             val displayMetrics = DisplayMetrics()
             (parent.context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
             val deviceWidth = displayMetrics.widthPixels / 3 - 12
@@ -58,7 +53,6 @@ class SeriesAdapter(
             binding.root.setOnClickListener {
                 onSeriesItemEventListener.clickOnSeries(series)
             }
-
         }
     }
 
