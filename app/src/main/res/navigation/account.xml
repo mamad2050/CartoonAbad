@@ -7,7 +7,26 @@
 
     <fragment
         android:id="@+id/accountFragment"
+        tools:layout="@layout/fragment_account"
         android:name="ir.andromeda.cartoonabad.feature.account.AccountFragment"
-        android:label="AccountFragment" />
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_accountFragment_to_subscriptionFragment"
+            app:destination="@id/subscriptionFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/subscriptionFragment"
+        android:name="ir.andromeda.cartoonabad.feature.subscription.SubscriptionFragment"
+        android:label="fragment_purchase"
+        tools:layout="@layout/fragment_subscription" />
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="ir.andromeda.cartoonabad.feature.contacts.ContactsFragment"
+        android:label="fragment_contacts"
+        tools:layout="@layout/fragment_contacts" />
 
 </navigation>

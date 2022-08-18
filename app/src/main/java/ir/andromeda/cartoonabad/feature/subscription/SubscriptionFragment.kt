@@ -13,7 +13,7 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
-import ir.andromeda.cartoonabad.databinding.FragmentPurchaseBinding
+import ir.andromeda.cartoonabad.databinding.FragmentSubscriptionBinding
 import ir.andromeda.cartoonabad.feature.main.MainActivity
 import ir.cafebazaar.poolakey.Connection
 import ir.cafebazaar.poolakey.ConnectionState
@@ -27,7 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SubscriptionFragment : CartoonAbadFragment() {
 
-    private var _binding: FragmentPurchaseBinding? = null
+    private var _binding: FragmentSubscriptionBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var lastSelectedLayout: View
@@ -42,7 +42,7 @@ class SubscriptionFragment : CartoonAbadFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPurchaseBinding.inflate(inflater, container, false)
+        _binding = FragmentSubscriptionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
