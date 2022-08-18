@@ -50,7 +50,7 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
 
                 viewModel.seriesLiveData.observe(this) {
                     binding.rvList.adapter = seriesAdapter
-                    seriesAdapter.addNewData(it)
+                    seriesAdapter.setData(it)
                 }
             }
 

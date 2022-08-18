@@ -58,6 +58,10 @@ class SeriesAdapter(
     }
 
 
+    fun setData(data : List<Series>){
+        seriesList.addAll(data)
+    }
+
     fun addNewData(data : List<Series>){
         seriesList.addAll(data)
     }
