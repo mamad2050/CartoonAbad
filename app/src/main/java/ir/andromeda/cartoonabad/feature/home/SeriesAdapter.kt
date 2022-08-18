@@ -57,13 +57,15 @@ class SeriesAdapter(
         }
     }
 
-
     fun setData(data : List<Series>){
         seriesList.addAll(data)
+        notifyDataSetChanged()
     }
 
     fun addNewData(data : List<Series>){
+        var prevItemsCount = itemCount
         seriesList.addAll(data)
+        notifyItemRangeInserted(prevItemsCount,itemCount)
     }
 
     interface OnSeriesItemEventListener {
