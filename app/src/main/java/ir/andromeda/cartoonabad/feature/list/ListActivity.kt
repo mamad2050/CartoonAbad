@@ -27,6 +27,7 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
     private lateinit var cartoonAdapter: CartoonAdapter
     private val seriesAdapter = SeriesAdapter(this, get(), ItemScale.LARGE)
     var currentPage = 1
+    var hasNextPage = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +48,21 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         when (intent.getStringExtra(MODE)) {
 
             LATEST_SERIES, MOST_VIEWED_SERIES -> {
+                binding.rvList.adapter = seriesAdapter
 
                 viewModel.seriesLiveData.observe(this) {
-                    binding.rvList.adapter = seriesAdapter
-                    seriesAdapter.setData(it)
+
+                    if (it.isEmpty()){
+                        hasNextPage = false
+                    }
+
+                    if (currentPage == 1)
+                        seriesAdapter.setData(it)
+                    else {
+                        seriesAdapter.addNewData(it)
+                        binding.rvList.smoothScrollToPosition(15)
+                    }
+
                 }
             }
 
@@ -67,9 +79,8 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    if (currentPage < 2) {
-                        currentPage++
-                        viewModel.getLatestSeries(currentPage)
+                    if (hasNextPage) {
+                        viewModel.getLatestSeries(++currentPage)
                     }
                 }
             }
