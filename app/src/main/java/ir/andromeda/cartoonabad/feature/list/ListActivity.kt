@@ -24,10 +24,11 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
 
     private lateinit var binding: ActivityListBinding
     private val viewModel: ListViewModel by viewModel { parametersOf(intent.extras) }
-    private lateinit var cartoonAdapter: CartoonAdapter
     private val seriesAdapter = SeriesAdapter(this, get(), ItemScale.LARGE)
+    private val cartoonAdapter = CartoonAdapter(this, get(), ItemScale.LARGE)
     var currentPage = 1
     var hasNextPage = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +49,21 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         when (intent.getStringExtra(MODE)) {
 
             LATEST_SERIES, MOST_VIEWED_SERIES -> {
+
                 binding.rvList.adapter = seriesAdapter
 
                 viewModel.seriesLiveData.observe(this) {
 
-                    if (it.isEmpty()){
+                    if (it.isEmpty()) {
                         hasNextPage = false
                     }
 
-                    if (currentPage == 1)
+                    if (currentPage == 1){
                         seriesAdapter.setData(it)
+                    }
                     else {
                         seriesAdapter.addNewData(it)
-                        binding.rvList.smoothScrollToPosition(15)
+                        binding.rvList.smoothScrollToPosition(seriesAdapter.itemCount-1)
                     }
 
                 }
@@ -68,9 +71,20 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
 
             LATEST_CARTOONS, MOST_VIEWED_CARTOONS -> {
 
+                binding.rvList.adapter = cartoonAdapter
+
                 viewModel.cartoonLiveData.observe(this) {
-                    cartoonAdapter = CartoonAdapter(it, this, get(), ItemScale.LARGE)
-                    binding.rvList.adapter = cartoonAdapter
+
+                    if (it.isEmpty()) {
+                        hasNextPage = false
+                    }
+
+                    if (currentPage == 1) {
+                        cartoonAdapter.setData(it)
+                    } else {
+                        cartoonAdapter.addNewData(it)
+                        binding.rvList.smoothScrollToPosition(cartoonAdapter.itemCount - 1)
+                    }
                 }
             }
         }
@@ -80,7 +94,12 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
                     if (hasNextPage) {
-                        viewModel.getLatestSeries(++currentPage)
+                        when (intent.getStringExtra(MODE)) {
+                            LATEST_SERIES -> viewModel.getLatestSeries(++currentPage)
+                            LATEST_CARTOONS -> viewModel.getLatestCartoons(++currentPage)
+                            MOST_VIEWED_SERIES -> viewModel.getMostViewedSeries(++currentPage)
+                            MOST_VIEWED_CARTOONS -> viewModel.getMostViewedCartoons(++currentPage)
+                        }
                     }
                 }
             }

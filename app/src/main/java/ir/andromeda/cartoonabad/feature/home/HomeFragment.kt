@@ -115,8 +115,9 @@ class HomeFragment : CartoonAbadFragment(),
             binding.rvLatestCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             latestCartoonsAdapter =
-                CartoonAdapter(it as ArrayList<Cartoon>, this, imageLoadingService, ItemScale.SMALL)
+                CartoonAdapter( this, imageLoadingService, ItemScale.SMALL)
             binding.rvLatestCartoons.adapter = latestCartoonsAdapter
+            latestCartoonsAdapter.setData(it)
 
         }
 
@@ -132,8 +133,9 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularCartoonsAdapter = CartoonAdapter(it, this, imageLoadingService, ItemScale.SMALL)
+            popularCartoonsAdapter = CartoonAdapter( this, imageLoadingService, ItemScale.SMALL)
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
+            popularCartoonsAdapter.setData(it)
         }
 
         binding.tvAllMostViewedSeries.setOnClickListener {

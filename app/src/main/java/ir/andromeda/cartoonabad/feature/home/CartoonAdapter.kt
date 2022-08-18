@@ -9,15 +9,17 @@ import ir.andromeda.cartoonabad.common.ItemScale
 import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
 
 class CartoonAdapter(
-    private val cartoonsList: List<Cartoon>,
     private val onCartoonItemEventListener: OnCartoonItemEventListener,
     private val imageLoadingService: ImageLoadingService,
     private val scale: ItemScale
 ) : RecyclerView.Adapter<CartoonAdapter.Holder>() {
+
+    private var cartoonsList = ArrayList<Cartoon>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
@@ -55,6 +57,17 @@ class CartoonAdapter(
             }
 
         }
+    }
+
+    fun setData(data : List<Cartoon>){
+        cartoonsList.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun addNewData(data : List<Cartoon>){
+        var prevItemsCount = itemCount
+        cartoonsList.addAll(data)
+        notifyItemRangeInserted(prevItemsCount,itemCount)
     }
 
     interface OnCartoonItemEventListener {
