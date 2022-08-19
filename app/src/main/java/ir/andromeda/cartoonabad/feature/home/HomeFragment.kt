@@ -41,7 +41,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : CartoonAbadFragment(),
-    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener{
+    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -106,7 +106,7 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvLatestSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestSeriesAdapter = SeriesAdapter( this, imageLoadingService, ItemScale.SMALL)
+            latestSeriesAdapter = SeriesAdapter(this, imageLoadingService, ItemScale.SMALL)
             binding.rvLatestSeries.adapter = latestSeriesAdapter
             latestSeriesAdapter.setData(it)
         }
@@ -115,7 +115,7 @@ class HomeFragment : CartoonAbadFragment(),
             binding.rvLatestCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             latestCartoonsAdapter =
-                CartoonAdapter( this, imageLoadingService, ItemScale.SMALL)
+                CartoonAdapter(this, imageLoadingService, ItemScale.SMALL)
             binding.rvLatestCartoons.adapter = latestCartoonsAdapter
             latestCartoonsAdapter.setData(it)
 
@@ -124,7 +124,7 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularSeries.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularSeriesAdapter = SeriesAdapter( this, imageLoadingService, ItemScale.SMALL)
+            popularSeriesAdapter = SeriesAdapter(this, imageLoadingService, ItemScale.SMALL)
             binding.rvPopularSeries.adapter = popularSeriesAdapter
             popularSeriesAdapter.setData(it)
 
@@ -133,7 +133,7 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.popularCartoonsLiveData.observe(viewLifecycleOwner) {
             binding.rvPopularCartoons.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularCartoonsAdapter = CartoonAdapter( this, imageLoadingService, ItemScale.SMALL)
+            popularCartoonsAdapter = CartoonAdapter(this, imageLoadingService, ItemScale.SMALL)
             binding.rvPopularCartoons.adapter = popularCartoonsAdapter
             popularCartoonsAdapter.setData(it)
         }
@@ -210,7 +210,7 @@ class HomeFragment : CartoonAbadFragment(),
 
     private fun snackBar(message: String) {
         Snackbar.make(
-            activity?.findViewById(R.id.contentRootView) as View, message, Snackbar.LENGTH_SHORT
+            binding.root as View, message, Snackbar.LENGTH_SHORT
         ).show()
     }
 

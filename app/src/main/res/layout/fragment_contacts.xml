@@ -5,18 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="12dp"
     tools:context=".feature.contacts.ContactsFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:elevation="4dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="enterAlways|scroll">
+
+            <TextView
+                android:id="@+id/tvTitleToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/contacts"
+                android:textAppearance="?textAppearanceHeadline5" />
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="12dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        </FrameLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -75,14 +110,15 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSend"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="?colorSurface"
-                android:text="@string/send" />
+                android:backgroundTint="@color/light_black"
+                android:text="@string/send"
+                android:textAppearance="?textAppearanceHeadline5" />
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/messageView"

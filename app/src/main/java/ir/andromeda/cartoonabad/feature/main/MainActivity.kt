@@ -118,7 +118,7 @@ class MainActivity : CartoonAbadActivity() {
 
     private fun snackBar(message: String) {
         Snackbar.make(
-            binding.contentRootView, message, Snackbar.LENGTH_SHORT
+            binding.root, message, Snackbar.LENGTH_SHORT
         ).show()
     }
 

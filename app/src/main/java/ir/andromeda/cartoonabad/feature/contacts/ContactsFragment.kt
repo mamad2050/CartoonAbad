@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.JsonObject
 import io.reactivex.disposables.CompositeDisposable
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
@@ -21,9 +22,9 @@ import ir.andromeda.cartoonabad.databinding.FragmentContactsBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,6 +48,10 @@ class ContactsFragment : CartoonAbadFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         checkCanSendMessage()
 
         setAutoTextViewValues()
@@ -67,11 +72,7 @@ class ContactsFragment : CartoonAbadFragment() {
             val message = binding.etlMessage.editText?.text.toString().trim()
 
             if (selectedTitle.isNullOrEmpty()) {
-                Snackbar.make(
-                    activity?.findViewById(R.id.contentRootView) as View,
-                    getString(R.string.choose_topic),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                snackBar(getString(R.string.choose_topic))
             }
 
             if (email.isEmpty()) {
@@ -83,18 +84,16 @@ class ContactsFragment : CartoonAbadFragment() {
             }
 
             if (!selectedTitle.isNullOrEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
-                viewModel.sendMessage(selectedTitle!!, message, email)
+                viewModel.sendMessage(JsonObject().apply {
+                    addProperty("title", selectedTitle!!)
+                    addProperty("text", message)
+                    addProperty("email", email)
+                })
                     .asyncNetworkRequest()
                     .subscribe(object :
                         CartoonAbadSingleObserver<MessageResponse>(compositeDisposable) {
                         override fun onSuccess(t: MessageResponse) {
-                            Timber.i(t.message)
-                            Snackbar.make(
-                                activity?.findViewById(R.id.contentRootView) as View,
-                                t.message,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-
+                            snackBar(t.message)
                             sharedPreferences.edit()
                                 .putLong(
                                     "messageTime",
@@ -133,9 +132,7 @@ class ContactsFragment : CartoonAbadFragment() {
     }
 
     private fun snackBar(message: String) {
-        Snackbar.make(
-            activity?.findViewById(R.id.contentRootView) as View, message, Snackbar.LENGTH_SHORT
-        ).show()
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun setAutoTextViewValues() {
@@ -167,7 +164,6 @@ class ContactsFragment : CartoonAbadFragment() {
 
     override fun onResume() {
         super.onResume()
-
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

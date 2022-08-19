@@ -1,6 +1,9 @@
 package ir.andromeda.cartoonabad.data.message
 
+import com.google.gson.annotations.SerializedName
+
 data class Message(
-     val title: String, val message: String,
-    val email: String
+    @SerializedName("title") val title: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("email") val email: String
 )
