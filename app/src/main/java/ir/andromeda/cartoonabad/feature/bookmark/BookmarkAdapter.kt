@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.favorite
+package ir.andromeda.cartoonabad.feature.bookmark
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,20 +11,19 @@ import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
-class FavoriteAdapter(
+class BookmarkAdapter(
     private val episodes: MutableList<Episode>,
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener
+) : RecyclerView.Adapter<BookmarkAdapter.Holder>() {
 
-) : RecyclerView.Adapter<FavoriteAdapter.Holder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteAdapter.Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkAdapter.Holder {
         return Holder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_favorite, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_bookmark, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: FavoriteAdapter.Holder, position: Int) {
+    override fun onBindViewHolder(holder: BookmarkAdapter.Holder, position: Int) {
         holder.bindEpisode(episodes[position])
     }
 
@@ -55,11 +54,8 @@ class FavoriteAdapter(
     }
 
     interface EpisodeEventListener {
-
         fun onRemoveClick(episode: Episode)
-
         fun onEpisodeClick(episode: Episode)
-
     }
 
 }

@@ -1,7 +1,6 @@
-package ir.andromeda.cartoonabad.feature.favorite
+package ir.andromeda.cartoonabad.feature.bookmark
 
 import androidx.lifecycle.MutableLiveData
-import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadCompletableObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
@@ -11,7 +10,7 @@ import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import timber.log.Timber
 
-class FavoriteViewModel(private val episodeRepository: EpisodeRepository) :
+class BookmarkViewModel(private val episodeRepository: EpisodeRepository) :
     CartoonAbadViewModel() {
 
     val episodesLiveData = MutableLiveData<List<Episode>>()
@@ -20,12 +19,12 @@ class FavoriteViewModel(private val episodeRepository: EpisodeRepository) :
     init {
 
         emptyStateLiveData.value = EmptyState(false)
-        getFavoriteEpisodes()
+        getBookmarkEpisodes()
 
     }
 
-    fun removeFromFavorite(episode: Episode) {
-        episodeRepository.deleteFromFavorite(episode)
+    fun removeFromBookmark(episode: Episode) {
+        episodeRepository.deleteFromBookmark(episode)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                 override fun onComplete() {
@@ -33,12 +32,11 @@ class FavoriteViewModel(private val episodeRepository: EpisodeRepository) :
                 }
             })
 
-        getFavoriteEpisodes()
+        getBookmarkEpisodes()
     }
 
-     private fun getFavoriteEpisodes() {
-
-        episodeRepository.getFavoriteEpisodes()
+    private fun getBookmarkEpisodes() {
+        episodeRepository.getBookmarkEpisodes()
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadSingleObserver<List<Episode>>(compositeDisposable) {
                 override fun onSuccess(t: List<Episode>) {

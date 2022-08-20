@@ -2,21 +2,20 @@ package ir.andromeda.cartoonabad.data.episode
 
 import io.reactivex.Completable
 import io.reactivex.Single
-import ir.andromeda.cartoonabad.services.http.ApiService
 
 class EpisodeRepositoryImpl(
     private val localDataSource: EpisodeLocalDataSource,
     private val remoteDataSource: EpisodeRemoteDataSource
 ) : EpisodeRepository {
 
-    override fun getFavoriteEpisodes(): Single<List<Episode>> =
-        localDataSource.getFavoriteEpisodes()
+    override fun getBookmarkEpisodes(): Single<List<Episode>> =
+        localDataSource.getBookmarkEpisodes()
 
-    override fun addToFavorite(episode: Episode): Completable =
-        localDataSource.addToFavorites(episode)
+    override fun addToBookmark(episode: Episode): Completable =
+        localDataSource.addToBookmark(episode)
 
-    override fun deleteFromFavorite(episode: Episode): Completable =
-        localDataSource.deleteFromFavorites(episode)
+    override fun deleteFromBookmark(episode: Episode): Completable =
+        localDataSource.deleteFromBookmark(episode)
 
     override fun getAllEpisodes(seriesId: String): Single<List<Episode>> =
         remoteDataSource.getAllEpisodes(seriesId)

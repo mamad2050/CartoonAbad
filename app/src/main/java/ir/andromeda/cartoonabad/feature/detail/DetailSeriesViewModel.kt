@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.common.*
-import ir.andromeda.cartoonabad.data.download.Downloaded
-import ir.andromeda.cartoonabad.data.download.DownloadedRepository
+import ir.andromeda.cartoonabad.data.download.Download
+import ir.andromeda.cartoonabad.data.download.DownloadRepository
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.season.Season
@@ -18,7 +18,7 @@ class DetailSeriesViewModel(
     private val seriesRepository: SeriesRepository,
     private val seasonRepository: SeasonRepository,
     private val episodeRepository: EpisodeRepository,
-    private val downloadRepository: DownloadedRepository
+    private val downloadRepository: DownloadRepository
 ) :
     CartoonAbadViewModel() {
 
@@ -67,25 +67,25 @@ class DetailSeriesViewModel(
     }
 
     fun addEpisodeToFavorites(episode: Episode) {
-        if (episode.isFavorite)
-            episodeRepository.deleteFromFavorite(episode)
+        if (episode.isBookmarked)
+            episodeRepository.deleteFromBookmark(episode)
                 .subscribeOn(Schedulers.io())
                 .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                     override fun onComplete() {
-                        episode.isFavorite = false
+                        episode.isBookmarked = false
                     }
                 })
         else
-            episodeRepository.addToFavorite(episode)
+            episodeRepository.addToBookmark(episode)
                 .subscribeOn(Schedulers.io())
                 .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                     override fun onComplete() {
-                        episode.isFavorite = true
+                        episode.isBookmarked = true
                     }
                 })
     }
 
-    fun addEpisodeToDownloads(episode: Downloaded) {
+    fun addEpisodeToDownloads(episode: Download) {
         if (episode.isDownload)
             downloadRepository.deleteFromDownloads(episode)
                 .subscribeOn(Schedulers.io())

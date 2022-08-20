@@ -17,6 +17,6 @@ data class Episode(
     @SerializedName("url") val url: String,
     @SerializedName("duration") val duration: String,
 ) : Parcelable {
-    var isFavorite = false
+    var isBookmarked = false
     var isDownloaded = false
 }

@@ -6,14 +6,14 @@ import ir.andromeda.cartoonabad.common.CartoonAbadSingleObserver
 import ir.andromeda.cartoonabad.common.CartoonAbadViewModel
 import ir.andromeda.cartoonabad.common.asyncNetworkRequest
 import ir.andromeda.cartoonabad.data.EmptyState
-import ir.andromeda.cartoonabad.data.download.Downloaded
-import ir.andromeda.cartoonabad.data.download.DownloadedRepository
+import ir.andromeda.cartoonabad.data.download.Download
+import ir.andromeda.cartoonabad.data.download.DownloadRepository
 import timber.log.Timber
 
-class DownloadedViewModel(private val repository: DownloadedRepository) :
+class DownloadedViewModel(private val repository: DownloadRepository) :
     CartoonAbadViewModel() {
 
-    val downloadedEpisodeLiveData = MutableLiveData<MutableList<Downloaded>>()
+    val downloadEpisodeLiveData = MutableLiveData<MutableList<Download>>()
     val emptyStateLiveData = MutableLiveData<EmptyState>()
 
     init {
@@ -21,8 +21,8 @@ class DownloadedViewModel(private val repository: DownloadedRepository) :
         getDownloadedEpisodes()
     }
 
-    fun removeFromDownloads(downloaded: Downloaded) {
-        repository.deleteFromDownloads(downloaded)
+    fun removeFromDownloads(download: Download) {
+        repository.deleteFromDownloads(download)
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                 override fun onComplete() {
@@ -37,11 +37,11 @@ class DownloadedViewModel(private val repository: DownloadedRepository) :
         repository.getDownloadedEpisodes()
             .asyncNetworkRequest()
             .subscribe(object :
-                CartoonAbadSingleObserver<List<Downloaded>>(compositeDisposable) {
-                override fun onSuccess(t: List<Downloaded>) {
+                CartoonAbadSingleObserver<List<Download>>(compositeDisposable) {
+                override fun onSuccess(t: List<Download>) {
                     try {
                         if (t.isNotEmpty()) {
-                            downloadedEpisodeLiveData.value = t as MutableList<Downloaded>
+                            downloadEpisodeLiveData.value = t as MutableList<Download>
                         } else {
                             emptyStateLiveData.value = EmptyState(
                                 true,

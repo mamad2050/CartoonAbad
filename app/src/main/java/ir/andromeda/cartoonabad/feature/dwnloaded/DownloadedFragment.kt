@@ -1,6 +1,5 @@
 package ir.andromeda.cartoonabad.feature.dwnloaded
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
-import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
-import ir.andromeda.cartoonabad.data.download.Downloaded
-import ir.andromeda.cartoonabad.data.episode.Episode
-import ir.andromeda.cartoonabad.databinding.FragmentDownloadedBinding
-import ir.andromeda.cartoonabad.feature.player.PlayerActivity
+import ir.andromeda.cartoonabad.data.download.Download
+import ir.andromeda.cartoonabad.databinding.FragmentDownloadBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +18,7 @@ import java.io.File
 
 class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEventListener {
 
-    private var _binding: FragmentDownloadedBinding? = null
+    private var _binding: FragmentDownloadBinding? = null
     private val binding get() = _binding!!
     private var adapter: DownloadedAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
@@ -32,14 +28,14 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDownloadedBinding.inflate(inflater, container, false)
+        _binding = FragmentDownloadBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.downloadedEpisodeLiveData.observe(viewLifecycleOwner) {
+        viewModel.downloadEpisodeLiveData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 it.forEach { downloaded ->
                     val file = File(downloaded.path)
@@ -71,13 +67,13 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
         _binding = null
     }
 
-    override fun onRemoveClick(downloaded: Downloaded) {
-        viewModel.removeFromDownloads(downloaded)
-        val file = File(downloaded.path)
+    override fun onRemoveClick(download: Download) {
+        viewModel.removeFromDownloads(download)
+        val file = File(download.path)
         file.delete()
     }
 
-    override fun onEpisodeClick(downloaded: Downloaded) {
+    override fun onEpisodeClick(download: Download) {
 //        val episode = Episode(
 //            downloaded.duration,
 //            downloaded.id,
@@ -93,7 +89,6 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
 
     override fun onResume() {
         super.onResume()
-
 
         FirebaseAnalytics.getInstance(requireContext())
             .logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {

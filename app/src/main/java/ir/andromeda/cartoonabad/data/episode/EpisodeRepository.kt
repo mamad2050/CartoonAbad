@@ -5,11 +5,11 @@ import io.reactivex.Single
 
 interface EpisodeRepository {
 
-    fun getFavoriteEpisodes(): Single<List<Episode>>
+    fun getBookmarkEpisodes(): Single<List<Episode>>
 
-    fun addToFavorite(episode: Episode): Completable
+    fun addToBookmark(episode: Episode): Completable
 
-    fun deleteFromFavorite(episode: Episode): Completable
+    fun deleteFromBookmark(episode: Episode): Completable
 
     fun getAllEpisodes(seriesId: String): Single<List<Episode>>
 

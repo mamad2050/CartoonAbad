@@ -6,15 +6,15 @@ import ir.andromeda.cartoonabad.services.http.ApiService
 
 class EpisodeRemoteDataSource(private val apiService: ApiService) : EpisodeDataSource {
 
-    override fun getFavoriteEpisodes(): Single<List<Episode>> {
+    override fun getBookmarkEpisodes(): Single<List<Episode>> {
         TODO("Not yet implemented")
     }
 
-    override fun addToFavorites(episode: Episode): Completable {
+    override fun addToBookmark(episode: Episode): Completable {
         TODO("Not yet implemented")
     }
 
-    override fun deleteFromFavorites(episode: Episode): Completable {
+    override fun deleteFromBookmark(episode: Episode): Completable {
         TODO("Not yet implemented")
     }
 

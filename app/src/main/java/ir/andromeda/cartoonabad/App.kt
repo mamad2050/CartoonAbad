@@ -23,8 +23,8 @@ import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeriesRemoteDataSou
 import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeriesRepository
 import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeriesRepositoryImpl
 import ir.andromeda.cartoonabad.data.db.AppDataBase
-import ir.andromeda.cartoonabad.data.download.DownloadedRepository
-import ir.andromeda.cartoonabad.data.download.DownloadedRepositoryImpl
+import ir.andromeda.cartoonabad.data.download.DownloadRepository
+import ir.andromeda.cartoonabad.data.download.DownloadRepositoryImpl
 import ir.andromeda.cartoonabad.data.episode.EpisodeRemoteDataSource
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepository
 import ir.andromeda.cartoonabad.data.episode.EpisodeRepositoryImpl
@@ -46,7 +46,7 @@ import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepositoryImpl
 import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonViewModel
 import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
-import ir.andromeda.cartoonabad.feature.favorite.FavoriteViewModel
+import ir.andromeda.cartoonabad.feature.bookmark.BookmarkViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.genre.GenreViewModel
@@ -141,7 +141,7 @@ class App : Application() {
 
             factory<MessageRepository> { MessageRepositoryImpl(MessageRemoteDataSource(get())) }
 
-            factory<DownloadedRepository> { DownloadedRepositoryImpl(get<AppDataBase>().downloadDao()) }
+            factory<DownloadRepository> { DownloadRepositoryImpl(get<AppDataBase>().downloadDao()) }
 
             factory<GenreRepository> { GenreRepositoryImpl(GenreRemoteDataSource(get())) }
 
@@ -173,7 +173,7 @@ class App : Application() {
             }
 
             viewModel { HomeViewModel(get(), get(), get(), get()) }
-            viewModel { FavoriteViewModel(get()) }
+            viewModel { BookmarkViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
             viewModel { SubscriptionViewModel(get()) }

@@ -9,10 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +20,7 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
-import ir.andromeda.cartoonabad.data.download.Downloaded
+import ir.andromeda.cartoonabad.data.download.Download
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.databinding.ActivityDetailSeriesBinding
@@ -320,7 +318,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                 .toString() + "/CartoonAbad/" + episode.url.substringAfterLast('/')
 
-        val downloaded = Downloaded(
+        val download = Download(
             episode.duration,
             episode.id,
             episode.image,
@@ -328,7 +326,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             episode.seasonId,
             path
         )
-        viewModel.addEpisodeToDownloads(downloaded)
+        viewModel.addEpisodeToDownloads(download)
 
     }
 

@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.favorite
+package ir.andromeda.cartoonabad.feature.bookmark
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,27 +11,27 @@ import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CartoonAbadFragment
 import ir.andromeda.cartoonabad.common.EXTRA_KEY_ID
 import ir.andromeda.cartoonabad.data.episode.Episode
-import ir.andromeda.cartoonabad.databinding.FragmentFavoriteBinding
+import ir.andromeda.cartoonabad.databinding.FragmentBookmarkBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventListener {
+class BookmarkFragment : CartoonAbadFragment(), BookmarkAdapter.EpisodeEventListener {
 
-    private var _binding: FragmentFavoriteBinding? = null
+    private var _binding: FragmentBookmarkBinding? = null
     private val binding get() = _binding!!
-    private var adapter: FavoriteAdapter? = null
+    private var adapter: BookmarkAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
-    private val viewModel: FavoriteViewModel by viewModel()
+    private val viewModel: BookmarkViewModel by viewModel()
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,9 +41,9 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
         viewModel.episodesLiveData.observe(viewLifecycleOwner) {
 
             if (it.isNotEmpty()) {
-                binding.rvFavorites.layoutManager = LinearLayoutManager(requireContext())
-                adapter = FavoriteAdapter(it as ArrayList, imageLoadingService, this)
-                binding.rvFavorites.adapter = adapter
+                binding.rvBookmark.layoutManager = LinearLayoutManager(requireContext())
+                adapter = BookmarkAdapter(it as ArrayList, imageLoadingService, this)
+                binding.rvBookmark.adapter = adapter
                 Timber.i(it.toString())
             }
         }
@@ -61,7 +61,7 @@ class FavoriteFragment : CartoonAbadFragment(), FavoriteAdapter.EpisodeEventList
     }
 
     override fun onRemoveClick(episode: Episode) {
-        viewModel.removeFromFavorite(episode)
+        viewModel.removeFromBookmark(episode)
     }
 
     override fun onEpisodeClick(episode: Episode) {

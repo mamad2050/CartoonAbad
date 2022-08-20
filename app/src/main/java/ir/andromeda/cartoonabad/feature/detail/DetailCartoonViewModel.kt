@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
 import ir.andromeda.cartoonabad.data.cartoon.CartoonRepository
-import ir.andromeda.cartoonabad.data.download.DownloadedRepository
+import ir.andromeda.cartoonabad.data.download.DownloadRepository
 
 class DetailCartoonViewModel(
     bundle: Bundle,
     cartoonRepository: CartoonRepository,
-    private val downloadRepository: DownloadedRepository
+    private val downloadRepository: DownloadRepository
 ) :
     CartoonAbadViewModel() {
 
