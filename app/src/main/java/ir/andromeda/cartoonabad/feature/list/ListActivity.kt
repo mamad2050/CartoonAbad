@@ -106,13 +106,13 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
         })
     }
 
-    override fun clickOnSeries(series: Series) {
+    override fun onSeriesClick(series: Series) {
         startActivity(Intent(this, DetailSeriesActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, series.id)
         })
     }
 
-    override fun clickOnCartoon(cartoon: Cartoon) {
+    override fun onCartoonClick(cartoon: Cartoon) {
         startActivity(Intent(this, DetailCartoonActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, cartoon.id)
         })

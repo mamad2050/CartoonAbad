@@ -63,6 +63,9 @@ interface ApiService {
     @GET("genres/list")
     fun getGenres(): Single<List<Genre>>
 
+    @GET("genres/{title}")
+    fun getByGenre(@Path("title")title : String): Single<List<CombinedCartoonSeries>>
+
     @GET("search/{query}")
     fun getSearchResult(@Path("query") word: String): Single<List<CombinedCartoonSeries>>
 

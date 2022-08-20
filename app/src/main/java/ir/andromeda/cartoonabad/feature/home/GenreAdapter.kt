@@ -10,7 +10,8 @@ import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 
 class GenreAdapter(
     private val genresList: ArrayList<Genre>,
-    private val imageLoadingService: ImageLoadingService
+    private val imageLoadingService: ImageLoadingService,
+    private val listener: OnGenreEventListener
 ) : RecyclerView.Adapter<GenreAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -30,9 +31,17 @@ class GenreAdapter(
             imageLoadingService.load(binding.ivGenre, genre.image)
             binding.tvGenreTitle.text = genre.title
             binding.root.implementSpringAnimationTrait()
-            binding.root.setOnClickListener {  }
+            binding.root.setOnClickListener { }
+
+            binding.root.setOnClickListener {
+                listener.onGenreClick(genre)
+            }
 
         }
+    }
+
+    interface OnGenreEventListener {
+        fun onGenreClick(genre: Genre)
     }
 
 }

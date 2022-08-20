@@ -52,7 +52,7 @@ class SeriesAdapter(
             binding.root.implementSpringAnimationTrait()
 
             binding.root.setOnClickListener {
-                onSeriesItemEventListener.clickOnSeries(series)
+                onSeriesItemEventListener.onSeriesClick(series)
             }
         }
     }
@@ -69,6 +69,6 @@ class SeriesAdapter(
     }
 
     interface OnSeriesItemEventListener {
-        fun clickOnSeries(series: Series)
+        fun onSeriesClick(series: Series)
     }
 }

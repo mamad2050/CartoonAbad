@@ -10,7 +10,7 @@ data class Cartoon(
     val id: String,
     val description: String,
     val duration: String,
-    val genre_id: String,
+    val genre_id: List<String>,
     val image: String,
     val name: String,
     val rate: Double,

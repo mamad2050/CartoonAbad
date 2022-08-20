@@ -13,6 +13,6 @@ data class Series(
     val banner: String,
     val description: String,
     val rate: String,
-    val genre_id: String,
+    val genre_id: List<String>,
     val views: Int,
 ) : Parcelable

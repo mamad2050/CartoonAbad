@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.common.ItemScale
-import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
-import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
 
@@ -53,7 +51,7 @@ class CartoonAdapter(
             binding.root.implementSpringAnimationTrait()
 
             binding.root.setOnClickListener {
-                onCartoonItemEventListener.clickOnCartoon(cartoon)
+                onCartoonItemEventListener.onCartoonClick(cartoon)
             }
 
         }
@@ -71,7 +69,7 @@ class CartoonAdapter(
     }
 
     interface OnCartoonItemEventListener {
-        fun clickOnCartoon(cartoon: Cartoon)
+        fun onCartoonClick(cartoon: Cartoon)
     }
 }
 

@@ -1,21 +1,26 @@
 package ir.andromeda.cartoonabad.feature.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.GridLayoutManager
-import ir.andromeda.cartoonabad.common.CartoonAbadActivity
+import ir.andromeda.cartoonabad.common.*
+import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.databinding.ActivitySearchBinding
+import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
+import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity : CartoonAbadActivity() {
+class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoonSeries> {
 
     private lateinit var binding: ActivitySearchBinding
-    private val viewModel: SearchViewModel by inject()
-    private val adapter = SearchAdapter(get())
+    private val viewModel: SearchViewModel by viewModel()
+    private val adapter = CombinedCartoonSeriesAdapter(get(),this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +45,6 @@ class SearchActivity : CartoonAbadActivity() {
             }
             override fun onTextChanged(word: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (word!!.isEmpty()) adapter.clear()
-//                else viewModel.search(word.toString())
             }
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -54,7 +58,20 @@ class SearchActivity : CartoonAbadActivity() {
         }
 
         viewModel.searchLiveData.observe(this) {
-            adapter.updateData(it)
+            adapter.setData(it as ArrayList<CombinedCartoonSeries> )
+        }
+    }
+
+    override fun clickOnItem(item: CombinedCartoonSeries) {
+        if (item.type == CARTOON) {
+            startActivity(Intent(this, DetailCartoonActivity::class.java).apply {
+                putExtra(EXTRA_KEY_ID, item.id)
+            })
+        }
+        if (item.type == SERIES) {
+            startActivity(Intent(this, DetailSeriesActivity::class.java).apply {
+                putExtra(EXTRA_KEY_ID, item.id)
+            })
         }
     }
 }

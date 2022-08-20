@@ -8,7 +8,7 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/genre"
+        android:id="@+id/bookmark"
         android:enabled="true"
         android:icon="@drawable/ic_bookmark_fill"
         android:title="@string/bookmarks" />

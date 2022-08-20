@@ -21,11 +21,13 @@ import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.banner.Banner
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.FragmentHomeBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
+import ir.andromeda.cartoonabad.feature.genre.GenreActivity
 import ir.andromeda.cartoonabad.feature.list.ListActivity
 import ir.andromeda.cartoonabad.feature.search.SearchActivity
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
@@ -41,7 +43,8 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : CartoonAbadFragment(),
-    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener {
+    SeriesAdapter.OnSeriesItemEventListener, CartoonAdapter.OnCartoonItemEventListener,
+    GenreAdapter.OnGenreEventListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -99,7 +102,7 @@ class HomeFragment : CartoonAbadFragment(),
         viewModel.genresLiveData.observe(viewLifecycleOwner) {
             binding.rvGenres.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            genresAdapter = GenreAdapter(it as ArrayList<Genre>, imageLoadingService)
+            genresAdapter = GenreAdapter(it as ArrayList<Genre>, imageLoadingService, this)
             binding.rvGenres.adapter = genresAdapter
         }
 
@@ -267,18 +270,25 @@ class HomeFragment : CartoonAbadFragment(),
 ////        }
 //    }
 
-    override fun clickOnSeries(series: Series) {
+    override fun onSeriesClick(series: Series) {
         startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, series.id)
         })
 //        requestBannerAd()
     }
 
-    override fun clickOnCartoon(cartoon: Cartoon) {
+    override fun onCartoonClick(cartoon: Cartoon) {
         startActivity(Intent(requireActivity(), DetailCartoonActivity::class.java).apply {
             putExtra(EXTRA_KEY_ID, cartoon.id)
         })
 //        requestBannerAd()
+    }
+
+
+    override fun onGenreClick(genre: Genre) {
+        startActivity(Intent(requireActivity(), GenreActivity::class.java).apply {
+            putExtra(EXTRA_KEY_TITLE, genre.title)
+        })
     }
 
 
@@ -313,5 +323,6 @@ class HomeFragment : CartoonAbadFragment(),
         super.onPause()
         handler.removeCallbacks(runnable)
     }
+
 
 }

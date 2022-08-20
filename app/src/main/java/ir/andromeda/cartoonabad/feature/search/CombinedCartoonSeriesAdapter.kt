@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.CARTOON
+import ir.andromeda.cartoonabad.common.OnItemEventListener
 import ir.andromeda.cartoonabad.common.SERIES
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 
-class SearchAdapter(
-    private val imageLoadingService: ImageLoadingService
-) : RecyclerView.Adapter<SearchAdapter.Holder>() {
+class CombinedCartoonSeriesAdapter(
+    private val imageLoadingService: ImageLoadingService,
+    private val listener: OnItemEventListener<CombinedCartoonSeries>
+) : RecyclerView.Adapter<CombinedCartoonSeriesAdapter.Holder>() {
 
     var result = ArrayList<CombinedCartoonSeries>()
 
@@ -54,7 +56,7 @@ class SearchAdapter(
                 binding.ivType.setImageResource(R.drawable.cartoon)
 
             binding.ivImage.setOnClickListener {
-
+                listener.clickOnItem(item)
             }
             binding.root.implementSpringAnimationTrait()
         }
@@ -66,9 +68,8 @@ class SearchAdapter(
         notifyDataSetChanged()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateData(data: List<CombinedCartoonSeries>) {
-        result = data as ArrayList<CombinedCartoonSeries>
+    fun setData(data: ArrayList<CombinedCartoonSeries>) {
+        result = data
         notifyDataSetChanged()
     }
 }

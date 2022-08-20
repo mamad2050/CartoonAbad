@@ -174,7 +174,6 @@ class App : Application() {
 
             viewModel { HomeViewModel(get(), get(), get(), get()) }
             viewModel { FavoriteViewModel(get()) }
-            viewModel { GenreViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
             viewModel { DownloadedViewModel(get()) }
             viewModel { SubscriptionViewModel(get()) }
@@ -190,6 +189,7 @@ class App : Application() {
             viewModel { (bundle: Bundle) -> DetailCartoonViewModel(bundle, get(), get()) }
             viewModel { (bundle: Bundle) -> ListViewModel(bundle, get(), get()) }
             viewModel { SearchViewModel(get()) }
+            viewModel { (bundle: Bundle) -> GenreViewModel(bundle, get()) }
         }
 
         startKoin {
