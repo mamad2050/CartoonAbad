@@ -6,14 +6,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Cartoon(
-    @SerializedName("_id")
-    val id: String,
-    val description: String,
-    val duration: String,
-    val genre_id: List<String>,
-    val image: String,
-    val name: String,
-    val rate: Double,
-    val url: String,
-    val views: Int
+    @SerializedName("_id") val id: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("duration") val duration: String,
+    @SerializedName("_id") val image: String,
+    @SerializedName("image") val name: String,
+    @SerializedName("rate") val rate: Double,
+    @SerializedName("url") val url: String,
+    @SerializedName("views") val views: Int,
+    @SerializedName("genres") val genres: List<String>
 ) : Parcelable
