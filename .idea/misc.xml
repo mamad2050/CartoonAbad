@@ -30,6 +30,7 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_share.xml" value="0.138" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_shop_white_24dp.xml" value="0.148" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_star_shape.xml" value="0.138" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_benefits.xml" value="0.185" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.18020833333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_download_in_splash.xml" value="0.121" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_item_episode.xml" value="0.19166666666666668" />
@@ -56,6 +57,7 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_list.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_purchase.xml" value="0.16666666666666666" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_search.xml" value="0.1765625" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_subscription.xml" value="0.1765625" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_animation.xml" value="0.4466666666666667" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_cartoon_series.xml" value="0.5" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_episode.xml" value="0.4466666666666667" />
