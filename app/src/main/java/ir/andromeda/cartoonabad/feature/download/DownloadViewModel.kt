@@ -26,7 +26,7 @@ class DownloadViewModel(private val repository: DownloadRepository) :
             .asyncNetworkRequest()
             .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
                 override fun onComplete() {
-                    Timber.i("Removed")
+                    Timber.i("Item Removed")
                 }
             })
         getDownloadedEpisodes()

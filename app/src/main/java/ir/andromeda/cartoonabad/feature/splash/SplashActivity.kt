@@ -89,9 +89,4 @@ class SplashActivity : CartoonAbadActivity(), SwipeRefreshLayout.OnRefreshListen
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.i("destroyedddddddddd")
-    }
 }

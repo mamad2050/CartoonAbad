@@ -13,14 +13,13 @@ import ir.andromeda.cartoonabad.databinding.ActivitySearchBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoonSeries> {
 
     private lateinit var binding: ActivitySearchBinding
     private val viewModel: SearchViewModel by viewModel()
-    private val adapter = CombinedCartoonSeriesAdapter(get(),this)
+    private val adapter = CombinedCartoonSeriesAdapter(get(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +42,14 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(word: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (word!!.isEmpty()) adapter.clear()
+                if (word!!.isEmpty()) {
+                    adapter.clear()
+                    binding.layoutSearchNotFound.visibility = View.GONE
+                }
             }
+
             override fun afterTextChanged(p0: Editable?) {
             }
         })
@@ -58,7 +62,21 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
         }
 
         viewModel.searchLiveData.observe(this) {
-            adapter.setData(it as ArrayList<CombinedCartoonSeries> )
+            if (it.isEmpty()) {
+                binding.layoutSearchNotFound.visibility = View.GONE
+            } else {
+                adapter.setData(it as ArrayList<CombinedCartoonSeries>)
+                binding.rvResult.visibility = View.VISIBLE
+            }
+        }
+
+
+        viewModel.showNotFoundState.observe(this) {
+            if (it) {
+                binding.layoutSearchNotFound.visibility = View.VISIBLE
+            } else {
+                binding.layoutSearchNotFound.visibility = View.GONE
+            }
         }
     }
 

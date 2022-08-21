@@ -71,4 +71,34 @@
         app:SpinKit_Style="FadingCircle" />
 
 
+    <LinearLayout
+        android:id="@+id/layout_search_not_found"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-56dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/not_found" />
+
+        <TextView
+            android:id="@+id/emptyStateMessageTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center_horizontal"
+            android:text="@string/not_found"
+            android:textAppearance="?textAppearanceHeadline5"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

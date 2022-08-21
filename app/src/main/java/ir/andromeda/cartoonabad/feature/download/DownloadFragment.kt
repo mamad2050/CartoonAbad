@@ -35,6 +35,7 @@ class DownloadFragment : CartoonAbadFragment(), DownloadAdapter.EpisodeEventList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         Toast.makeText(requireContext(), "Download", Toast.LENGTH_SHORT).show()
 
         viewModel.downloadEpisodeLiveData.observe(viewLifecycleOwner) {
@@ -48,6 +49,7 @@ class DownloadFragment : CartoonAbadFragment(), DownloadAdapter.EpisodeEventList
                 }
                 if (it.isEmpty())
                     showEmptyState(R.layout.view_download_empty_state)
+
                 binding.rvDownloads.layoutManager = LinearLayoutManager(requireContext())
                 adapter = DownloadAdapter(it as ArrayList, imageLoadingService, this)
                 binding.rvDownloads.adapter = adapter

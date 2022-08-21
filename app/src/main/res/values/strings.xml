@@ -12,7 +12,7 @@
     <string name="no_account">شما هیچ اشتراکی ندارید!</string>
     <string name="episodes_size">تعداد قسمت :</string>
     <string name="choose_app">برنامه ای را انتخاب کنید</string>
-    <string name="empty_state_favorite">هنوز چیزی به علاقه مندی هات اضافه نکردی :)</string>
+    <string name="empty_state_favorite">هنوز چیزی به نشان شده هات اضافه نکردی :)</string>
     <string name="empty_state_download">هنوز یه قسمتم دانلود نکردی :)</string>
     <string name="install_bazaar_app">لطفا برنامه ی کافه بازار را نصب کنید</string>
     <string name="error_in_purchase">مشکل در پرداخت</string>
@@ -71,5 +71,6 @@
     <string name="select_season">فصل را انتخاب کنید</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="not_found">چیزی پیدا نشد !</string>
 
 </resources>

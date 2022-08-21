@@ -52,7 +52,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/shape_download_in_splash"
-
             android:orientation="vertical"
             android:visibility="gone"
             app:layout_anchor="@+id/isOfflineLayout"

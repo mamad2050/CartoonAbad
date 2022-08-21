@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -172,8 +173,7 @@ class HomeFragment : CartoonAbadFragment(),
         binding.ivSearch.setOnClickListener {
             startActivity(Intent(requireActivity(), SearchActivity::class.java))
         }
-
-
+         
     }
 
     val runnable = Runnable {
