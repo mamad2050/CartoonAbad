@@ -22,6 +22,7 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.download.Download
 import ir.andromeda.cartoonabad.data.episode.Episode
+import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.databinding.ActivityDetailSeriesBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
@@ -55,6 +56,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
     private var adResponseId: String? = null
 
     private val episodeAdapter by lazy { EpisodeAdapter(imageLoadingService, this) }
+    private val genreAdapter by lazy { GenreInDetailAdapter() }
 
     private var selectedSeasonId: String = ""
     private var episodeList = listOf<Episode>()
@@ -73,6 +75,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             binding.tvRate.text = "امتیاز ${it.rate} / 10"
             binding.tvDescription.text = it.description
             imageLoadingService.load(binding.ivImage, it.banner)
+            genreAdapter.genres = it.genres as ArrayList<String>
         }
 
         viewModel.progressBarLiveData.observe(this) {
@@ -108,6 +111,10 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
         binding.rvEpisodes.adapter = episodeAdapter
         binding.rvEpisodes.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+        binding.rvGenre.adapter = genreAdapter
+        binding.rvGenre.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
