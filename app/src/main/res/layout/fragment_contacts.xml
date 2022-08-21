@@ -15,8 +15,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:layout_scrollFlags="enterAlways|scroll">
+            android:layout_height="?actionBarSize">
 
             <TextView
                 android:id="@+id/tvTitleToolbar"
@@ -44,9 +43,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
+        android:paddingVertical="16dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout

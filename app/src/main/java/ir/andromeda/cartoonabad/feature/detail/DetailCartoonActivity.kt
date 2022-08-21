@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import ir.andromeda.cartoonabad.R
@@ -43,6 +45,7 @@ class DetailCartoonActivity : CartoonAbadActivity() {
     private var adResponseId: String? = null
 
     private lateinit var cartoon: Cartoon
+    private val genreAdapter by lazy { GenreInDetailAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,12 +60,13 @@ class DetailCartoonActivity : CartoonAbadActivity() {
             onBackPressed()
         }
 
-        viewModel.cartoonLiveData.observe(this) { cartoon ->
-            binding.tvName.text = cartoon.name
-            binding.tvRate.text = "امتیاز ${cartoon.rate} / 10"
-            binding.tvDescription.text = cartoon.description
-            imageLoadingService.load(binding.ivImage, cartoon.image)
-            this.cartoon = cartoon
+        viewModel.cartoonLiveData.observe(this) {
+            binding.tvName.text = it.name
+            binding.tvRate.text = "امتیاز ${it.rate} / 10"
+            binding.tvDescription.text = it.description
+            imageLoadingService.load(binding.ivImage, it.image)
+            genreAdapter.genres = it.genres as ArrayList<String>
+            cartoon = it
         }
 
         binding.btnPlayCartoon.setOnClickListener {
@@ -75,6 +79,9 @@ class DetailCartoonActivity : CartoonAbadActivity() {
                 })
             }
         }
+
+        binding.rvGenre.adapter = genreAdapter
+        binding.rvGenre.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
 
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permission ->

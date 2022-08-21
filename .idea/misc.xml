@@ -106,14 +106,15 @@
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_selected_plan.xml" value="0.175" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_series_and_cartoon_image.xml" value="0.189" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/drawable/shape_transparent.xml" value="0.1195" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_cartoon.xml" value="0.25" />
-        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_series.xml" value="0.33" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_cartoon.xml" value="0.22" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_detail_series.xml" value="0.1" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_player.xml" value="0.14907407407407408" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/custom_player_control_view.xml" value="0.33" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/dialog_alert_purchase.xml" value="0.33" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/dialog_alert_update.xml" value="0.33" />
+        <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_account.xml" value="0.16973065412569474" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_contacts.xml" value="0.33" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/Mohammad/AndroidStudioProjects/CartoonAbad/app/src/main/res/layout/fragment_home.xml" value="0.25" />
