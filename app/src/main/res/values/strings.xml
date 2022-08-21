@@ -68,7 +68,7 @@
     <string name="latest_cartoons">جدیدترین کارتون ها</string>
     <string name="popular_cartoons">پربازدیدترین کارتون ها</string>
     <string name="popular_series">پربازدیدترین سریال ها</string>
-    <string name="select_season">فصل را انتخاب کنید</string>
+    <string name="select_season">انتخاب فصل</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="not_found">چیزی پیدا نشد !</string>

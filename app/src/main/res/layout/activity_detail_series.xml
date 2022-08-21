@@ -108,7 +108,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:fitsSystemWindows="true"
-            android:foreground="@drawable/foreground_series_and_cartoon_image"
+            android:foreground="@drawable/foreground_image_detail"
             app:actualImageScaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

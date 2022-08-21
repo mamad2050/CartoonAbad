@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     tools:context=".feature.account.AccountFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,9 +14,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            android:layout_width="72dp"
-
-            android:layout_height="72dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_marginTop="64dp"
             android:src="@drawable/avatar"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,12 +36,12 @@
 
 
         <ImageView
-            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_baseline_edit_24"
             app:layout_constraintBottom_toBottomOf="@+id/textView10"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
+            app:layout_constraintEnd_toStartOf="@+id/textView10"
             app:layout_constraintTop_toTopOf="@+id/textView10" />
 
         <LinearLayout
