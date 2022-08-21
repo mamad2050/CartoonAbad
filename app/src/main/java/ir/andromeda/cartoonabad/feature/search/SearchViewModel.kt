@@ -15,17 +15,16 @@ class SearchViewModel(private val repository: CombinedCartoonSeriesRepository) :
 
     fun search(word: String) {
         progressBarLiveData.value = true
+        showNotFoundState.value = false
         repository.getSearchResult(word).asyncNetworkRequest()
             .doFinally { progressBarLiveData.postValue(false) }
             .subscribe(object :
                 CartoonAbadSingleObserver<List<CombinedCartoonSeries>>(compositeDisposable) {
                 override fun onSuccess(t: List<CombinedCartoonSeries>) {
-                    if (t.isNotEmpty()){
-                        searchLiveData.value = t
-                        showNotFoundState.value = false
-                    }
-                    else
+                    if (t.isEmpty())
                         showNotFoundState.value = true
+                    else
+                        searchLiveData.value = t
                 }
             })
     }

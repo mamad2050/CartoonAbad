@@ -62,17 +62,12 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
         }
 
         viewModel.searchLiveData.observe(this) {
-            if (it.isEmpty()) {
-                binding.layoutSearchNotFound.visibility = View.GONE
-            } else {
-                adapter.setData(it as ArrayList<CombinedCartoonSeries>)
-                binding.rvResult.visibility = View.VISIBLE
-            }
+            adapter.setData(it as ArrayList<CombinedCartoonSeries>)
         }
-
 
         viewModel.showNotFoundState.observe(this) {
             if (it) {
+                adapter.clear()
                 binding.layoutSearchNotFound.visibility = View.VISIBLE
             } else {
                 binding.layoutSearchNotFound.visibility = View.GONE
