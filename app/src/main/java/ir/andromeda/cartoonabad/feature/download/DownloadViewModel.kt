@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.dwnloaded
+package ir.andromeda.cartoonabad.feature.download
 
 import androidx.lifecycle.MutableLiveData
 import ir.andromeda.cartoonabad.common.CartoonAbadCompletableObserver
@@ -10,7 +10,7 @@ import ir.andromeda.cartoonabad.data.download.Download
 import ir.andromeda.cartoonabad.data.download.DownloadRepository
 import timber.log.Timber
 
-class DownloadedViewModel(private val repository: DownloadRepository) :
+class DownloadViewModel(private val repository: DownloadRepository) :
     CartoonAbadViewModel() {
 
     val downloadEpisodeLiveData = MutableLiveData<MutableList<Download>>()

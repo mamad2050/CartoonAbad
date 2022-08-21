@@ -80,23 +80,4 @@ class HomeViewModel(
             })
     }
 
-//    fun showAnimationList() {
-//        progressBarLiveData.value = true
-//
-//        animationRepository.getAnimations()
-//            .doFinally { progressBarLiveData.postValue(false) }
-//            .asyncNetworkRequest()
-//            .subscribe(object : CartoonAbadSingleObserver<List<Animation>>(compositeDisposable) {
-//                override fun onSuccess(t: List<Animation>) {
-//                    animationsLiveData.value = t
-//                    Timber.i(t.toString())
-//                }
-//            })
-//    }
-
-//    fun getVersionNumber(): Single<AppData> {
-//        return animationRepository.getVersion()
-//    }
-
-
 }

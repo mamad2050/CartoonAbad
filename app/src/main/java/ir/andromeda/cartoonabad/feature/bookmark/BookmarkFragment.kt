@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
@@ -37,9 +38,9 @@ class BookmarkFragment : CartoonAbadFragment(), BookmarkAdapter.EpisodeEventList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(), "Bookmark",Toast.LENGTH_SHORT).show()
 
         viewModel.episodesLiveData.observe(viewLifecycleOwner) {
-
             if (it.isNotEmpty()) {
                 binding.rvBookmark.layoutManager = LinearLayoutManager(requireContext())
                 adapter = BookmarkAdapter(it as ArrayList, imageLoadingService, this)

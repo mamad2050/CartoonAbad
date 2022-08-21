@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bookmark"
-    app:startDestination="@id/favoriteFragment">
+    app:startDestination="@id/bookmarkFragment">
 
     <fragment
-        android:id="@+id/favoriteFragment"
+        android:id="@+id/bookmarkFragment"
         android:name="ir.andromeda.cartoonabad.feature.bookmark.BookmarkFragment"
-        android:label="FavoriteFragment" />
+        android:label="BookmarkFragment" />
 
 </navigation>

@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/download"
-    app:startDestination="@id/downloadedFragment">
+    app:startDestination="@id/downloadFragment">
 
     <fragment
-        android:id="@+id/downloadedFragment"
-        android:name="ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment"
-        android:label="DownloadedFragment" />
+        android:id="@+id/downloadFragment"
+        android:name="ir.andromeda.cartoonabad.feature.download.DownloadFragment"
+        android:label="DownloadFragment" />
 
 </navigation>

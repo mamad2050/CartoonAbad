@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.dwnloaded
+package ir.andromeda.cartoonabad.feature.download
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +11,13 @@ import ir.andromeda.cartoonabad.data.download.Download
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.view.CartoonAbadImageView
 
-class DownloadedAdapter(
+class DownloadAdapter(
 
     private val downloadList: MutableList<Download>,
     private val imageLoadingService: ImageLoadingService,
     private val listener: EpisodeEventListener
 
-) : RecyclerView.Adapter<DownloadedAdapter.Holder>() {
+) : RecyclerView.Adapter<DownloadAdapter.Holder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {

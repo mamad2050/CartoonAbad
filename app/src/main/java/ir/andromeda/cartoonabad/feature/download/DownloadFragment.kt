@@ -1,9 +1,10 @@
-package ir.andromeda.cartoonabad.feature.dwnloaded
+package ir.andromeda.cartoonabad.feature.download
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import ir.andromeda.cartoonabad.R
@@ -16,13 +17,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
 
-class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEventListener {
+class DownloadFragment : CartoonAbadFragment(), DownloadAdapter.EpisodeEventListener {
 
     private var _binding: FragmentDownloadBinding? = null
     private val binding get() = _binding!!
-    private var adapter: DownloadedAdapter? = null
+    private var adapter: DownloadAdapter? = null
     private val imageLoadingService: ImageLoadingService by inject()
-    private val viewModel: DownloadedViewModel by viewModel()
+    private val viewModel: DownloadViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,7 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(), "Download", Toast.LENGTH_SHORT).show()
 
         viewModel.downloadEpisodeLiveData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
@@ -47,7 +49,7 @@ class DownloadedFragment : CartoonAbadFragment(), DownloadedAdapter.EpisodeEvent
                 if (it.isEmpty())
                     showEmptyState(R.layout.view_download_empty_state)
                 binding.rvDownloads.layoutManager = LinearLayoutManager(requireContext())
-                adapter = DownloadedAdapter(it as ArrayList, imageLoadingService, this)
+                adapter = DownloadAdapter(it as ArrayList, imageLoadingService, this)
                 binding.rvDownloads.adapter = adapter
                 Timber.i(it.toString())
             }

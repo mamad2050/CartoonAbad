@@ -84,7 +84,7 @@
                 android:background="?divider" />
 
             <fragment
-                android:name="ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedFragment"
+                android:name="ir.andromeda.cartoonabad.feature.download.DownloadFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp" />

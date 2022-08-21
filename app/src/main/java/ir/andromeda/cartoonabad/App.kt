@@ -45,7 +45,7 @@ import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepository
 import ir.andromeda.cartoonabad.data.subscription.SubscriptionRepositoryImpl
 import ir.andromeda.cartoonabad.feature.contacts.ContactsViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonViewModel
-import ir.andromeda.cartoonabad.feature.dwnloaded.DownloadedViewModel
+import ir.andromeda.cartoonabad.feature.download.DownloadViewModel
 import ir.andromeda.cartoonabad.feature.bookmark.BookmarkViewModel
 import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
@@ -175,7 +175,7 @@ class App : Application() {
             viewModel { HomeViewModel(get(), get(), get(), get()) }
             viewModel { BookmarkViewModel(get()) }
             viewModel { ContactsViewModel(get()) }
-            viewModel { DownloadedViewModel(get()) }
+            viewModel { DownloadViewModel(get()) }
             viewModel { SubscriptionViewModel(get()) }
             viewModel { (bundle: Bundle) ->
                 DetailSeriesViewModel(
