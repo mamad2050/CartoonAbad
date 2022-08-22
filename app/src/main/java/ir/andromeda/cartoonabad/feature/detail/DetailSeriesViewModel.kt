@@ -2,6 +2,7 @@ package ir.andromeda.cartoonabad.feature.detail
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import io.reactivex.schedulers.Schedulers
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.download.Download
@@ -12,6 +13,8 @@ import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.data.season.SeasonRepository
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.data.series.SeriesRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class DetailSeriesViewModel(
     private val bundle: Bundle,
@@ -31,8 +34,11 @@ class DetailSeriesViewModel(
 
     init {
         seriesId = bundle.getString(EXTRA_KEY_ID) ?: ""
-        showSeasons()
-        showEpisodes()
+        viewModelScope.launch {
+            showEpisodes()
+            delay(200)
+            showSeasons()
+        }
     }
 
     fun showSeasons() {
