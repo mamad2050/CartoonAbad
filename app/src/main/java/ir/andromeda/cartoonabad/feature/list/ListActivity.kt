@@ -104,6 +104,7 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
                 }
             }
         })
+
     }
 
     override fun onSeriesClick(series: Series) {

@@ -42,6 +42,7 @@
 
 
     <TextView
+
         android:textColor="@color/white"
         android:id="@+id/tv_rate"
         android:layout_width="24dp"

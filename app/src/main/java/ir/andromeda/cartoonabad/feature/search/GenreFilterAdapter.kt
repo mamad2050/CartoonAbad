@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.home
+package ir.andromeda.cartoonabad.feature.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,15 +10,15 @@ import ir.andromeda.cartoonabad.databinding.ItemGenreBinding
 import ir.andromeda.cartoonabad.databinding.ItemGenreFilterBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 
-class GenreAdapter(
+class GenreFilterAdapter(
     private val genresList: ArrayList<Genre>,
     private val imageLoadingService: ImageLoadingService,
     private val listener: OnGenreEventListener
-) : RecyclerView.Adapter<GenreAdapter.Holder>() {
+) : RecyclerView.Adapter<GenreFilterAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
-            ItemGenreBinding.inflate(
+            ItemGenreFilterBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -31,7 +31,7 @@ class GenreAdapter(
 
     override fun getItemCount(): Int = genresList.size
 
-    inner class Holder(private val binding: ItemGenreBinding) :
+    inner class Holder(private val binding: ItemGenreFilterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindGenre(genre: Genre) {
 

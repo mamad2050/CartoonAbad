@@ -5,12 +5,14 @@
       <map>
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable-v24/ic_profile_white.xml" value="0.1535" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/background_tv_search.xml" value="0.185" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/checked.xml" value="0.1605" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/foreground_genre_image.xml" value="0.1085" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/foreground_image_detail.xml" value="0.1565" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/foreground_item_search.xml" value="0.127" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/foreground_series_and_cartoon_image.xml" value="0.123" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.19583333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_baseline_arrow_right.xml" value="0.1535" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_baseline_check_circle_24.xml" value="0.1" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.19583333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_bookmark_fill_white.xml" value="0.185" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_bookmark_outline_white.xml" value="0.185" />
@@ -22,6 +24,8 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_exit.xml" value="0.138" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_favorite_white_24dp.xml" value="0.148" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_file_download_white_24dp.xml" value="0.19583333333333333" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_filter.xml" value="0.1195" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_filter_1.xml" value="0.1415" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_mail.xml" value="0.138" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_no_data.xml" value="0.2125" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_phone.xml" value="0.138" />
@@ -33,7 +37,11 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_share.xml" value="0.138" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_shop_white_24dp.xml" value="0.148" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_star_shape.xml" value="0.138" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/ic_unchecked_24.xml" value="0.1" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/selector_checkbox.xml" value="0.1" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_benefits.xml" value="0.185" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_button_checkbox.xml" value="0.17" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_checkbox.xml" value="0.1" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_circle.xml" value="0.18020833333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_download_in_splash.xml" value="0.121" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/drawable/shape_et_search.xml" value="0.1" />
@@ -49,7 +57,7 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_list.xml" value="0.22" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_player.xml" value="0.16666666666666666" />
-        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_search.xml" value="0.3333333333333333" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_search.xml" value="0.22" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/banner_container.xml" value="0.17552083333333332" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/custom_player_control_view.xml" value="0.1796875" />
@@ -58,6 +66,7 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_contacts.xml" value="0.23148148148148148" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_downloaded.xml" value="0.1" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_filter_bottom_sheet.xml" value="0.3333333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_list.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/fragment_purchase.xml" value="0.16666666666666666" />
@@ -69,8 +78,11 @@
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_episode.xml" value="0.4466666666666667" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_favorite.xml" value="0.3333333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_genre.xml" value="0.3333333333333333" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_genre_filter.xml" value="0.3333333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_season.xml" value="0.3333333333333333" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/item_topic.xml" value="0.17552083333333332" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.3333333333333333" />
+        <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/layout_filter_bottom_sheet.xml" value="0.14493373236425822" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/layout_header_nav_drawer.xml" value="0.4466666666666667" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/nativ_vid_template.xml" value="0.1796875" />
         <entry key="..\:/Programming/Android/Projects/Apps/CartoonAbad/app/src/main/res/layout/view_connection_lost.xml" value="0.26927083333333335" />

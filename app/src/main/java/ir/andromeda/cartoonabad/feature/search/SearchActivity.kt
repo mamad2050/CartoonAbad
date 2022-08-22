@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.databinding.ActivitySearchBinding
+import ir.andromeda.cartoonabad.feature.CombinedCartoonSeriesAdapter
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import org.koin.android.ext.android.get
@@ -80,9 +81,19 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
 
 
         binding.ivClearSearch.setOnClickListener {
-//            binding.ivClearSearch.visibility = View.GONE
             binding.etSearch.text.clear()
         }
+
+        binding.fabFilter.setOnClickListener {
+            showDialog()
+        }
+    }
+
+    private fun showDialog() {
+
+        val filterBottomSheet = FilterBottomSheetDialog()
+        filterBottomSheet.show(supportFragmentManager,"FILTER")
+
     }
 
     override fun clickOnItem(item: CombinedCartoonSeries) {

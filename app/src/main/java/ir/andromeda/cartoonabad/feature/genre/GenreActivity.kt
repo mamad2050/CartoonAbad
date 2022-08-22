@@ -8,7 +8,7 @@ import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
 import ir.andromeda.cartoonabad.databinding.ActivityGenreBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
-import ir.andromeda.cartoonabad.feature.search.CombinedCartoonSeriesAdapter
+import ir.andromeda.cartoonabad.feature.CombinedCartoonSeriesAdapter
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf

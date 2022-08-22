@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="@color/navy_blue"
+                android:backgroundTint="#8C73E0"
                 android:gravity="center"
                 android:minHeight="55dp"
                 android:text="@string/buy"

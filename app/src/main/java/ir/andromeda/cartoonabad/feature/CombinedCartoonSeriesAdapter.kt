@@ -1,4 +1,4 @@
-package ir.andromeda.cartoonabad.feature.search
+package ir.andromeda.cartoonabad.feature
 
 import android.annotation.SuppressLint
 import android.app.Activity

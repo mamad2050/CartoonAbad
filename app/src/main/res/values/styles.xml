@@ -20,4 +20,17 @@
 
     </style>
 
+    <style name="MyChipTextStyle">
+        <item name="font">@font/primary_regular</item>
+        <item name="fontFamily">@font/primary_regular</item>
+        <item name="android:fontFamily">@font/primary_regular</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="MyCustomCheckbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_checkbox</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 </resources>

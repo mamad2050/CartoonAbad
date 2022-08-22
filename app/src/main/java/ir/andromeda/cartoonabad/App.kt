@@ -51,6 +51,7 @@ import ir.andromeda.cartoonabad.feature.home.HomeViewModel
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesViewModel
 import ir.andromeda.cartoonabad.feature.genre.GenreViewModel
 import ir.andromeda.cartoonabad.feature.list.ListViewModel
+import ir.andromeda.cartoonabad.feature.search.FilterFragmentViewModel
 import ir.andromeda.cartoonabad.feature.subscription.SubscriptionViewModel
 import ir.andromeda.cartoonabad.feature.search.SearchViewModel
 import ir.andromeda.cartoonabad.services.http.createApiServiceInstance
@@ -190,6 +191,7 @@ class App : Application() {
             viewModel { (bundle: Bundle) -> ListViewModel(bundle, get(), get()) }
             viewModel { SearchViewModel(get()) }
             viewModel { (bundle: Bundle) -> GenreViewModel(bundle, get()) }
+            viewModel { FilterFragmentViewModel(get()) }
         }
 
         startKoin {
