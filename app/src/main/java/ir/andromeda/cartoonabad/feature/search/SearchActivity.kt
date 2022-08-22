@@ -39,6 +39,7 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
             }
         }
 
+
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -47,7 +48,10 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
                 if (word!!.isEmpty()) {
                     adapter.clear()
                     binding.layoutSearchNotFound.visibility = View.GONE
-                }
+                    binding.ivClearSearch.visibility = View.GONE
+                } else
+                    binding.ivClearSearch.visibility = View.VISIBLE
+
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -72,6 +76,12 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
             } else {
                 binding.layoutSearchNotFound.visibility = View.GONE
             }
+        }
+
+
+        binding.ivClearSearch.setOnClickListener {
+//            binding.ivClearSearch.visibility = View.GONE
+            binding.etSearch.text.clear()
         }
     }
 
