@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +42,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 import java.io.File
 
 class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
@@ -84,9 +86,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
 
         viewModel.episodesLiveData.observe(this) {
             episodeList = it
-            episodeAdapter.episodes = episodeList.filter { episode ->
-                episode.seasonId == selectedSeasonId
-            } as ArrayList<Episode>
+            Timber.tag("maaaaaaaaaaaaan").i("episodesLiveData")
         }
 
         viewModel.seasonsLiveData.observe(this) {
@@ -95,6 +95,10 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
             binding.autoTvSeason.setAdapter(adapter)
             binding.autoTvSeason.setText(binding.autoTvSeason.adapter.getItem(0).toString(), false)
             selectedSeasonId = it[0].id
+            Timber.tag("maaaaaaaaaaaaan").i("seasonsLiveData")
+            episodeAdapter.episodes = episodeList.filter { episode ->
+                episode.seasonId == selectedSeasonId
+            } as ArrayList<Episode>
         }
 
         binding.autoTvSeason.setOnItemClickListener { parent, _, position, _ ->
