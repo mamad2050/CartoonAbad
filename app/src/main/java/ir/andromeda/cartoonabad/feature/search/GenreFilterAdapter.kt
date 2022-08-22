@@ -1,12 +1,13 @@
 package ir.andromeda.cartoonabad.feature.search
 
+import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import ir.andromeda.cartoonabad.common.ItemScale
 import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
 import ir.andromeda.cartoonabad.data.genre.Genre
-import ir.andromeda.cartoonabad.databinding.ItemGenreBinding
 import ir.andromeda.cartoonabad.databinding.ItemGenreFilterBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 
@@ -26,6 +27,7 @@ class GenreFilterAdapter(
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: Holder, position: Int) =
         holder.bindGenre(genresList[position])
 
@@ -33,6 +35,7 @@ class GenreFilterAdapter(
 
     inner class Holder(private val binding: ItemGenreFilterBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @RequiresApi(Build.VERSION_CODES.M)
         fun bindGenre(genre: Genre) {
 
             imageLoadingService.load(binding.ivGenre, genre.image)
@@ -42,6 +45,10 @@ class GenreFilterAdapter(
 
             binding.root.setOnClickListener {
                 listener.onGenreClick(genre)
+            }
+
+            binding.root.setOnClickListener {
+//                binding.ivGenre.foreground = it.
             }
 
         }

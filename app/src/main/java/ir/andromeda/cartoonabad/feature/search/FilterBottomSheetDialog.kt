@@ -1,9 +1,11 @@
 package ir.andromeda.cartoonabad.feature.search
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.andromeda.cartoonabad.data.genre.Genre
@@ -47,6 +49,9 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment(),
             binding.rvGenres.adapter = genreFilterAdapter
         }
 
+        binding.chipMostViewed.typeface = binding.rbSeries.typeface
+        binding.chipLatest.typeface = binding.rbSeries.typeface
+        binding.chipImdb.typeface = binding.rbSeries.typeface
 
     }
 

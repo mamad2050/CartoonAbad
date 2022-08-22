@@ -22,27 +22,28 @@
         style="@style/MyCustomCheckbox"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layoutDirection="ltr"
         android:layout_marginHorizontal="8dp"
+        android:layoutDirection="ltr"
         android:text="همه"
         android:textColor="@color/white" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         style="@style/MyCustomCheckbox"
-        android:layoutDirection="ltr"
+        android:id="@+id/rb_series"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginHorizontal="8dp"
+        android:layoutDirection="ltr"
         android:text="سریال"
         android:textColor="@color/white" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         style="@style/MyCustomCheckbox"
-        android:layout_marginHorizontal="8dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="کارتون"
+        android:layout_marginHorizontal="8dp"
         android:layoutDirection="ltr"
+        android:text="کارتون"
 
         android:textColor="@color/white" />
 
@@ -71,21 +72,27 @@
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_most_viewed"
+            style="@style/MyCustomChipStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/light_black"
             android:text="بیشترین بازدید" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_latest"
+            style="@style/MyCustomChipStyle"
+            android:backgroundTint="@color/light_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
             android:text="جدیدترین" />
 
         <com.google.android.material.chip.Chip
+            android:id="@+id/chip_imdb"
+            style="@style/MyCustomChipStyle"
+            android:backgroundTint="@color/light_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
             android:text="امتیاز IMDb" />
 
     </com.google.android.material.chip.ChipGroup>
@@ -107,9 +114,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_genres"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:clipToPadding="false" />
