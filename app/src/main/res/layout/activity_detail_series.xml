@@ -148,8 +148,9 @@
             android:id="@+id/tvRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
             android:textAppearance="?textAppearanceBody1"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="320dp"
             tools:text="امتیاز 8 / 10" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
