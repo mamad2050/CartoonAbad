@@ -20,10 +20,6 @@ const val SORT_BY_LATEST = "latest"
 const val SORT_BY_VIEW = "view"
 const val SORT_BY_IMDB = "imdb"
 
-const val FILTER_BY_LATEST = "latest"
-const val FILTER_BY_VIEW = "view"
-const val FILTER_BY_IMDB = "imdb"
-
 const val MOST_VIEWED_SERIES = "most_viewed_series"
 const val LATEST_SERIES = "latest_series"
 const val MOST_VIEWED_CARTOONS = "most_viewed_cartoons"

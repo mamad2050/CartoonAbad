@@ -17,7 +17,7 @@ import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FilterBottomSheetDialog(
-    val listener: OnFilterListener
+    private val listener: OnFilterListener
 ) : BottomSheetDialogFragment(),
     GenreFilterAdapter.OnGenreEventListener {
 

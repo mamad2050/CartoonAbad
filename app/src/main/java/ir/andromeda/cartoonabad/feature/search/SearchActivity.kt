@@ -25,6 +25,7 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
     private val adapter = CombinedCartoonSeriesAdapter(get(), this)
     private val filterBottomSheet = FilterBottomSheetDialog(this)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)

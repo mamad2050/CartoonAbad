@@ -7,7 +7,8 @@
 
     <style name="NavigationDrawerTextStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/primary_regular</item>
-    </style>c
+    </style>
+    c
 
     <style name="MyTextInputLayout" parent="ThemeOverlay.AppCompat">
         <item name="colorPrimary">@color/white</item>
@@ -21,17 +22,10 @@
     </style>
 
 
-    <style name="MyCustomChipStyle" parent="Base.Widget.MaterialComponents.Chip">
-        <item name="android:checkable">true</item>
-        <item name="chipIconVisible">false</item>
+    <style name="MyCustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
         <item name="checkedIconVisible">false</item>
-        <item name="closeIconVisible">false</item>
-        <item name="android:fontFamily">@font/primary_regular</item>
-        <item name="fontFamily">@font/primary_regular</item>
-        <item name="android:textColor">@drawable/selector_choice_chip_text</item>
-        <item name="chipBackgroundColor">@color/selector_choice_chip_background</item>
-        <item name="rippleColor">@color/navy_blue</item>
-
     </style>
 
 
