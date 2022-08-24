@@ -258,4 +258,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center|bottom"
+        android:textColor="?android:textColorSecondary"
+        android:text="نسخه 1.1"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

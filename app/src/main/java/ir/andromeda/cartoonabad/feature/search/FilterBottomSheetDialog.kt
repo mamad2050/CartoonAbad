@@ -1,28 +1,30 @@
 package ir.andromeda.cartoonabad.feature.search
 
 import android.app.Dialog
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.databinding.FragmentFilterBottomSheetBinding
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FilterBottomSheetDialog : BottomSheetDialogFragment(),
+class FilterBottomSheetDialog(
+    val listener: OnFilterListener
+) : BottomSheetDialogFragment(),
     GenreFilterAdapter.OnGenreEventListener {
 
     private var _binding: FragmentFilterBottomSheetBinding? = null
     private val binding get() = _binding!!
     val viewModel: FilterFragmentViewModel by viewModel()
+    var sortBy: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,9 +74,23 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment(),
             binding.rvGenres.adapter = genreFilterAdapter
         }
 
-        binding.chipMostViewed.typeface = binding.rbSeries.typeface
-        binding.chipLatest.typeface = binding.rbSeries.typeface
-        binding.chipImdb.typeface = binding.rbSeries.typeface
+        binding.chipMostViewed.typeface = binding.btnApply.typeface
+        binding.chipLatest.typeface = binding.btnApply.typeface
+        binding.chipImdb.typeface = binding.btnApply.typeface
+
+        binding.chipGroup.setOnCheckedChangeListener { _, checkedId ->
+
+            when (checkedId) {
+                binding.chipImdb.id -> sortBy = SORT_BY_IMDB
+                binding.chipMostViewed.id -> sortBy = SORT_BY_VIEW
+                binding.chipLatest.id -> sortBy = SORT_BY_LATEST
+            }
+        }
+
+        binding.btnApply.setOnClickListener {
+            listener.onApplyFilter(sortBy, null)
+            dismiss()
+        }
 
     }
 
@@ -91,5 +107,9 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment(),
         val layoutParams = bottomSheet.layoutParams
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
         bottomSheet.layoutParams = layoutParams
+    }
+
+    interface OnFilterListener {
+        fun onApplyFilter(sortBy: String?, selectedGenres: List<Genre>?)
     }
 }

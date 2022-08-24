@@ -7,10 +7,9 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.combined.CombinedCartoonSeries
+import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.databinding.ActivitySearchBinding
 import ir.andromeda.cartoonabad.feature.CombinedCartoonSeriesAdapter
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
@@ -18,12 +17,13 @@ import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoonSeries> {
+class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoonSeries>,
+    FilterBottomSheetDialog.OnFilterListener {
 
     private lateinit var binding: ActivitySearchBinding
     private val viewModel: SearchViewModel by viewModel()
     private val adapter = CombinedCartoonSeriesAdapter(get(), this)
-    private val filterBottomSheet = FilterBottomSheetDialog()
+    private val filterBottomSheet = FilterBottomSheetDialog(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +82,6 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
             }
         }
 
-
         binding.ivClearSearch.setOnClickListener {
             binding.etSearch.text.clear()
         }
@@ -90,10 +89,8 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
         binding.fabFilter.setOnClickListener {
             showFilterBottomSheet()
         }
-    }
 
-    private fun showFilterBottomSheet() {
-        filterBottomSheet.show(supportFragmentManager,"FILTER")
+
     }
 
     override fun clickOnItem(item: CombinedCartoonSeries) {
@@ -107,5 +104,13 @@ class SearchActivity : CartoonAbadActivity(), OnItemEventListener<CombinedCartoo
                 putExtra(EXTRA_KEY_ID, item.id)
             })
         }
+    }
+
+    override fun onApplyFilter(sortBy: String?, selectedGenres: List<Genre>?) {
+        TODO("Not yet implemented")
+    }
+
+    private fun showFilterBottomSheet() {
+        filterBottomSheet.show(supportFragmentManager, FILTER_FRAGMENT_TAG)
     }
 }

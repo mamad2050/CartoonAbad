@@ -18,6 +18,11 @@ const val ZONE_ID_INTERSTITIAL_VIDEO_AD = "61830e29fc45e6003f1c815c"
 
 const val SORT_BY_LATEST = "latest"
 const val SORT_BY_VIEW = "view"
+const val SORT_BY_IMDB = "imdb"
+
+const val FILTER_BY_LATEST = "latest"
+const val FILTER_BY_VIEW = "view"
+const val FILTER_BY_IMDB = "imdb"
 
 const val MOST_VIEWED_SERIES = "most_viewed_series"
 const val LATEST_SERIES = "latest_series"
@@ -25,3 +30,5 @@ const val MOST_VIEWED_CARTOONS = "most_viewed_cartoons"
 const val LATEST_CARTOONS = "latest_cartoons"
 const val MODE = "mode"
 const val TITLE = "title"
+
+const val FILTER_FRAGMENT_TAG = "FilterFragment"

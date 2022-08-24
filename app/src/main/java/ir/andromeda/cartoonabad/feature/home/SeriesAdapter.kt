@@ -5,8 +5,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.andromeda.cartoonabad.common.ItemScale
-import ir.andromeda.cartoonabad.common.implementSpringAnimationTrait
+import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.ItemCartoonSeriesBinding
@@ -57,18 +56,27 @@ class SeriesAdapter(
         }
     }
 
-    fun setData(data : List<Series>){
+    fun setData(data: List<Series>) {
         seriesList.addAll(data)
         notifyDataSetChanged()
     }
 
-    fun addNewData(data : List<Series>){
+    fun addNewData(data: List<Series>) {
         var prevItemsCount = itemCount
         seriesList.addAll(data)
-        notifyItemRangeInserted(prevItemsCount,itemCount)
+        notifyItemRangeInserted(prevItemsCount, itemCount)
     }
 
     interface OnSeriesItemEventListener {
         fun onSeriesClick(series: Series)
+    }
+
+    fun filterData(sortBy: String) {
+
+        when (sortBy) {
+            SORT_BY_IMDB -> seriesList.sortByDescending { it.rate.toDouble() }
+            SORT_BY_VIEW -> seriesList.sortByDescending { it.views }
+        }
+        notifyDataSetChanged()
     }
 }

@@ -2,33 +2,32 @@ package ir.andromeda.cartoonabad.feature.list
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ir.andromeda.cartoonabad.R
 import ir.andromeda.cartoonabad.common.*
 import ir.andromeda.cartoonabad.data.cartoon.Cartoon
+import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.series.Series
 import ir.andromeda.cartoonabad.databinding.ActivityListBinding
 import ir.andromeda.cartoonabad.feature.detail.DetailCartoonActivity
 import ir.andromeda.cartoonabad.feature.detail.DetailSeriesActivity
 import ir.andromeda.cartoonabad.feature.home.CartoonAdapter
 import ir.andromeda.cartoonabad.feature.home.SeriesAdapter
+import ir.andromeda.cartoonabad.feature.search.FilterBottomSheetDialog
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 
 class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListener,
-    CartoonAdapter.OnCartoonItemEventListener {
+    CartoonAdapter.OnCartoonItemEventListener, FilterBottomSheetDialog.OnFilterListener {
 
     private lateinit var binding: ActivityListBinding
     private val viewModel: ListViewModel by viewModel { parametersOf(intent.extras) }
     private val seriesAdapter = SeriesAdapter(this, get(), ItemScale.LARGE)
     private val cartoonAdapter = CartoonAdapter(this, get(), ItemScale.LARGE)
+    private val filterBottomSheet = FilterBottomSheetDialog(this)
     var currentPage = 1
     var hasNextPage = true
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +57,11 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
                         hasNextPage = false
                     }
 
-                    if (currentPage == 1){
+                    if (currentPage == 1) {
                         seriesAdapter.setData(it)
-                    }
-                    else {
+                    } else {
                         seriesAdapter.addNewData(it)
-                        binding.rvList.smoothScrollToPosition(seriesAdapter.itemCount-1)
+                        binding.rvList.smoothScrollToPosition(seriesAdapter.itemCount - 1)
                     }
 
                 }
@@ -105,6 +103,9 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
             }
         })
 
+        binding.fabFilter.setOnClickListener {
+            showFilterBottomSheet()
+        }
     }
 
     override fun onSeriesClick(series: Series) {
@@ -118,4 +119,14 @@ class ListActivity : CartoonAbadActivity(), SeriesAdapter.OnSeriesItemEventListe
             putExtra(EXTRA_KEY_ID, cartoon.id)
         })
     }
+
+
+    private fun showFilterBottomSheet() {
+        filterBottomSheet.show(supportFragmentManager, FILTER_FRAGMENT_TAG)
+    }
+
+    override fun onApplyFilter(sortBy: String?, selectedGenres: List<Genre>?) {
+        seriesAdapter.filterData(sortBy!!)
+    }
+
 }
