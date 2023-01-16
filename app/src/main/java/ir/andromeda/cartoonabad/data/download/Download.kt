@@ -3,18 +3,15 @@ package ir.andromeda.cartoonabad.data.download
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "downloads")
 @Parcelize
 data class Download(
     val duration: String,
-    @PrimaryKey()
+    @PrimaryKey
     val id: String,
-    val image: String,
+    val imageUrl: String,
     val name: String,
-    val season_id: String,
-    val path: String
-) : Parcelable {
-    var isDownload = false
-}
+    val path: String,
+) : Parcelable

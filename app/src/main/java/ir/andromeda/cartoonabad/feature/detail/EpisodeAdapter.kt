@@ -1,20 +1,12 @@
 package ir.andromeda.cartoonabad.feature.detail
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.cartoonabad.R
-import ir.andromeda.cartoonabad.common.CartoonAbadExceptionMapper
-import ir.andromeda.cartoonabad.data.PurchaseContainer
-import ir.andromeda.cartoonabad.data.PurchaseException
 import ir.andromeda.cartoonabad.data.episode.Episode
 import ir.andromeda.cartoonabad.databinding.ItemEpisodeBinding
 import ir.andromeda.cartoonabad.services.imageloader.ImageLoadingService
-import ir.andromeda.cartoonabad.view.CartoonAbadImageView
-import org.greenrobot.eventbus.EventBus
 
 class EpisodeAdapter(
     private val imageLoadingService: ImageLoadingService,
@@ -44,7 +36,7 @@ class EpisodeAdapter(
 
         fun bindEpisode(episode: Episode) {
 
-            imageLoadingService.load(binding.ivImage, episode.image)
+            imageLoadingService.load(binding.ivImage, episode.imageUrl)
             binding.tvName.text = episode.name
             binding.tvDuration.text = episode.duration
 

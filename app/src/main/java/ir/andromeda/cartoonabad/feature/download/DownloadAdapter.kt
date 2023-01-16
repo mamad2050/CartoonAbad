@@ -40,7 +40,7 @@ class DownloadAdapter(
 
         fun bindEpisode(download: Download) {
 
-            imageLoadingService.load(ivImage, download.image)
+            imageLoadingService.load(ivImage, download.imageUrl)
             tvName.text = download.name
             tvDuration.text = download.duration
 

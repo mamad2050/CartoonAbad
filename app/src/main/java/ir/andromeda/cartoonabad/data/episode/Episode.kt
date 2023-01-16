@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class Episode(
     @PrimaryKey
     @SerializedName("_id") val id: String,
-    @SerializedName("image") val image: String,
+    @SerializedName("image") val imageUrl: String,
     @SerializedName("name") val name: String,
     @SerializedName("season_id") val seasonId: String,
     @SerializedName("url") val url: String,

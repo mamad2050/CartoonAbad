@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,7 +22,6 @@ import ir.andromeda.cartoonabad.data.CartoonAbadEvent
 import ir.andromeda.cartoonabad.data.PurchaseContainer
 import ir.andromeda.cartoonabad.data.download.Download
 import ir.andromeda.cartoonabad.data.episode.Episode
-import ir.andromeda.cartoonabad.data.genre.Genre
 import ir.andromeda.cartoonabad.data.season.Season
 import ir.andromeda.cartoonabad.databinding.ActivityDetailSeriesBinding
 import ir.andromeda.cartoonabad.feature.player.PlayerActivity
@@ -208,7 +206,7 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
     }
 
     override fun onFavoriteClick(episode: Episode) {
-        viewModel.addEpisodeToFavorites(episode)
+        viewModel.addEpisodeToBookmarks(episode)
     }
 
     override fun onDownloadClick(episode: Episode) {
@@ -332,9 +330,8 @@ class DetailSeriesActivity : CartoonAbadActivity(), EpisodeEventListener {
         val download = Download(
             episode.duration,
             episode.id,
-            episode.image,
+            episode.imageUrl,
             episode.name,
-            episode.seasonId,
             path
         )
         viewModel.addEpisodeToDownloads(download)

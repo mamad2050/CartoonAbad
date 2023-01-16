@@ -72,7 +72,7 @@ class DetailSeriesViewModel(
             })
     }
 
-    fun addEpisodeToFavorites(episode: Episode) {
+    fun addEpisodeToBookmarks(episode: Episode) {
         if (episode.isBookmarked)
             episodeRepository.deleteFromBookmark(episode)
                 .subscribeOn(Schedulers.io())
@@ -91,23 +91,23 @@ class DetailSeriesViewModel(
                 })
     }
 
-    fun addEpisodeToDownloads(episode: Download) {
-        if (episode.isDownload)
-            downloadRepository.deleteFromDownloads(episode)
-                .subscribeOn(Schedulers.io())
-                .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
-                    override fun onComplete() {
-                        episode.isDownload = false
-                    }
-                })
-        else
-            downloadRepository.addToDownloads(episode)
-                .subscribeOn(Schedulers.io())
-                .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
-                    override fun onComplete() {
-                        episode.isDownload = true
-                    }
-                })
-    }
+//    fun addEpisodeToDownloads(episode: Episode) {
+//        if (episode.isDownloaded)
+//            downloadRepository.deleteFromDownloads(episode)
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
+//                    override fun onComplete() {
+//                        episode.isDownload = false
+//                    }
+//                })
+//        else
+//            downloadRepository.addToDownloads(episode)
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(object : CartoonAbadCompletableObserver(compositeDisposable) {
+//                    override fun onComplete() {
+//                        episode.isDownload = true
+//                    }
+//                })
+//    }
 }
 

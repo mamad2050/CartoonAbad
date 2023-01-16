@@ -37,7 +37,7 @@ class BookmarkAdapter(
 
         fun bindEpisode(episode: Episode) {
 
-            imageLoadingService.load(ivImage, episode.image)
+            imageLoadingService.load(ivImage, episode.imageUrl)
             tvName.text = episode.name
             tvDuration.text = episode.duration
 
