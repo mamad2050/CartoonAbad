@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ir.andromeda.cartoonabad.feature.home.HomeFragment"
+        android:name="ir.andromeda.movieado.feature.home.HomeFragment"
         android:label="HomeFragment" />
 
 </navigation>

@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 33
     defaultConfig {
 
-        applicationId "ir.andromeda.cartoonabad"
+        applicationId "ir.andromeda.movieado"
         minSdk 21
-        targetSdk 30
+        targetSdk 33
         versionCode 5
         versionName "1.3"
 
@@ -74,9 +74,6 @@ dependencies {
     //timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    //poolakey
-    implementation "com.github.cafebazaar.Poolakey:poolakey:1.2.2"
-
     //fresco
     implementation 'com.facebook.fresco:fresco:2.5.0'
 
@@ -101,9 +98,6 @@ dependencies {
 
     //spin kit
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
-
-    //tapsell
-    implementation 'ir.tapsell.plus:tapsell-plus-sdk-android:2.1.3'
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:29.0.0')

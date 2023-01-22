@@ -7,7 +7,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
-    <ir.andromeda.cartoonabad.view.CartoonAbadImageView
+    <ir.andromeda.movieado.view.MovieadoImageView
         android:id="@+id/iv_banner"
         android:foreground="@drawable/foreground_series_and_cartoon_image"
         android:layout_width="match_parent"

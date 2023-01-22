@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/bookmarkFragment"
-        android:name="ir.andromeda.cartoonabad.feature.bookmark.BookmarkFragment"
+        android:name="ir.andromeda.movieado.feature.bookmark.BookmarkFragment"
         android:label="BookmarkFragment" />
 
 </navigation>

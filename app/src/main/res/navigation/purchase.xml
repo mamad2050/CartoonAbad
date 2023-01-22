@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/purchaseFragment"
-        android:name="ir.andromeda.cartoonabad.feature.subscription.SubscriptionFragment"
+        android:name="ir.andromeda.movieado.feature.subscription.SubscriptionFragment"
         android:label="PurchaseFragment" />
 
 </navigation>

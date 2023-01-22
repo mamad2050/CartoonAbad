@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.detail.DetailCartoonActivity">
+    tools:context=".feature.detail.DetailMovieActivity">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/motionLayout"
@@ -83,7 +83,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ir.andromeda.cartoonabad.view.CartoonAbadImageView
+        <ir.andromeda.movieado.view.MovieadoImageView
             android:id="@+id/ivImage"
             android:layout_width="wrap_content"
             android:layout_height="500dp"

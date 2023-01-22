@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/downloadFragment"
-        android:name="ir.andromeda.cartoonabad.feature.download.DownloadFragment"
+        android:name="ir.andromeda.movieado.feature.download.DownloadFragment"
         android:label="DownloadFragment" />
 
 </navigation>

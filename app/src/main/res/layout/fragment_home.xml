@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -93,8 +92,8 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/genres"
-                android:textStyle="bold"
                 android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sliderIndicator"
                 tools:layout_editor_absoluteY="80dp" />
@@ -118,15 +117,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
-                android:textStyle="bold"
-
-                android:text="@string/latest_series"
+                android:text="@string/latest_movies"
                 android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_genres" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_latest_series"
+                android:id="@+id/rvLatestMovies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -137,11 +135,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <TextView
-                android:id="@+id/tv_all_latest_series"
+                android:id="@+id/tvMoreLatestMovies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@string/see_all"
+                android:text="@string/more"
                 android:textAppearance="?textAppearanceBody1"
                 android:textColor="@color/light_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/textView14"
@@ -155,19 +153,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
-                android:textStyle="bold"
-                android:text="@string/latest_cartoons"
+                android:text="@string/latest_series"
                 android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_latest_series" />
+                app:layout_constraintTop_toBottomOf="@+id/rvLatestMovies" />
 
 
             <TextView
-                android:id="@+id/tv_all_latest_cartoons"
+                android:id="@+id/tvMoreLatestSeries"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@string/see_all"
+                android:text="@string/more"
                 android:textAppearance="?textAppearanceBody1"
                 android:textColor="@color/light_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/textView16"
@@ -175,7 +173,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView16" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_latest_cartoons"
+                android:id="@+id/rvLatestSeries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -191,19 +189,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
-                android:textStyle="bold"
-
-                android:text="@string/popular_series"
+                android:text="@string/latest_animations"
                 android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_latest_cartoons" />
+                app:layout_constraintTop_toBottomOf="@+id/rvLatestSeries" />
 
             <TextView
-                android:id="@+id/tv_all_most_viewed_series"
+                android:id="@+id/tvMoreLatestAnimations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@string/see_all"
+                android:text="@string/more"
                 android:textAppearance="?textAppearanceBody1"
                 android:textColor="@color/light_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/textView18"
@@ -211,7 +208,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView18" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_popular_series"
+                android:id="@+id/rvLatestAnimations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -226,19 +223,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                android:text="@string/popular_cartoons"
+                android:text="@string/popular_movies"
                 android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_popular_series" />
+                app:layout_constraintTop_toBottomOf="@+id/rvLatestAnimations" />
 
             <TextView
-                android:id="@+id/tv_all_most_viewed_cartoons"
+                android:id="@+id/tvMorePopularMovies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@string/see_all"
+                android:text="@string/more"
                 android:textAppearance="?textAppearanceBody1"
                 android:textColor="@color/light_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/textView20"
@@ -246,7 +243,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView20" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_popular_cartoons"
+                android:id="@+id/rvPopularMovies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -255,6 +252,76 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView20" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/popular_series"
+                android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvPopularMovies" />
+
+            <TextView
+                android:id="@+id/tvMorePopularSeries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/more"
+                android:textAppearance="?textAppearanceBody1"
+                android:textColor="@color/light_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPopularSeries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView21" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/popular_animations"
+                android:textAppearance="?textAppearanceBody1"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvPopularSeries" />
+
+            <TextView
+                android:id="@+id/tvMorePopularAnimations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/more"
+                android:textAppearance="?textAppearanceBody1"
+                android:textColor="@color/light_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/textView23"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView23" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPopularAnimations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView23" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

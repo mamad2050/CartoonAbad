@@ -101,7 +101,7 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <ir.andromeda.cartoonabad.view.CartoonAbadImageView
+        <ir.andromeda.movieado.view.MovieadoImageView
             android:id="@+id/ivImage"
             android:layout_width="wrap_content"
             android:layout_height="350dp"

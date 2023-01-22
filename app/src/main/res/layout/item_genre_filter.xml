@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ir.andromeda.cartoonabad.view.CartoonAbadImageView
+        <ir.andromeda.movieado.view.MovieadoImageView
             android:id="@+id/iv_genre"
             android:alpha="0.85"
             android:layout_width="match_parent"
