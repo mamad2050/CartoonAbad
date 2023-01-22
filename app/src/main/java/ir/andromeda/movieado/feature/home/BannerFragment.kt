@@ -43,11 +43,11 @@ class BannerFragment : Fragment() {
         view.setOnClickListener {
             if (banner.type == TYPE_MOVIE && banner.type == TYPE_ANIMATION_MOVIE) {
                 startActivity(Intent(requireActivity(), DetailMovieActivity::class.java).apply {
-                    putExtra(EXTRA_KEY_ID, banner.content_id)
+                    putExtra(EXTRA_KEY_ID, banner.movieId)
                 })
             } else if (banner.type == TYPE_SERIES && banner.type == TYPE_ANIMATION_SERIES) {
                 startActivity(Intent(requireActivity(), DetailSeriesActivity::class.java).apply {
-                    putExtra(EXTRA_KEY_ID, banner.content_id)
+                    putExtra(EXTRA_KEY_ID, banner.movieId)
                 })
             }
         }

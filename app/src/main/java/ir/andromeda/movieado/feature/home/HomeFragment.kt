@@ -223,6 +223,7 @@ class HomeFragment : MovieadoFragment(),
                 val connectionView = showConnectionLost(true)
                 connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
                     showConnectionLost(false)
+                    setProgressIndicator(true)
 //                    viewModel.showAnimationList()
                 }
             }
