@@ -8,10 +8,10 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "downloads")
 @Parcelize
 data class Download(
-    val duration: String,
     @PrimaryKey
     val id: String,
     val imageUrl: String,
+    val duration: String,
     val name: String,
     val path: String,
 ) : Parcelable

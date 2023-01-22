@@ -56,7 +56,7 @@ class DetailSeriesActivity : MovieadoActivity(), EpisodeEventListener {
 
         viewModel.seriesLiveData.observe(this) {
             binding.tvName.text = it.name
-            binding.tvRate.text = "امتیاز ${it.rate} / 10"
+            binding.tvRate.text = "امتیاز ${it.imdb} / 10"
             binding.tvDescription.text = it.description
             imageLoadingService.load(binding.ivImage, it.banner)
             genreAdapter.genres = it.genres as ArrayList<String>

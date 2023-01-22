@@ -47,7 +47,7 @@ class MovieAdapter(
         fun bindMovie(movie: Movie) {
             imageLoadingService.load(binding.ivImage, movie.image)
             binding.tvName.text = movie.name
-            binding.tvRate.text = movie.rate.toString()
+            binding.tvRate.text = movie.imdb.toString()
 
             binding.root.implementSpringAnimationTrait()
 

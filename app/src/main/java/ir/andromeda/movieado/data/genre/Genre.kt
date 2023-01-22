@@ -6,8 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Genre(
-    @SerializedName("_id")
-    val id: String,
-    val title: String,
-    val image: String
+    @SerializedName("_id") val id: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("image") val image: String
 ) : Parcelable

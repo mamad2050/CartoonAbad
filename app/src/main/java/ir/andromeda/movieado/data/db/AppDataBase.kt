@@ -7,8 +7,7 @@ import ir.andromeda.movieado.data.download.DownloadLocalDataSource
 import ir.andromeda.movieado.data.episode.Episode
 import ir.andromeda.movieado.data.episode.EpisodeLocalDataSource
 
-@Database(entities = [Episode::class , Download::class], version = 1 , exportSchema = false)
-
+@Database(entities = [Episode::class, Download::class], version = 1, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun episodeDao(): EpisodeLocalDataSource
