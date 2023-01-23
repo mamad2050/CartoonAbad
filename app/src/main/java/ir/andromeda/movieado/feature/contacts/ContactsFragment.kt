@@ -30,6 +30,7 @@ class ContactsFragment : MovieadoFragment() {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: ContactsViewModel by viewModel()
     private val compositeDisposable = CompositeDisposable()
     private var selectedTitle: String? = null
@@ -137,7 +138,7 @@ class ContactsFragment : MovieadoFragment() {
         val topics: MutableList<String> = ArrayList()
         topics.add(getString(R.string.error_in_purchase))
         topics.add(getString(R.string.error_in_app))
-        topics.add(getString(R.string.suggest_cartoon))
+        topics.add(getString(R.string.suggest_movie))
 
         val adapter = ArrayAdapter(
             requireContext(), R.layout.item_topic, topics

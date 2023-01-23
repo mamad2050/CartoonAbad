@@ -39,7 +39,7 @@ class GenreActivity : MovieadoActivity(),
         }
 
         viewModel.genresLiveData.observe(this) {
-            movieAdapter.setData(it as ArrayList<Movie>)
+            movieAdapter.movieList = it as ArrayList<Movie>
         }
 
         binding.ivBack.setOnClickListener {

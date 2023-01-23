@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">موویادو</string>
     <string name="home">خانه</string>
-    <string name="favorite">علاقه مندی ها</string>
     <string name="downloads">دانلود شده ها</string>
     <string name="purchase">اشتراک</string>
     <string name="profile">حساب من</string>
@@ -9,7 +8,7 @@
     <string name="rate">رای به برنامه</string>
     <string name="share">معرفی برنامه به دوستان</string>
     <string name="contacts">ارتباط با ما</string>
-    <string name="no_account">شما هیچ اشتراکی ندارید!</string>
+    <string name="no_subscription">شما هیچ اشتراکی ندارید!</string>
     <string name="episodes_size">تعداد قسمت :</string>
     <string name="choose_app">برنامه ای را انتخاب کنید</string>
     <string name="empty_state_favorite">هنوز چیزی به نشان شده هات اضافه نکردی :)</string>
@@ -17,7 +16,7 @@
     <string name="install_bazaar_app">لطفا برنامه ی کافه بازار را نصب کنید</string>
     <string name="error_in_purchase">مشکل در پرداخت</string>
     <string name="error_in_app">مشکل در برنامه</string>
-    <string name="suggest_cartoon">پیشنهاد برای کارتون جدید</string>
+    <string name="suggest_movie">پیشنهاد برای فیلم جدید</string>
     <string name="topic">موضوع</string>
     <string name="email">ایمیل</string>
     <string name="message_guide">لطفا متن خود را بنویسید…</string>

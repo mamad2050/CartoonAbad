@@ -21,7 +21,7 @@ class ListActivity : MovieadoActivity(), MovieAdapter.MovieEventListener,
 
     private lateinit var binding: ActivityListBinding
     private val viewModel: ListViewModel by viewModel { parametersOf(intent.extras) }
-    private val movieAdapter = MovieAdapter(this, get(), ItemScale.LARGE)
+    private val movieAdapter by lazy { MovieAdapter(this, get(), ItemScale.LARGE) }
     private val filterBottomSheet = FilterBottomSheetDialog(this)
     var currentPage = 1
     var hasNextPage = true
@@ -50,7 +50,7 @@ class ListActivity : MovieadoActivity(), MovieAdapter.MovieEventListener,
             }
 
             if (currentPage == 1) {
-                movieAdapter.setData(it)
+                movieAdapter.movieList = it as ArrayList<Movie>
             } else {
                 movieAdapter.addNewData(it)
                 binding.rvList.smoothScrollToPosition(movieAdapter.itemCount - 1)

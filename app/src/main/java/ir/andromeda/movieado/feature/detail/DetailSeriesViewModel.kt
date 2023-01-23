@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DetailSeriesViewModel(
-    private val bundle: Bundle,
+    bundle: Bundle,
     private val seriesRepository: MovieRepository,
     private val seasonRepository: SeasonRepository,
     private val episodeRepository: EpisodeRepository,
@@ -28,19 +28,18 @@ class DetailSeriesViewModel(
     val seasonsLiveData = MutableLiveData<List<Season>>()
     val episodesLiveData = MutableLiveData<List<Episode>>()
 
-    private var movieId = ""
-
+    private val movieId: String
 
     init {
         movieId = bundle.getString(EXTRA_KEY_ID) ?: ""
         viewModelScope.launch {
             showEpisodes()
             delay(200)
-            showSeasons()
+            getSeries()
         }
     }
 
-    fun showSeasons() {
+    fun getSeries() {
         progressBarLiveData.value = true
 
         seriesRepository.getMovieDetail(movieId)

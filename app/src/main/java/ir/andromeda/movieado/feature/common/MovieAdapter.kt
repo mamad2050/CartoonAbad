@@ -18,7 +18,11 @@ class MovieAdapter(
     private val showBadge: Boolean = false
 ) : RecyclerView.Adapter<MovieAdapter.Holder>() {
 
-    private var movieList = ArrayList<Movie>()
+    var movieList = ArrayList<Movie>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
@@ -63,11 +67,6 @@ class MovieAdapter(
                 }
             }
         }
-    }
-
-    fun setData(data: List<Movie>) {
-        movieList.addAll(data)
-        notifyDataSetChanged()
     }
 
     fun addNewData(data: List<Movie>) {

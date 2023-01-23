@@ -32,7 +32,7 @@ class DetailSeriesActivity : MovieadoActivity(), EpisodeEventListener {
 
     private lateinit var binding: ActivityDetailSeriesBinding
     private val imageLoadingService: ImageLoadingService by inject()
-    private val viewModel: DetailSeriesViewModel by viewModel { parametersOf(intent.extras) }
+    private val detailSeriesViewModel: DetailSeriesViewModel by viewModel { parametersOf(intent.extras) }
 
     private var readPermissionGranted = false
     private var writePermissionGranted = false
@@ -51,10 +51,10 @@ class DetailSeriesActivity : MovieadoActivity(), EpisodeEventListener {
         setContentView(binding.root)
 
         binding.ivBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
-        viewModel.seriesLiveData.observe(this) {
+        detailSeriesViewModel.seriesLiveData.observe(this) {
             binding.tvName.text = it.name
             binding.tvRate.text = "امتیاز ${it.imdb} / 10"
             binding.tvDescription.text = it.description
@@ -62,15 +62,15 @@ class DetailSeriesActivity : MovieadoActivity(), EpisodeEventListener {
             genreAdapter.genres = it.genres as ArrayList<String>
         }
 
-        viewModel.progressBarLiveData.observe(this) {
+        detailSeriesViewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
         }
 
-        viewModel.episodesLiveData.observe(this) {
+        detailSeriesViewModel.episodesLiveData.observe(this) {
             episodeList = it
         }
 
-        viewModel.seasonsLiveData.observe(this) {
+        detailSeriesViewModel.seasonsLiveData.observe(this) {
             binding.tvSeasonSize.text = "${it.size} فصل"
             val adapter = ArrayAdapter(this, R.layout.item_topic, it)
             binding.autoTvSeason.setAdapter(adapter)
@@ -130,18 +130,18 @@ class DetailSeriesActivity : MovieadoActivity(), EpisodeEventListener {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun onEpisodeClick(episode: Episode) {
+    override fun onEpisodeClicked(episode: Episode) {
         startActivity(Intent(this, PlayerActivity::class.java).apply {
             putExtra(EXTRA_KEY_NAME, episode.name)
             putExtra(EXTRA_KEY_URL, episode.url)
         })
     }
 
-    override fun onFavoriteClick(episode: Episode) {
-        viewModel.addEpisodeToBookmarks(episode)
+    override fun onFavoriteClicked(episode: Episode) {
+        detailSeriesViewModel.addEpisodeToBookmarks(episode)
     }
 
-    override fun onDownloadClick(episode: Episode) {
+    override fun onDownloadClicked(episode: Episode) {
 
 //        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
 //            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -277,7 +277,7 @@ class DetailSeriesActivity : MovieadoActivity(), EpisodeEventListener {
                 val connectionView = showConnectionLost(true)
                 connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
                     showConnectionLost(false)
-                    viewModel.showSeasons()
+                    detailSeriesViewModel.getSeries()
                 }
             }
             else -> {}

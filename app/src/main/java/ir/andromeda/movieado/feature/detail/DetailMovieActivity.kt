@@ -15,7 +15,7 @@ import ir.andromeda.movieado.common.EXTRA_KEY_URL
 import ir.andromeda.movieado.common.MovieadoActivity
 import ir.andromeda.movieado.data.MovieadoEvent
 import ir.andromeda.movieado.data.movie.Movie
-import ir.andromeda.movieado.databinding.ActivityDetailCartoonBinding
+import ir.andromeda.movieado.databinding.ActivityDetailMovieBinding
 import ir.andromeda.movieado.feature.player.PlayerActivity
 import ir.andromeda.movieado.services.imageloader.ImageLoadingService
 import org.greenrobot.eventbus.EventBus
@@ -27,33 +27,32 @@ import org.koin.core.parameter.parametersOf
 
 class DetailMovieActivity : MovieadoActivity() {
 
-    private lateinit var binding: ActivityDetailCartoonBinding
+    private lateinit var binding: ActivityDetailMovieBinding
     private val imageLoadingService: ImageLoadingService by inject()
-    private val viewModel: DetailMovieViewModel by viewModel { parametersOf(intent.extras) }
+    private val detailMovieViewModel: DetailMovieViewModel by viewModel { parametersOf(intent.extras) }
 
     private var readPermissionGranted = false
     private var writePermissionGranted = false
     private lateinit var downloadManager: DownloadManager
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    private var adResponseId: String? = null
 
     private lateinit var movie: Movie
     private val genreAdapter by lazy { GenreInDetailAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailCartoonBinding.inflate(layoutInflater)
+        binding = ActivityDetailMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.progressBarLiveData.observe(this) {
+        detailMovieViewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
         }
 
         binding.ivBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
-        viewModel.movieLiveData.observe(this) {
+        detailMovieViewModel.movieLiveData.observe(this) {
             binding.tvName.text = it.name
             binding.tvRate.text = "امتیاز ${it.imdb} / 10"
             binding.tvDescription.text = it.description
@@ -62,7 +61,7 @@ class DetailMovieActivity : MovieadoActivity() {
             movie = it
         }
 
-        binding.btnPlayCartoon.setOnClickListener {
+        binding.btnPlayMovie.setOnClickListener {
             startActivity(Intent(this, PlayerActivity::class.java).apply {
                 putExtra(EXTRA_KEY_NAME, movie.name)
                 putExtra(EXTRA_KEY_URL, movie.url)
@@ -242,7 +241,7 @@ class DetailMovieActivity : MovieadoActivity() {
                 val connectionView = showConnectionLost(true)
                 connectionView?.findViewById<MaterialButton>(R.id.btnRetry)?.setOnClickListener {
                     showConnectionLost(false)
-                    //we must refresh activity
+                    detailMovieViewModel.getMovie()
                 }
             }
             else -> {}

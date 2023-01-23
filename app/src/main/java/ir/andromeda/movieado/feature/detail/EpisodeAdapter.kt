@@ -62,7 +62,7 @@ class EpisodeAdapter(
             }
 
             itemView.setOnClickListener {
-                listener.onEpisodeClick(episode)
+                listener.onEpisodeClicked(episode)
             }
 
 //            binding.ivDownload.setOnClickListener {
@@ -80,10 +80,10 @@ class EpisodeAdapter(
 
 interface EpisodeEventListener {
 
-    fun onEpisodeClick(episode: Episode)
+    fun onEpisodeClicked(episode: Episode)
 
-    fun onFavoriteClick(episode: Episode)
+    fun onFavoriteClicked(episode: Episode)
 
-    fun onDownloadClick(episode: Episode)
+    fun onDownloadClicked(episode: Episode)
 
 }

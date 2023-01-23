@@ -9,19 +9,22 @@ import ir.andromeda.movieado.data.movie.MovieRepository
 
 class DetailMovieViewModel(
     bundle: Bundle,
-    cartoonRepository: MovieRepository,
+    private val movieRepository: MovieRepository,
     private val downloadRepository: DownloadRepository
 ) :
     MovieadoViewModel() {
 
     val movieLiveData = MutableLiveData<Movie>()
+    private val movieId: String
 
     init {
+        movieId = bundle.getString(EXTRA_KEY_ID) ?: ""
+        getMovie()
+    }
+
+    fun getMovie() {
         progressBarLiveData.value = true
-
-        val movieId = bundle.getString(EXTRA_KEY_ID) ?: ""
-
-        cartoonRepository.getMovieDetail(movieId)
+        movieRepository.getMovieDetail(movieId)
             .asyncNetworkRequest()
             .doFinally { progressBarLiveData.postValue(false) }
             .subscribe(object : MovieadoSingleObserver<Movie>(compositeDisposable) {

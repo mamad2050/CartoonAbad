@@ -37,18 +37,32 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : MovieadoFragment(),
     MovieAdapter.MovieEventListener,
-    GenreAdapter.OnGenreEventListener {
+    GenreAdapter.GenreEventListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var genresAdapter: GenreAdapter
-    private lateinit var latestMovieAdapter: MovieAdapter
-    private lateinit var latestSeriesAdapter: MovieAdapter
-    private lateinit var latestAnimationsAdapter: MovieAdapter
-    private lateinit var popularMovieAdapter: MovieAdapter
-    private lateinit var popularSeriesAdapter: MovieAdapter
-    private lateinit var popularAnimationsAdapter: MovieAdapter
+    private val genresAdapter by lazy {
+        GenreAdapter(imageLoadingService, this)
+    }
+    private val latestMovieAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
+    }
+    private val latestSeriesAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
+    }
+    private val latestAnimationsAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.SMALL, true)
+    }
+    private val popularMovieAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
+    }
+    private val popularSeriesAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
+    }
+    private val popularAnimationsAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.SMALL, true)
+    }
 
     private val imageLoadingService: ImageLoadingService by inject()
     private val viewModel: HomeViewModel by viewModel()
@@ -93,60 +107,60 @@ class HomeFragment : MovieadoFragment(),
             })
         }
 
+        //Genre adapter initialization
+        binding.rvGenres.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvGenres.adapter = genresAdapter
         viewModel.genresLiveData.observe(viewLifecycleOwner) {
-            binding.rvGenres.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            genresAdapter = GenreAdapter(it as ArrayList<Genre>, imageLoadingService, this)
-            binding.rvGenres.adapter = genresAdapter
+            genresAdapter.genres = it as ArrayList<Genre>
         }
 
+        //Latest movies adapter initialization
+        binding.rvLatestMovies.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvLatestMovies.adapter = latestMovieAdapter
         viewModel.latestMoviesLiveData.observe(viewLifecycleOwner) {
-            binding.rvLatestMovies.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestMovieAdapter =
-                MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
-            binding.rvLatestMovies.adapter = latestMovieAdapter
-            latestMovieAdapter.setData(it)
+            latestMovieAdapter.movieList = it as ArrayList<Movie>
         }
 
+        //Latest series adapter initialization
+        binding.rvLatestSeries.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvLatestSeries.adapter = latestSeriesAdapter
         viewModel.latestSeriesLiveData.observe(viewLifecycleOwner) {
-            binding.rvLatestSeries.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestSeriesAdapter = MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
-            binding.rvLatestSeries.adapter = latestSeriesAdapter
-            latestSeriesAdapter.setData(it)
+            latestSeriesAdapter.movieList = it as ArrayList<Movie>
         }
 
+        //Latest animations adapter initialization
+        binding.rvLatestAnimations.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvLatestAnimations.adapter = latestAnimationsAdapter
         viewModel.latestAnimationsLiveData.observe(viewLifecycleOwner) {
-            binding.rvLatestAnimations.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            latestAnimationsAdapter = MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
-            binding.rvLatestAnimations.adapter = latestAnimationsAdapter
-            latestAnimationsAdapter.setData(it)
+            latestAnimationsAdapter.movieList = it as ArrayList<Movie>
         }
 
+        //popular movies adapter initialization
+        binding.rvPopularMovies.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPopularMovies.adapter = popularMovieAdapter
         viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) {
-            binding.rvPopularMovies.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularMovieAdapter = MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
-            binding.rvPopularMovies.adapter = popularMovieAdapter
-            popularMovieAdapter.setData(it)
+            popularMovieAdapter.movieList = it as ArrayList<Movie>
         }
 
+        //popular series adapter initialization
+        binding.rvPopularSeries.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPopularSeries.adapter = popularSeriesAdapter
         viewModel.popularSeriesLiveData.observe(viewLifecycleOwner) {
-            binding.rvPopularSeries.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularSeriesAdapter = MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
-            binding.rvPopularSeries.adapter = popularSeriesAdapter
-            popularSeriesAdapter.setData(it)
+            popularSeriesAdapter.movieList = it as ArrayList<Movie>
         }
 
+        //popular animations adapter initialization
+        binding.rvPopularAnimations.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPopularAnimations.adapter = popularAnimationsAdapter
         viewModel.popularAnimationsLiveData.observe(viewLifecycleOwner) {
-            binding.rvPopularAnimations.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            popularAnimationsAdapter = MovieAdapter(this, imageLoadingService, ItemScale.SMALL)
-            binding.rvPopularAnimations.adapter = popularAnimationsAdapter
-            popularAnimationsAdapter.setData(it)
+            popularAnimationsAdapter.movieList = it as ArrayList<Movie>
         }
 
         binding.tvMoreLatestMovies.setOnClickListener {
@@ -235,7 +249,7 @@ class HomeFragment : MovieadoFragment(),
         Snackbar.make(binding.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun onGenreClick(genre: Genre) {
+    override fun onGenreClicked(genre: Genre) {
         startActivity(Intent(requireActivity(), GenreActivity::class.java).apply {
             putExtra(EXTRA_KEY_TITLE, genre.title)
         })

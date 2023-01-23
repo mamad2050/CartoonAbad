@@ -25,7 +25,9 @@ class SearchActivity : MovieadoActivity(),
     private lateinit var binding: ActivitySearchBinding
     private val viewModel: SearchViewModel by viewModel()
     private val imageLoadingService: ImageLoadingService by inject()
-    private lateinit var movieAdapter: MovieAdapter
+    private val movieAdapter by lazy {
+        MovieAdapter(this, imageLoadingService, ItemScale.LARGE, true)
+    }
     private val filterBottomSheet = FilterBottomSheetDialog(this)
 
 
@@ -35,7 +37,6 @@ class SearchActivity : MovieadoActivity(),
         setContentView(binding.root)
 
         binding.rvResult.layoutManager = GridLayoutManager(this, 3)
-        movieAdapter = MovieAdapter(this, imageLoadingService, ItemScale.LARGE, true)
         binding.rvResult.adapter = movieAdapter
 
         viewModel.progressBarLiveData.observe(this) {
@@ -75,7 +76,7 @@ class SearchActivity : MovieadoActivity(),
         }
 
         viewModel.searchLiveData.observe(this) {
-            movieAdapter.setData(it as ArrayList<Movie>)
+            movieAdapter.movieList = it as ArrayList<Movie>
         }
 
         viewModel.showNotFoundState.observe(this) {
