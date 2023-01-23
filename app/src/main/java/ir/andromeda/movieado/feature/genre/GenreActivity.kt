@@ -31,7 +31,6 @@ class GenreActivity : MovieadoActivity(),
         movieAdapter = MovieAdapter(this, imageLoadingService, ItemScale.LARGE, true)
         binding.rvData.adapter = movieAdapter
 
-
         binding.tvTitleToolbar.text = intent.getStringExtra(EXTRA_KEY_TITLE)
 
         viewModel.progressBarLiveData.observe(this) {
