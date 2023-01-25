@@ -1,4 +1,4 @@
-package ir.andromeda.movieado.feature.list
+package ir.andromeda.movieado.feature.allMovie
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import ir.andromeda.movieado.common.*
 import ir.andromeda.movieado.data.movie.Movie
 import ir.andromeda.movieado.data.movie.MovieRepository
 
-class ListViewModel(
+class AllMoviesViewModel(
     val bundle: Bundle,
     private val movieRepository: MovieRepository,
 ) : MovieadoViewModel() {

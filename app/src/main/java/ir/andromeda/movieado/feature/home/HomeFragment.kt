@@ -26,7 +26,7 @@ import ir.andromeda.movieado.feature.common.MovieAdapter
 import ir.andromeda.movieado.feature.detail.DetailMovieActivity
 import ir.andromeda.movieado.feature.detail.DetailSeriesActivity
 import ir.andromeda.movieado.feature.genre.GenreActivity
-import ir.andromeda.movieado.feature.list.ListActivity
+import ir.andromeda.movieado.feature.allMovie.AllMoviesActivity
 import ir.andromeda.movieado.feature.search.SearchActivity
 import ir.andromeda.movieado.services.imageloader.ImageLoadingService
 import org.greenrobot.eventbus.EventBus
@@ -164,42 +164,42 @@ class HomeFragment : MovieadoFragment(),
         }
 
         binding.tvMoreLatestMovies.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+            startActivity(Intent(requireActivity(), AllMoviesActivity::class.java).apply {
                 putExtra(EXTRA_KEY_MODE, LIST_LATEST_MOVIES)
                 putExtra(EXTRA_KEY_TITLE, getString(R.string.latest_movies))
             })
         }
 
         binding.tvMoreLatestSeries.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+            startActivity(Intent(requireActivity(), AllMoviesActivity::class.java).apply {
                 putExtra(EXTRA_KEY_MODE, LIST_LATEST_SERIES)
                 putExtra(EXTRA_KEY_TITLE, getString(R.string.latest_series))
             })
         }
 
         binding.tvMoreLatestAnimations.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+            startActivity(Intent(requireActivity(), AllMoviesActivity::class.java).apply {
                 putExtra(EXTRA_KEY_MODE, LIST_LATEST_ANIMATIONS)
                 putExtra(EXTRA_KEY_TITLE, getString(R.string.latest_animations))
             })
         }
 
         binding.tvMorePopularMovies.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+            startActivity(Intent(requireActivity(), AllMoviesActivity::class.java).apply {
                 putExtra(EXTRA_KEY_MODE, LIST_POPULAR_MOVIES)
                 putExtra(EXTRA_KEY_TITLE, getString(R.string.popular_movies))
             })
         }
 
         binding.tvMorePopularSeries.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+            startActivity(Intent(requireActivity(), AllMoviesActivity::class.java).apply {
                 putExtra(EXTRA_KEY_MODE, LIST_POPULAR_SERIES)
                 putExtra(EXTRA_KEY_TITLE, getString(R.string.popular_series))
             })
         }
 
         binding.tvMorePopularAnimations.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListActivity::class.java).apply {
+            startActivity(Intent(requireActivity(), AllMoviesActivity::class.java).apply {
                 putExtra(EXTRA_KEY_MODE, LIST_POPULAR_ANIMATIONS)
                 putExtra(EXTRA_KEY_TITLE, getString(R.string.popular_animations))
             })

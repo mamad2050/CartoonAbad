@@ -29,7 +29,7 @@
             android:name="ir.andromeda.movieado.feature.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name="ir.andromeda.movieado.feature.list.ListActivity"
+            android:name="ir.andromeda.movieado.feature.allMovie.AllMoviesActivity"
             android:exported="false" />
         <activity
             android:name="ir.andromeda.movieado.feature.detail.DetailMovieActivity"

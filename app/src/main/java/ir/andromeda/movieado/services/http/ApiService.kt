@@ -68,8 +68,7 @@ fun createApiServiceInstance(): ApiService {
         .build()
 
     val retrofit = Retrofit.Builder()
-        // .baseUrl("https://movieado.ir/api/v1/")
-        .baseUrl("http://172.16.30.218:5000/api/v1/")
+        .baseUrl("https://movieado.ir/api/v1/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)

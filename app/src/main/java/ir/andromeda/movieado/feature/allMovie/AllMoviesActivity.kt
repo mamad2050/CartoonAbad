@@ -1,4 +1,4 @@
-package ir.andromeda.movieado.feature.list
+package ir.andromeda.movieado.feature.allMovie
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.andromeda.movieado.common.*
 import ir.andromeda.movieado.data.genre.Genre
 import ir.andromeda.movieado.data.movie.Movie
-import ir.andromeda.movieado.databinding.ActivityListBinding
+import ir.andromeda.movieado.databinding.ActivityAllMovieBinding
 import ir.andromeda.movieado.feature.common.MovieAdapter
 import ir.andromeda.movieado.feature.detail.DetailMovieActivity
 import ir.andromeda.movieado.feature.detail.DetailSeriesActivity
@@ -16,11 +16,11 @@ import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ListActivity : MovieadoActivity(), MovieAdapter.MovieEventListener,
+class AllMoviesActivity : MovieadoActivity(), MovieAdapter.MovieEventListener,
     FilterBottomSheetDialog.OnFilterListener {
 
-    private lateinit var binding: ActivityListBinding
-    private val viewModel: ListViewModel by viewModel { parametersOf(intent.extras) }
+    private lateinit var binding: ActivityAllMovieBinding
+    private val viewModel: AllMoviesViewModel by viewModel { parametersOf(intent.extras) }
     private val movieAdapter by lazy { MovieAdapter(this, get(), ItemScale.LARGE) }
     private val filterBottomSheet = FilterBottomSheetDialog(this)
     var currentPage = 1
@@ -28,7 +28,7 @@ class ListActivity : MovieadoActivity(), MovieAdapter.MovieEventListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityListBinding.inflate(layoutInflater)
+        binding = ActivityAllMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.rvList.layoutManager = GridLayoutManager(this, 3)

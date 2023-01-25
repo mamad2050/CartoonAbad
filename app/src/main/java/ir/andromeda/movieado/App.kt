@@ -43,7 +43,7 @@ import ir.andromeda.movieado.feature.bookmark.BookmarkViewModel
 import ir.andromeda.movieado.feature.home.HomeViewModel
 import ir.andromeda.movieado.feature.detail.DetailSeriesViewModel
 import ir.andromeda.movieado.feature.genre.GenreViewModel
-import ir.andromeda.movieado.feature.list.ListViewModel
+import ir.andromeda.movieado.feature.allMovie.AllMoviesViewModel
 import ir.andromeda.movieado.feature.search.FilterFragmentViewModel
 import ir.andromeda.movieado.feature.subscription.SubscriptionViewModel
 import ir.andromeda.movieado.feature.search.SearchViewModel
@@ -138,7 +138,7 @@ class App : Application() {
                 )
             }
             viewModel { (bundle: Bundle) -> DetailMovieViewModel(bundle, get(), get()) }
-            viewModel { (bundle: Bundle) -> ListViewModel(bundle, get()) }
+            viewModel { (bundle: Bundle) -> AllMoviesViewModel(bundle, get()) }
             viewModel { SearchViewModel(get()) }
             viewModel { (bundle: Bundle) -> GenreViewModel(bundle, get()) }
             viewModel { FilterFragmentViewModel(get()) }
